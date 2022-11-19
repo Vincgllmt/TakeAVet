@@ -81,7 +81,49 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "fix:cs": [
+            "php-cs-fixer fix"
+        ],
+        "test:cs" : [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "test:codeception": [
+            "@db:test",
+            "php vendor/bin/codecept clean",
+            "php vendor/bin/codecept run"
+        ],
+        "test" : [
+            "@test:cs",
+            "@test:codeception"
+        ],
+        "start:linux" : [
+            "Composer\\Config::disableProcessTimeout",
+            "symfony serve"
+        ],
+        "db": [
+            "php bin/console doctrine:database:drop --force --if-exists",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "php bin/console doctrine:fixtures:load --no-interaction"
+        ],
+        "db:test": [
+            "php bin/console doctrine:database:drop --force --quiet --env=test",
+            "php bin/console doctrine:database:create --quiet --env=test",
+            "php bin/console doctrine:schema:create --quiet --env=test"
+        ],
+        "start": [
+            "@start:linux"
         ]
+    },
+    "scripts-descriptions": {
+        "start" : "Run Web server on Linux",
+        "start:linux" : "Run Web server on Linux",
+        "start:windows" : "Run Web server on Windows",
+        "fix:cs": "Fix PHP code with PHP CS Fixer",
+        "test:cs" : "Test PHP code with PHP CS Fixer",
+        "test" : "Run all tests",
+        "db": "Generate all the test database to work with"
     },
     "conflict": {
         "symfony/symfony": "*"
