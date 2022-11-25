@@ -4,8 +4,8 @@ Application de gestion d'emploi du temps et de rendez-vous pour vétérinaire.
 
 ## Les auteurs
 
-- Udycz Alexis
-- Guillemot Vincent
+- Alexis Udycz
+- Vincent Guillemot
 - Clement Perrot
 - Romain Leroy
 
