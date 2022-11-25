@@ -8,6 +8,7 @@ Application de gestion d'emploi du temps et de rendez-vous pour vétérinaire.
 - Vincent Guillemot
 - Clement Perrot
 - Romain Leroy
+- Benoit Soulière
 
 ![Logo de TakeAVet](Logo.png)
 
