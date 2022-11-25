@@ -1,15 +1,15 @@
 # Take'A'Vet (SAE 3.01)
 
-Application de gestion d'emploi du temps et de rendez-vous pour vétérinaire.
+![Banner](Banner.png)
 
-## Les auteurs
+Application de gestion d'emploi du temps,de rendez-vous, d'animaux pour vétérinaire et clients en Symfony.
+
+## Les auteurs du projet
 
 - Udycz Alexis
 - Guillemot Vincent
 - Clement Perrot
 - Romain Leroy
-
-![Logo de TakeAVet](Logo.png)
 
 ## Les outils
 
@@ -19,3 +19,17 @@ Application de gestion d'emploi du temps et de rendez-vous pour vétérinaire.
 - zenstruck/foundry
 - EasyAdmin
 - orm-fixtures
+
+## Commandes
+
+- "Getting Started"
+```shell
+git clone https://iut-info.univ-reims.fr/gitlab/udyc0001/sae3-01.git ./takeavet
+cd ./takeavet/
+composer install # to install all deps
+```
+
+- Lancer le projet sur une machine linux.
+```shell
+composer start
+```
