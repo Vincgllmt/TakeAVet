@@ -6,10 +6,11 @@ Application de gestion d'emploi du temps,de rendez-vous, d'animaux pour vétéri
 
 ## Les auteurs du projet
 
-- Udycz Alexis
-- Guillemot Vincent
+- Alexis Udycz
+- Vincent Guillemot
 - Clement Perrot
 - Romain Leroy
+- Benoit Soulière
 
 ## Les outils
 
