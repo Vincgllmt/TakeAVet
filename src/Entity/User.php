@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $profilePic = null;
 
-    #[ORM\Column(length: 10, nullable: true)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $tel = null;
 
     public function getId(): ?int
