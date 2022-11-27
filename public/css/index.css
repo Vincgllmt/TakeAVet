@@ -1,0 +1,23 @@
+/*----------------Media-------------*/
+
+@media (min-width: 766px){
+    .navbar-login-container > button {
+        margin-left: 20px;
+    }
+}
+
+/*To make <main> all the screen with flex: 1*/
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    background-size: cover;
+    background: url("/media/background/chihuahua.jpg")  no-repeat center center fixed;
+}
