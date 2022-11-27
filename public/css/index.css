@@ -19,7 +19,7 @@ body {
 main {
     flex: 1;
     background-size: cover;
-    background: url("/media/background/chihuahua.jpg")  no-repeat center center fixed;
+    background: url("/media/background/chihuahua.jpg")  no-repeat center fixed;
 }
 
 .main-content {
