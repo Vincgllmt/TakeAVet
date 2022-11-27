@@ -3,7 +3,17 @@
 {% block title %}Take'A'Vet - Home{% endblock %}
 
 {% block body %}
-    <header>
-        {% include("_navbar.html.twig") %}
-    </header>
+    {% include("_navbar.html.twig") %}
+
+    <main>
+        <div class="main-content">
+            <section class="main-content-home">
+                <h2>Hello World</h2>
+                <p>This document provides a guide to help with the important task of choosing the correct Apple.</p>
+            </section>
+            <aside class="twitter-container">
+                <a class="twitter-timeline" href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </aside>
+        </div>
+    </main>
 {% endblock %}

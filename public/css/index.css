@@ -1,0 +1,46 @@
+/*----------------Media-------------*/
+
+@media (min-width: 766px){
+    .navbar-login-container > button {
+        margin-left: 20px;
+    }
+}
+
+/*To make <main> all the screen with flex: 1*/
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    background-size: cover;
+    background: url("/media/background/chihuahua.jpg")  no-repeat center center fixed;
+}
+
+.main-content {
+    margin: 100px 50px 50px;
+    background: white;
+    height: 100%;
+    border-radius: 30px;
+
+    display: flex;
+}
+
+.main-content-home {
+    margin: 40px;
+    padding: 50px;
+    flex: 1;
+}
+
+.twitter-container {
+    background: #0c4a6e;
+    height: 100%;
+    width: 600px;
+    margin: 30px;
+    border-radius: 30px;
+}
