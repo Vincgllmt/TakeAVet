@@ -1,0 +1,96 @@
+/*----------------------------------------
+Medias
+----------------------------------------*/
+
+@media (min-width: 766px){
+    .navbar-login-container > button {
+        margin-left: 20px;
+    }
+}
+
+/*----------------------------------------
+Main css
+----------------------------------------*/
+
+/*To make <main> all the screen with flex: 1*/
+body, html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    background-size: cover;
+}
+
+.main-content {
+    margin: 100px 50px 50px;
+    background: white;
+    border-radius: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/*Can be changed !!!*/
+/*NOT FINAL !!!*/
+@media (max-width: 766px){
+    .main-content {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        margin: 0;
+
+        border-radius: 0px;
+    }
+
+    /*For: Twitter*/
+    .main-content-home {
+        margin: 0px !important;
+    }
+    .twitter-timeline {
+        width: 50% !important;
+        flex: 1;
+    }
+    .twitter-container {
+        display: flex;
+        justify-content: center;
+        width: auto !important;
+    }
+}
+
+.main-content-home {
+    margin: 40px;
+    padding: 50px;
+    flex: 1;
+}
+
+.twitter-container {
+    height: 100%;
+    width: 600px;
+    margin: 30px;
+    border-radius: 30px;
+}
+
+.footer-left-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+/*----------------------------------------
+Transitions & utils
+----------------------------------------*/
+
+.navbar-fixed {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+}
