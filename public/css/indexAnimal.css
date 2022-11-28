@@ -21,60 +21,29 @@ body {
     display: flex;
     flex-direction: column;
 }
-
-main {
-    flex: 1;
-    background-size: cover;
-}
-
-.main-content {
-    margin: 100px 50px 50px;
-    background: white;
-    border-radius: 30px;
-
+.list_animal {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    margin: 10px;
+    border: double black;
 }
-
+.list_animal_item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.animal_desc {
+    border: double black;
+    margin: 10px;
+}
+.title {
+    text-align: center;
+}
 /*Can be changed !!!*/
 /*NOT FINAL !!!*/
 @media (max-width: 766px){
-    .main-content {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        margin: 0;
 
-        border-radius: 0px;
     }
-
-    /*For: Twitter*/
-    .main-content-home {
-        margin: 0px !important;
-    }
-    .twitter-timeline {
-        width: 50% !important;
-        flex: 1;
-    }
-    .twitter-container {
-        display: flex;
-        justify-content: center;
-        width: auto !important;
-    }
-}
-
-.main-content-home {
-    margin: 40px;
-    padding: 50px;
-    flex: 1;
-}
-
-.twitter-container {
-    height: 100%;
-    width: 600px;
-    margin: 30px;
-    border-radius: 30px;
-}
 
 .footer-left-block {
     display: flex;
