@@ -12,7 +12,7 @@
             <li><a href="#" class="nav-link px-2 link-dark">Contact</a></li>
         </ul>
 
-        <div class="d-flex align-items-center flex-grow-1 justify-content-evenly">
+        <div class="d-flex align-items-center flex-grow-1 justify-content-evenly gap-3 navbar-button-spacer">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="#" class="btn btn-primary">TODO</a>
                 <a href="{{ url('app_logout') }}" class="btn btn-outline-primary me-2">Déconnexion</a>
