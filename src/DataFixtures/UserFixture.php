@@ -13,6 +13,16 @@ class UserFixture extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
+        UserFactory::createOne([
+            'firstName' => 'Admin',
+            'lastName' => 'Admin',
+            'email' => 'admin@take.vet',
+            'password' => 'admin',
+            'ROLES' => [
+                'ROLE_ADMIN',
+            ],
+        ]);
+
         UserFactory::createMany(10, function () {
             return [
                 'tel' => UserFactory::faker()->boolean(50)
