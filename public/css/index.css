@@ -6,6 +6,10 @@ Medias
     .navbar-login-container > button {
         margin-left: 20px;
     }
+
+    .navbar-button-spacer {
+        margin-left: 2rem;
+    }
 }
 
 /*----------------------------------------
