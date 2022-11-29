@@ -4,17 +4,23 @@
         Take'A'Vet
     </a>
 
-    <div class="d-flex flex-row collapse flex-wrap">
+    <div class="d-flex flex-row collapse flex-wrap m-lg-2">
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Accueil</a></li>
+            <li><a href="/" class="nav-link px-2 link-secondary">Accueil</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Planning</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">FAQ</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Contact</a></li>
         </ul>
 
-        <div class="navbar-login-container flex-grow-1 d-flex flex-wrap align-items-center justify-content-around">
-            <button type="button" class="btn btn-primary">Créer un compte</button>
-            <button type="button" class="btn btn-outline-primary me-2">Se connecter</button>
+        <div class="d-flex align-items-center flex-grow-1 justify-content-evenly">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                
+                <img src="https://github.com/mdo.png" alt="avatar" width="32" height="32" class="rounded-circle">
+            {% else %}
+                <a href="#" class="btn btn-primary">Créer un compte</a>
+                <a href="{{ url('app_login') }}" class="btn btn-outline-primary me-2">Se connecter</a>
+            {% endif %}
         </div>
+    </div>
     </div>
 </header>
