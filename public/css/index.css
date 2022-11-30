@@ -87,7 +87,27 @@ main {
     justify-content: center;
     align-items: end;
 }
-
+/*----------------------------------------
+animal css
+----------------------------------------*/
+.list_animal {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border: double black;
+}
+.list_animal_item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+.animal_desc {
+    border: double black;
+    margin: 10px;
+}
+.title {
+    text-align: center;
+}
 /*----------------------------------------
 Transitions & utils
 ----------------------------------------*/
