@@ -14,97 +14,101 @@ class Animal
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $idAnimal = null;
-
     #[ORM\Column(length: 50)]
-    private ?string $nomAn = null;
+    private ?string $name;
 
     #[ORM\Column(length: 1024, nullable: true)]
-    private ?string $descAn = null;
+    private ?string $note = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $race = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $dateNaisAn = null;
+    private ?\DateTimeInterface $birthday;
+
+    #[ORM\Column(length: 1)]
+    private ?string $gender;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $imageAn = null;
+    private $photo = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $sexeAn = null;
+    #[ORM\Column]
+    private bool $isDomestic;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdAnimal(): ?int
+
+    public function getName(): ?string
     {
-        return $this->idAnimal;
+        return $this->name;
     }
 
-    public function setIdAnimal(int $idAnimal): self
+    public function setName(string $name): self
     {
-        $this->idAnimal = $idAnimal;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getNomAn(): ?string
+    public function getNote(): ?string
     {
-        return $this->nomAn;
+        return $this->note;
     }
 
-    public function setNomAn(string $nomAn): self
+    public function setNote(?string $note): self
     {
-        $this->nomAn = $nomAn;
+        $this->note = $note;
 
         return $this;
     }
 
-    public function getDescAn(): ?string
+    public function getBirthday(): ?\DateTimeInterface
     {
-        return $this->descAn;
+        return $this->birthday;
     }
 
-    public function setDescAn(?string $descAn): self
+    public function setBirthday(\DateTimeInterface $birthday): self
     {
-        $this->descAn = $descAn;
+        $this->birthday = $birthday;
 
         return $this;
     }
 
-    public function getDateNaisAn(): ?\DateTimeInterface
+    public function getPhoto()
     {
-        return $this->dateNaisAn;
+        return $this->photo;
     }
 
-    public function setDateNaisAn(\DateTimeInterface $dateNaisAn): self
+    public function setPhoto($photo): self
     {
-        $this->dateNaisAn = $dateNaisAn;
+        $this->photo = $photo;
 
         return $this;
     }
 
-    public function getImageAn()
+    public function getGender(): ?string
     {
-        return $this->imageAn;
+        return $this->gender;
     }
 
-    public function setImageAn($imageAn): self
+    public function setGender(string $gender): self
     {
-        $this->imageAn = $imageAn;
+        $this->gender = $gender;
 
         return $this;
     }
 
-    public function getSexeAn(): ?string
+    public function getRace(): ?string
     {
-        return $this->sexeAn;
+        return $this->race;
     }
 
-    public function setSexeAn(string $sexeAn): self
+    public function setRace(?string $race): self
     {
-        $this->sexeAn = $sexeAn;
+        $this->race = $race;
 
         return $this;
     }
