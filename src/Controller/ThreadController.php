@@ -13,4 +13,10 @@ class ThreadController extends AbstractController
     {
         return $this->render('thread/index.html.twig');
     }
+
+    #[Route('/questions/{id}', name: 'app_questions_show')]
+    public function show(): Response
+    {
+        return $this->render('thread/show.html.twig');
+    }
 }
