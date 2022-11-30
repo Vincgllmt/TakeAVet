@@ -129,15 +129,18 @@ Threads
 
 .thread-messages-list{
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     gap: 10px;
     margin: 10px;
 }
 
 .thread-messages-item {
-    border: 3px solid #232323;
-    border-radius: 5px;
     padding: 30px;
+    border: 1px dotted;
+}
+
+.thread-messages-author {
+    color: gray;
 }
 
 /*----------------------------------------
