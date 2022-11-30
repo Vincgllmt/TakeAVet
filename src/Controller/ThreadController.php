@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ThreadController extends AbstractController
 {
-    #[Route('/thread', name: 'app_thread')]
+    #[Route('/questions', name: 'app_questions')]
     public function index(): Response
     {
         return $this->render('thread/index.html.twig');
