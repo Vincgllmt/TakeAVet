@@ -42,6 +42,11 @@ main {
     justify-content: space-around;
 }
 
+:root {
+    /* variable blue of buttons */
+    --main-color: #0D6EFD;
+}
+
 /*Can be changed !!!*/
 /*NOT FINAL !!!*/
 @media (max-width: 766px){
@@ -52,7 +57,12 @@ main {
 
         border-radius: 0px;
     }
+}
 
+@media (max-width: 1400px) {
+    .main-content {
+        flex-direction: column;
+    }
     /*For: Twitter*/
     .main-content-home {
         margin: 0px !important;
@@ -87,6 +97,11 @@ main {
     justify-content: center;
     align-items: end;
 }
+
+li a.nav-link.link-dark:hover {
+    color: var(--main-color) !important;
+}
+
 /*----------------------------------------
 animal css
 ----------------------------------------*/
