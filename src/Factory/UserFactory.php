@@ -45,8 +45,8 @@ abstract class UserFactory extends ModelFactory
 
         return [
             'email' => "user-$idUnique@exemple.com",
-            'lastName' => self::faker()->lastName(),
             'firstName' => self::faker()->firstName(),
+            'lastName' => self::faker()->lastName(),
             'roles' => [],
             'password' => 'test',
         ];
