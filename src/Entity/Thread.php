@@ -23,7 +23,7 @@ class Thread
     private ?string $message = null;
 
     #[ORM\ManyToOne(inversedBy: 'threads')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
 
     public function getId(): ?int
