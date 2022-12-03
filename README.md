@@ -2,13 +2,13 @@
 
 ![Banner](Banner.png)
 
-Application de gestion d'emploi du temps,de rendez-vous, d'animaux pour vétérinaire et clients en Symfony.
+Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétérinaire et clients en Symfony.
 
 ## Les auteurs du projet
 
 - Alexis Udycz
 - Vincent Guillemot
-- Clement Perrot
+- Clément Perrot
 - Romain Leroy
 - Benoit Soulière
 
@@ -17,9 +17,9 @@ Application de gestion d'emploi du temps,de rendez-vous, d'animaux pour vétéri
 - Symfony
 - PhpCsFixer
 - Codeception
-- zenstruck/foundry
+- Zenstruck/foundry
 - EasyAdmin
-- orm-fixtures
+- Orm-fixtures
 
 ## Commandes
 
@@ -30,7 +30,33 @@ cd ./takeavet/
 composer install # to install all deps
 ```
 
-- Lancer le projet sur une machine linux.
+- Lancer le projet sur une machine linux :
 ```shell
 composer start
 ```
+
+- Vérifier le code avec l'outil Cs Fixer :
+````shell
+composer test:cs
+````
+
+- Corriger le code avec l'outil Cs Fixer :
+````shell
+composer fix:cs
+````
+
+- Générer des données factices :
+````shell
+composer db
+````
+
+- Générer tous les tests :
+````shell
+composer test
+````
+
+- Identifiants pour la fixture :
+````shell
+admin@take.vet
+admin
+````
