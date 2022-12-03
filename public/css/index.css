@@ -97,6 +97,21 @@ main {
     justify-content: center;
     align-items: end;
 }
+/*----------------------------------------
+animal css
+----------------------------------------*/
+.list_animal {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border: solid black 2px;
+    padding: 5px !important;
+    border-radius: 15px;
+}
+.list_animal_item {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
 
 li a.nav-link.link-dark:hover {
     color: var(--main-color) !important;
