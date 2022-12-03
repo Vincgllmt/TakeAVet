@@ -6,20 +6,10 @@ use App\Repository\VetoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VetoRepository::class)]
-class Veto
+class Veto extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?bool $isAnHusbandry = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function isIsAnHusbandry(): ?bool
     {
