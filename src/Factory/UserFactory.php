@@ -28,15 +28,15 @@ use Zenstruck\Foundry\RepositoryProxy;
  * @method static UserRepository|RepositoryProxy repository()
  * @method        User|Proxy                     create(array|callable $attributes = [])
  */
-final class UserFactory extends ModelFactory
+abstract class UserFactory extends ModelFactory
 {
     private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct();
-
         $this->passwordHasher = $passwordHasher;
+
     }
 
     protected function getDefaults(): array
@@ -44,12 +44,11 @@ final class UserFactory extends ModelFactory
         $idUnique = self::faker()->unique()->numerify();
 
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'email' => "user-$idUnique@exemple.com",
+            'firstName' => self::faker()->firstName(),
+            'lastName' => self::faker()->lastName(),
             'roles' => [],
             'password' => 'test',
-            'lastName' => self::faker()->lastName(),
-            'firstName' => self::faker()->firstName(),
         ];
     }
 
@@ -60,10 +59,5 @@ final class UserFactory extends ModelFactory
                 $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
             })
         ;
-    }
-
-    protected static function getClass(): string
-    {
-        return User::class;
     }
 }
