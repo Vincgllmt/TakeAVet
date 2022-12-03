@@ -60,9 +60,4 @@ abstract class UserFactory extends ModelFactory
             })
         ;
     }
-
-    protected static function getClass(): string
-    {
-        return User::class;
-    }
 }
