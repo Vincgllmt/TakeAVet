@@ -36,16 +36,6 @@ final class VetoFactory extends UserFactory
     }
 
     /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     */
-    protected function getDefaults(): array
-    {
-        return array_merge(parent::getDefaults(), [
-            'isAnHusbandry' => self::faker()->boolean(),
-        ]);
-    }
-
-    /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
      */
     protected function initialize(): self
