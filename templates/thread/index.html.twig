@@ -4,43 +4,24 @@
     {% include('_navbar.html.twig') %}
     <main>
         <div class="main-content">
-            <h1>F.A.Q</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam corporis debitis dicta dolor error eum
-                eveniet expedita iste, necessitatibus, nemo nostrum numquam odio possimus provident quisquam
-                reprehenderit sit sunt voluptatem.</p>
+            <div class="main-title">
+                <h1>F.A.Q</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam corporis debitis dicta dolor error eum
+                    eveniet expedita iste, necessitatibus, nemo nostrum numquam odio possimus provident quisquam
+                    reprehenderit sit sunt voluptatem.</p>
+            </div>
 
             <section class="thread-messages-list">
-                <div class="thread-messages-item">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit ?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                        <span class="badge bg-primary rounded-pill">8 reponses</span></p>
-                    <p class="thread-messages-author">15/10/2022 | Michael Jackson</p>
-                    <a class="btn btn-primary">Voir le message</a>
-                    <a class="btn btn-primary">Répondre</a>
-                </div>
-                <div class="thread-messages-item">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores distinctio dolorum et excepturi, expedita fugiat fugit odit rerum ?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                        <span class="badge bg-primary rounded-pill">8 reponses</span></p>
-                    <p class="thread-messages-author">15/10/2022 | Michael Jackson</p>
-                    <a class="btn btn-primary">Voir le message</a>
-                    <a class="btn btn-primary">Répondre</a>
-                </div>
-                <div class="thread-messages-item">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit ?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                        <span class="badge bg-primary rounded-pill">8 reponses</span></p>
-                    <p class="thread-messages-author">15/10/2022 | Michael Jackson</p>
-                    <a class="btn btn-primary">Voir le message</a>
-                    <a class="btn btn-primary">Répondre</a>
-                </div><div class="thread-messages-item">
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit ?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                        <span class="badge bg-primary rounded-pill">8 reponses</span></p>
-                    <p class="thread-messages-author">15/10/2022 | Michael Jackson</p>
-                    <a class="btn btn-primary">Voir le message</a>
-                    <a class="btn btn-primary">Répondre</a>
-                </div>
+                {% for thread in threads %}
+                    <div class="thread-messages-item">
+                        <h4>{{ thread.lib }}</h4>
+                        <p>{{ thread.message|u.truncate(150, '...')}}
+                            <span class="badge bg-primary rounded-pill">8 reponses</span></p>
+                        <p class="thread-messages-author">{{ thread.createdAt|date('d-m-Y') }} | {{ thread.author.firstName }} {{ thread.author.lastName }}</p>
+                        <a class="btn btn-primary">Voir le message</a>
+                        <a class="btn btn-primary">Répondre</a>
+                    </div>
+                {% endfor %}
             </section>
             <section>
                 <h2>Avez-vous une question ?</h2>
