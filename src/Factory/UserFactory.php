@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\DataFixtures\ThreadFixtures;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

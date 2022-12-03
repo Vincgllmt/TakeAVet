@@ -47,6 +47,22 @@ main {
     --main-color: #0D6EFD;
 }
 
+.main-title {
+    color: #0d5e42;
+    text-align: center;
+}
+
+.main-title > h1:after {
+    content: ' ';
+    background-image: url("/media/cat.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 28px;
+    width: 28px;
+    display: inline-block;
+
+}
+
 /*Can be changed !!!*/
 /*NOT FINAL !!!*/
 @media (max-width: 766px){
@@ -97,6 +113,12 @@ main {
     justify-content: center;
     align-items: end;
 }
+
+li a.nav-link.link-dark:hover {
+    color: var(--main-color) !important;
+}
+
+
 /*----------------------------------------
 animal css
 ----------------------------------------*/
@@ -112,6 +134,7 @@ animal css
     display: flex;
     flex-direction: column;
     margin: 5px;
+}
 
 li a.nav-link.link-dark:hover {
     color: var(--main-color) !important;
@@ -142,11 +165,12 @@ animal css
 Threads
 ----------------------------------------*/
 
-.thread-messages-list{
+.thread-messages-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 10px;
+    padding: 100px !important;
 }
 
 .thread-messages-item {
