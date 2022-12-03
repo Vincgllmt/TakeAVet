@@ -22,6 +22,10 @@ class Thread
     #[ORM\Column(length: 1024)]
     private ?string $message = null;
 
+    #[ORM\ManyToOne(inversedBy: 'threads')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class Thread
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
