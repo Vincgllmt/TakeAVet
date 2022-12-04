@@ -22,4 +22,7 @@ class AnimalController extends AbstractController
     public function create(): Response
     {
     }
+    public function delete(Animal $animal): Response
+    {
+    }
 }
