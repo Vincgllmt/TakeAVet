@@ -34,7 +34,7 @@ class AnimalController extends AbstractController
 
             return $this->redirectToRoute('app_contact');
         }
-        return $this->renderForm('animal/create.twig', [
+        return $this->renderForm('contact/create.twig', [
             'form' => $form,
         ]);
 
