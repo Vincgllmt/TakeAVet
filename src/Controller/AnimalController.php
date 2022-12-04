@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Form\AnimalType;
+use App\Repository\AnimalRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,8 +24,20 @@ class AnimalController extends AbstractController
     {
     }
     #[Route('/animal/create')]
-    public function create(): Response
+    public function create(Request $request, AnimalRepository $animalRepository): Response
     {
+        $animal = new Animal();
+        $form = $this->createForm(AnimalType::class, $animal);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $animalRepository->save($animal, true);
+
+            return $this->redirectToRoute('app_contact');
+        }
+        return $this->renderForm('animal/create.twig', [
+            'form' => $form,
+        ]);
+
     }
     #[Route('/animal/{id}/delete')]
     public function delete(Animal $animal): Response
