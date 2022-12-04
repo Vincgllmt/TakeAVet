@@ -20,11 +20,11 @@ class ThreadMessage
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $User = null;
 
     #[ORM\ManyToOne(inversedBy: 'replies')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Thread $thread = null;
 
     public function getId(): ?int
