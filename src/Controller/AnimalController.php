@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,4 +16,8 @@ class AnimalController extends AbstractController
             'controller_name' => 'AnimalController',
         ]);
     }
+    public function update(Animal $animal): Response
+    {
+    }
+
 }
