@@ -16,12 +16,15 @@ class AnimalController extends AbstractController
             'controller_name' => 'AnimalController',
         ]);
     }
+    #[Route('/animal/{id}/update')]
     public function update(Animal $animal): Response
     {
     }
+    #[Route('/animal/create')]
     public function create(): Response
     {
     }
+    #[Route('/animal/{id}/delete')]
     public function delete(Animal $animal): Response
     {
     }
