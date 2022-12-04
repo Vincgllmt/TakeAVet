@@ -19,5 +19,7 @@ class AnimalController extends AbstractController
     public function update(Animal $animal): Response
     {
     }
-
+    public function create(): Response
+    {
+    }
 }
