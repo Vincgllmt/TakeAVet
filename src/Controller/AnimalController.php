@@ -32,9 +32,9 @@ class AnimalController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $animalRepository->save($animal, true);
 
-            return $this->redirectToRoute('app_contact');
+            return $this->redirectToRoute('app_animal');
         }
-        return $this->renderForm('contact/create.twig', [
+        return $this->renderForm('animal/create.twig', [
             'form' => $form,
         ]);
 
