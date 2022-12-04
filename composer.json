@@ -116,6 +116,9 @@
             "php bin/console doctrine:database:create --quiet --env=test",
             "php bin/console doctrine:schema:create --quiet --env=test"
         ],
+        "migrate": [
+            "php bin/console make:migration"
+        ],
         "start": [
             "@start:linux"
         ]
