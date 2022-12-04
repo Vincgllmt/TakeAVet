@@ -20,9 +20,24 @@ class AnimalController extends AbstractController
         ]);
     }
     #[Route('/animal/{id}/update')]
-    public function update(Animal $animal): Response
+    public function update(Animal $animal, Request $request, AnimalRepository $animalRepository): Response
     {
+        $formulaire = $this->createForm(AnimalType::class, $animal);
+        $formulaire->handleRequest($request);
+        if ($formulaire->isSubmitted() && $formulaire->isValid()) {
+            $animalRepository->save($animal, true);
+
+            return $this->redirectToRoute('app_contact_show', [
+                'id' => $animal->getId(),
+            ]);
+        }
+
+        return $this->renderForm('contact/update.twig', [
+            'contact' => $animal,
+            'formulaire' => $formulaire,
+        ]);
     }
+
     #[Route('/animal/create')]
     public function create(Request $request, AnimalRepository $animalRepository): Response
     {
