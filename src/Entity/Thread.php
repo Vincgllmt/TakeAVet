@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ThreadRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThreadRepository::class)]
@@ -25,6 +27,14 @@ class Thread
     #[ORM\ManyToOne(inversedBy: 'threads')]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
+
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class)]
+    private Collection $replies;
+
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +85,36 @@ class Thread
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ThreadMessage>
+     */
+    public function getReplies(): Collection
+    {
+        return $this->replies;
+    }
+
+    public function addReply(ThreadMessage $reply): self
+    {
+        if (!$this->replies->contains($reply)) {
+            $this->replies->add($reply);
+            $reply->setThread($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReply(ThreadMessage $reply): self
+    {
+        if ($this->replies->removeElement($reply)) {
+            // set the owning side to null (unless already changed)
+            if ($reply->getThread() === $this) {
+                $reply->setThread(null);
+            }
+        }
 
         return $this;
     }

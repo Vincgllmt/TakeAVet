@@ -23,6 +23,10 @@ class ThreadMessage
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
 
+    #[ORM\ManyToOne(inversedBy: 'replies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Thread $thread = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class ThreadMessage
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getThread(): ?Thread
+    {
+        return $this->thread;
+    }
+
+    public function setThread(?Thread $thread): self
+    {
+        $this->thread = $thread;
 
         return $this;
     }
