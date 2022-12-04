@@ -15,7 +15,7 @@ class Animal
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $name;
+    private ?string $name = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $note = null;
@@ -24,22 +24,21 @@ class Animal
     private ?string $race = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthday;
+    private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(length: 1)]
-    private ?string $gender;
+    #[ORM\Column(length: 50)]
+    private ?string $gender = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $photo = null;
 
     #[ORM\Column]
-    private bool $isDomestic;
+    private ?bool $isDomestic = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getName(): ?string
     {
@@ -65,6 +64,18 @@ class Animal
         return $this;
     }
 
+    public function getRace(): ?string
+    {
+        return $this->race;
+    }
+
+    public function setRace(?string $race): self
+    {
+        $this->race = $race;
+
+        return $this;
+    }
+
     public function getBirthday(): ?\DateTimeInterface
     {
         return $this->birthday;
@@ -73,18 +84,6 @@ class Animal
     public function setBirthday(\DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto($photo): self
-    {
-        $this->photo = $photo;
 
         return $this;
     }
@@ -101,14 +100,26 @@ class Animal
         return $this;
     }
 
-    public function getRace(): ?string
+    public function getPhoto()
     {
-        return $this->race;
+        return $this->photo;
     }
 
-    public function setRace(?string $race): self
+    public function setPhoto($photo): self
     {
-        $this->race = $race;
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function isIsDomestic(): ?bool
+    {
+        return $this->isDomestic;
+    }
+
+    public function setIsDomestic(bool $isDomestic): self
+    {
+        $this->isDomestic = $isDomestic;
 
         return $this;
     }
