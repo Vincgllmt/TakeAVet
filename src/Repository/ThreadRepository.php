@@ -40,15 +40,18 @@ class ThreadRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return all thread in 'thread' and all author name in 'name'.
+     * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request.
      *
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findAllWithUserName(): array
+    public function findAllWithName(): array
     {
         return $this->createQueryBuilder('t')
-            ->select('t as thread')
+            ->select('t.id as id')
+            ->addSelect('t.lib as lib')
+            ->addSelect('t.createdAt as createdAt')
+            ->addSelect('t.message as message')
             ->addSelect("CONCAT(author.lastName, ' ',author.firstName) as name")
             ->innerJoin('t.author', 'author')
             ->orderBy('t.createdAt', 'DESC')
