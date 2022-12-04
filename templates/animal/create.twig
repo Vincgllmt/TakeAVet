@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Création d'un nouvel animal
+{% endblock %}
+
+{% block body %}
+    <h1>Création d'un nouvel animal</h1>
+
+    {{ include('animal/_form.html.twig', {label_submit: "créer", with_context: false, form: form}) }}
+
+{% endblock %}
+
