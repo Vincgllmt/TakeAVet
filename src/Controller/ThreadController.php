@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Thread;
 use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,12 @@ class ThreadController extends AbstractController
         ]);
     }
 
-    #[Route('/questions/{id}', name: 'app_questions_show')]
-    public function show(): Response
+    #[Route('/questions/{id}',
+        name: 'app_questions_show',
+        requirements: ['id' => "\d+"])]
+    public function show(Thread $thread): Response
     {
-        return $this->render('thread/show.html.twig');
+        return $this->render('thread/show.html.twig', ['thread' => $thread]);
     }
 
     #[Route('/questions_form/create', name: 'app_question_form')]
