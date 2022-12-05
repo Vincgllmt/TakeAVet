@@ -3,33 +3,8 @@
 {% block title %}Take'A'Vet - Mes animaux{% endblock %}
 
 {% block body %}
-
     {% include('_navbar.html.twig') %}
-    <main>
-        <div class="main-content">
-            <div class="main-content-home">
-                <h1 class="title">Mes animaux</h1>
-                <ul class="list_animal">
-                    <div class="list_animal_item">
-                        <div class="animal_nametype">
-                            <p class="animal_name">Big cat</p>
-                            <p class="animal-type">type</p>
-                        </div>
-                        <p class="animal_date">19/03/2003</p>
-                        <textarea class="form-control"> </textarea>
-                    </div>
-                    <div class="list_animal_item">
-                        <div class="animal_nametype">
-                            <p class="animal_name">Big cat</p>
-                            <p class="animal-type">type</p>
-                        </div>
-                        <p class="animal_date">19/03/2003</p>
-                        <textarea class="form-control"> </textarea>
-                    </div>
-                </ul>
-            </div>
-        </div>
-    </main>
+    {% include('_animals.html.twig') %}
     {% include('_footer.html.twig') %}
 
 {% endblock %}
