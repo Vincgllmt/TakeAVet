@@ -1,0 +1,19 @@
+<main>
+    <div class="main-content">
+        <div class="main-content-home">
+            <h1 class="title">Mes animaux</h1>
+            <ul class="list_animal">
+                {% for animal in animals  %}
+                <div class="list_animal_item">
+                    <div class="animal_nametype">
+                        <p class="animal_name">{{animal.name}}</p>
+                        <p class="animal-type">{{animal.race}}</p>
+                    </div>
+                    <p class="animal_date">{{ animal.birthday }}</p>
+                    <textarea class="form-control"> </textarea>
+                </div>
+                {% enfor %}d
+            </ul>
+        </div>
+    </div>
+</main>
