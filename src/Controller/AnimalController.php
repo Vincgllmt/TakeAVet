@@ -15,10 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnimalController extends AbstractController
 {
     #[Route('/animal', name: 'app_animal')]
-    public function index(): Response
+    public function index(Request $request, AnimalRepository $animalRepository): Response
     {
         return $this->render('animal/index.html.twig', [
-            'controller_name' => 'AnimalController',
+            'animals' => 'animalRepository',
         ]);
     }
     #[Route('/animal/{id}/update')]
