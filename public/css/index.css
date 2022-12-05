@@ -182,6 +182,54 @@ Threads
     color: gray;
 }
 
+/* form threads */
+
+form {
+    margin-top: 50px;
+}
+
+div.form-group input {
+    margin-bottom: 15px;
+}
+
+div.form-group label {
+    font-weight: 600;
+}
+
+div.form-group {
+    margin: 0 10%;
+}
+
+/* media query for form */
+
+@media (min-width: 1300px) {
+    div.main-title p.form-p {
+        width: 80%;
+        margin: -80px auto;
+    }
+    div.main-title h1.form_titles {
+        margin: 100px;
+    }
+}
+
+@media (max-width: 766px) {
+    div.form-content {
+        margin: 10px 20px;
+        border-radius: 30px;
+        padding-bottom: 50px !important;
+    }
+    div.main-title p.form-p {
+        width: 60%;
+        margin: 0 auto;
+    }
+    main.main_form {
+        padding-top: 150px;
+    }
+    button.button_form {
+        margin-top: 20px;
+    }
+}
+
 /*----------------------------------------
 Transitions & utils
 ----------------------------------------*/
