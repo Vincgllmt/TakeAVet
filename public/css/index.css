@@ -34,6 +34,7 @@ main {
 
 .main-content {
     margin: 100px 50px 50px;
+    padding: 20px;
     background: white;
     border-radius: 30px;
 
@@ -70,6 +71,7 @@ main {
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
+        padding-top: 10px;
 
         border-radius: 0px;
     }
@@ -118,6 +120,9 @@ li a.nav-link.link-dark:hover {
     color: var(--main-color) !important;
 }
 
+.main-content > h2 {
+    text-align: center;
+}
 
 /*----------------------------------------
 animal css
@@ -170,7 +175,7 @@ Threads
     flex-direction: column;
     gap: 10px;
     margin: 10px;
-    padding: 100px !important;
+    /*padding: 100px !important;*/
 }
 
 .thread-messages-item {
