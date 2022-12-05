@@ -12,8 +12,9 @@ class ThreadController extends AbstractController
     #[Route('/questions', name: 'app_questions')]
     public function index(ThreadRepository $threadRepository): Response
     {
-        // TODO: Change find all
-        return $this->render('thread/index.html.twig', ['threads' => $threadRepository->findAll()]);
+        return $this->render('thread/index.html.twig', [
+            'threads' => $threadRepository->findAllWithName(),
+        ]);
     }
 
     #[Route('/questions/{id}', name: 'app_questions_show')]
