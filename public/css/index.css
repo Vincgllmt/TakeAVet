@@ -135,6 +135,10 @@ animal css
     padding: 5px !important;
     border-radius: 15px;
 }
+.animal_nametype {
+    display: flex;
+    justify-content: space-between;
+}
 .list_animal_item {
     display: flex;
     flex-direction: column;
@@ -145,20 +149,6 @@ li a.nav-link.link-dark:hover {
     color: var(--main-color) !important;
 }
 
-/*----------------------------------------
-animal css
-----------------------------------------*/
-.list_animal {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    border: double black;
-}
-.list_animal_item {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
 .animal_desc {
     border: double black;
     margin: 10px;
