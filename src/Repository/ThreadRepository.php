@@ -56,6 +56,7 @@ class ThreadRepository extends ServiceEntityRepository
             ->addSelect("CONCAT(author.lastName, ' ',author.firstName) as name")
             ->innerJoin('t.author', 'author')
             ->innerJoin('t.replies', 'replies')
+            ->orderBy('t.createdAt', 'DESC')
             ->groupBy('t.id')
             ->getQuery()
             ->execute();
