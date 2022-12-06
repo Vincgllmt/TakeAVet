@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Thread;
 use App\Entity\ThreadMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,23 @@ class ThreadMessageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * Tri les messages d'un thread par date et passe les messages des vétèrinaire en premier.
+     *
+     * @param Thread $thread Le thread
+     *
+     * @return ThreadMessage[] Les messages du thread
+     */
+    public function findSortByVeto(Thread $thread): array
+    {
+        $messages = $this->findBy(['thread' => $thread], ['createdAt' => 'DESC']);
+        usort($messages, function (ThreadMessage $first) {
+            return !$first->getUser()->isVeto();
+        });
+
+        return $messages;
     }
 
 //    /**
