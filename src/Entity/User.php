@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[InheritanceType('JOINED')]
 #[DiscriminatorColumn(name: 'discriminator', type: 'string')]
 #[DiscriminatorMap(['veto' => Veto::class, 'client' => Client::class])]
-
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -257,5 +256,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function isVeto(): bool
+    {
+        return $this instanceof Veto;
+    }
+
+    public function isClient(): bool
+    {
+        return $this instanceof Client;
     }
 }
