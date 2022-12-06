@@ -16,9 +16,9 @@
                     <div class="thread-messages-item">
                         <h4>{{ thread.lib }}</h4>
                         <p>{{ thread.message|u.truncate(150, '...')}}
-                            <span class="badge bg-primary rounded-pill">8 reponses</span></p>
+                            <span class="badge bg-primary rounded-pill">{{ thread.count }} réponses</span></p>
                         <p class="thread-messages-author">{{ thread.createdAt|date('d-m-Y') }} | {{ thread.name }}</p>
-                        <a class="btn btn-primary">Voir le message</a>
+                        <a class="btn btn-primary" href="{{ path('app_questions_show', {'id':  thread.id}) }}">Voir le message</a>
                         <a class="btn btn-primary">Répondre</a>
                     </div>
                 {% endfor %}

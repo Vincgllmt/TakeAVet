@@ -52,9 +52,12 @@ class ThreadRepository extends ServiceEntityRepository
             ->addSelect('t.lib as lib')
             ->addSelect('t.createdAt as createdAt')
             ->addSelect('t.message as message')
+            ->addSelect('COUNT(replies.id) as count')
             ->addSelect("CONCAT(author.lastName, ' ',author.firstName) as name")
             ->innerJoin('t.author', 'author')
+            ->innerJoin('t.replies', 'replies')
             ->orderBy('t.createdAt', 'DESC')
+            ->groupBy('t.id')
             ->getQuery()
             ->execute();
     }
