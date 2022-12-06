@@ -9,7 +9,7 @@
                         <p class="animal_name">{{animal.name}}</p>
                         <p class="animal-type">{{animal.race}}</p>
                     </div>
-                    <p class="animal_date">{{ animal.birthday }}</p>
+                    <p class="animal_date">{{ animal.birthday| date("d-m-Y") }}</p>
                     <textarea class="form-control"> </textarea>
                 </div>
                 {% endfor %}
