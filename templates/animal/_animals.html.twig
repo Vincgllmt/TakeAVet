@@ -2,6 +2,7 @@
     <div class="main-content">
         <div class="main-content-home">
             <h1 class="title">Mes animaux</h1>
+            <a class="btn btn-primary" href="{{ path('app_animal_create') }}" role="button"> Ajouter un nouvel animal</a>
             <ul class="list_animal">
                 {% for animal in animals  %}
                 <div class="list_animal_item">
@@ -11,6 +12,7 @@
                     </div>
                     <p class="animal_date">{{ animal.birthday| date("d-m-Y") }}</p>
                     <textarea class="form-control"> </textarea>
+                    <a class="btn btn-primary" href="{{ path('app_animal_update', {id: animal.id}) }}" role="button"> Modifier cet animal</a>
                 </div>
                 {% endfor %}
             </ul>
