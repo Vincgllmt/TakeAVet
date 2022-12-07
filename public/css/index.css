@@ -139,6 +139,10 @@ animal css
     display: flex;
     justify-content: space-between;
 }
+.animal_button {
+    display: flex;
+    justify-content: end;
+}
 .list_animal_item {
     display: flex;
     flex-direction: column;
