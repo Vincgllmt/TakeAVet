@@ -12,8 +12,8 @@
                 {{ thread.message }}
             </p>
             <section class="thread-messages-list" style="padding-top: 0px !important;">
-                {% for msg in thread.replies %}
-                    <div class="thread-messages-item">
+                {% for msg in messages %}
+                    <div class="thread-messages-item {{ msg.user.isVeto() ? 'thread-messages-item-promote' : '' }}">
                         <p style="text-align: justify">{{ msg.message }}</p>
                         <p class="thread-messages-author">{{ msg.createdAt|date('d-m-Y') }} | {{ msg.user.lastName }} {{ msg.user.firstName }}</p>
                     </div>

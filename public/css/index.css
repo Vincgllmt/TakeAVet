@@ -177,6 +177,11 @@ Threads
     border: 1px dotted;
 }
 
+.thread-messages-item-promote {
+    border-color: greenyellow;
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
 .thread-messages-author {
     color: gray;
 }
