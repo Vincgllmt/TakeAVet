@@ -6,6 +6,7 @@ use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,8 +48,10 @@ class ThreadRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findAllWithName(): array
+    public function findAllWithName(int $page, int $perPage): array
     {
+        /*https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html*/
+
         return $this->createQueryBuilder('t')
             ->select('t.id as id')
             ->addSelect('t.lib as lib')
@@ -61,6 +64,8 @@ class ThreadRepository extends ServiceEntityRepository
             ->orderBy('t.createdAt', 'DESC')
             ->groupBy('t.id')
             ->getQuery()
+            ->setFirstResult($page * $perPage)
+            ->setMaxResults($perPage)
             ->execute();
     }
 
