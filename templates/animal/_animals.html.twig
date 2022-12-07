@@ -11,9 +11,9 @@
                         <p class="animal-type">{{animal.race}}</p>
                     </div>
                     <p class="animal_date">{{ animal.birthday| date("d-m-Y") }}</p>
+                    <p class="animal_button"><a class="btn btn-primary" href="{{ path('app_animal_update', {id: animal.id}) }}" role="button"> Modifier cet animal</a>
+                        <a class="btn btn-primary" href="{{ path('app_animal_delete', {id: animal.id}) }}" role="button"> Supprimer cet animal</a></p>
                     <textarea class="form-control"> </textarea>
-                    <a class="btn btn-primary" href="{{ path('app_animal_update', {id: animal.id}) }}" role="button"> Modifier cet animal</a>
-                    <a class="btn btn-primary" href="{{ path('app_animal_delete', {id: animal.id}) }}" role="button"> Supprimer cet animal</a>
                 </div>
                 {% endfor %}
             </ul>
