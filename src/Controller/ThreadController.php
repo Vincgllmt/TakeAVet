@@ -30,7 +30,7 @@ class ThreadController extends AbstractController
         ]);
     }
 
-    #[Route('/questions_form/create', name: 'app_question_form')]
+    #[Route('/questions/new', name: 'app_question_form')]
     public function create(): Response
     {
         return $this->render('thread/form_thread.html.twig');
