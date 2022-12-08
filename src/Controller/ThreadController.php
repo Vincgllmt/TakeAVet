@@ -6,16 +6,20 @@ use App\Entity\Thread;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ThreadController extends AbstractController
 {
     #[Route('/questions', name: 'app_questions')]
-    public function index(ThreadRepository $threadRepository): Response
+    public function index(ThreadRepository $threadRepository, Request $request): Response
     {
+        $page = $request->query->getInt('page');
+
         return $this->render('thread/index.html.twig', [
-            'threads' => $threadRepository->findAllWithName(),
+            'threads' => $threadRepository->findAllWithName($page, 15),
+            'page' => $page,
         ]);
     }
 

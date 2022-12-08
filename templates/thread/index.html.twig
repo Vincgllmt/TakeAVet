@@ -9,8 +9,20 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam corporis debitis dicta dolor error eum
                     eveniet expedita iste, necessitatibus, nemo nostrum numquam odio possimus provident quisquam
                     reprehenderit sit sunt voluptatem.</p>
-                <a href="{{ path('app_question_form') }}" class="btn btn-secondary button_form" style="width: 300px; height: 40px; margin: 0 auto;">Ajouter une question ici</a>
             </div>
+
+            <form class="row m-2">
+                <div class="col-auto align-self-center">
+                    <label>Page: {{ page }}</label>
+                </div>
+                <div class="col-auto">
+                    <input class="form-control" type="search" name="search">
+                </div>
+                <div class="col-auto">
+                    <button class="form-control" type="submit">Rechercher</button>
+                </div>
+                <a href="{{ path('app_question_form') }}" class="btn btn-secondary col-auto">Ajouter une question ici</a>
+            </form>
 
             <section class="thread-messages-list">
                 {% for thread in threads %}
