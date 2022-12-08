@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,21 @@ class Animal
 
     #[ORM\Column]
     private ?bool $isDomestic = null;
+
+    #[ORM\ManyToMany(targetEntity: Vaccine::class)]
+    private Collection $vaccines;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?AnimalRecord $record = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CategoryAnimal $category = null;
+
+    public function __construct()
+    {
+        $this->vaccines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +137,54 @@ class Animal
     public function setIsDomestic(bool $isDomestic): self
     {
         $this->isDomestic = $isDomestic;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vaccine>
+     */
+    public function getVaccines(): Collection
+    {
+        return $this->vaccines;
+    }
+
+    public function addVaccine(Vaccine $vaccine): self
+    {
+        if (!$this->vaccines->contains($vaccine)) {
+            $this->vaccines->add($vaccine);
+        }
+
+        return $this;
+    }
+
+    public function removeVaccine(Vaccine $vaccine): self
+    {
+        $this->vaccines->removeElement($vaccine);
+
+        return $this;
+    }
+
+    public function getRecord(): ?AnimalRecord
+    {
+        return $this->record;
+    }
+
+    public function setRecord(?AnimalRecord $record): self
+    {
+        $this->record = $record;
+
+        return $this;
+    }
+
+    public function getCategory(): ?CategoryAnimal
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?CategoryAnimal $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -26,6 +26,17 @@ class Appointment
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $note = null;
 
+    #[ORM\OneToOne(inversedBy: 'appointment', cascade: ['persist', 'remove'])]
+    private ?Receipt $receipt = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeAppointment $type = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Address $address = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +86,42 @@ class Appointment
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getReceipt(): ?Receipt
+    {
+        return $this->receipt;
+    }
+
+    public function setReceipt(?Receipt $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeAppointment
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeAppointment $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
 
         return $this;
     }

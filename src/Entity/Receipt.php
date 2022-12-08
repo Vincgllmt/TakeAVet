@@ -23,6 +23,9 @@ class Receipt
     #[ORM\Column]
     private ?float $VAT = null;
 
+    #[ORM\OneToOne(mappedBy: 'receipt', cascade: ['persist', 'remove'])]
+    private ?Appointment $appointment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,28 @@ class Receipt
     public function setVAT(float $VAT): self
     {
         $this->VAT = $VAT;
+
+        return $this;
+    }
+
+    public function getAppointment(): ?Appointment
+    {
+        return $this->appointment;
+    }
+
+    public function setAppointment(?Appointment $appointment): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($appointment === null && $this->appointment !== null) {
+            $this->appointment->setReceipt(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($appointment !== null && $appointment->getReceipt() !== $this) {
+            $appointment->setReceipt($this);
+        }
+
+        $this->appointment = $appointment;
 
         return $this;
     }
