@@ -18,10 +18,17 @@ class AnimalController extends AbstractController
     #[Route('/animal', name: 'app_animal')]
     public function index(AnimalRepository $animalRepository): Response
     {
-        $animals = $animalRepository->newFindAll();
-
+        $user = $this->getUser();
+        $animals = [];
+        $isClient = false;
+        if ($user instanceof \App\Entity\Client) {
+            $isClient = true;
+            $id = $user->getId();
+            $animals = $animalRepository->findAllWithUser($id);
+        }
         return $this->render('animal/index.html.twig', [
             'animals' => $animals,
+            'isClient' => $isClient,
         ]);
     }
 
