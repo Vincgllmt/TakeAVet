@@ -90,7 +90,7 @@ main {
         flex-direction: column;
     }
     /*For: Twitter*/
-    .main-content-home {
+    .main-content__home {
         margin: 0px !important;
     }
     .twitter-timeline {
@@ -104,7 +104,7 @@ main {
     }
 }
 
-.main-content-home {
+.main-content__home {
     margin: 40px;
     padding: 50px;
     flex: 1;
