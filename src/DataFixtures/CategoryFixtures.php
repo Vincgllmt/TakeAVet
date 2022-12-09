@@ -9,9 +9,9 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
-        $manager->flush();
+        $file = json_decode(file_get_contents(__DIR__.'/data/Animals.json'), flags: JSON_OBJECT_AS_ARRAY);
+        foreach ($file as $category) {
+            CategoryFactory::createOne($category);
+        }
     }
 }
