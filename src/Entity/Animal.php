@@ -40,12 +40,8 @@ class Animal
     #[ORM\ManyToMany(targetEntity: Vaccine::class)]
     private Collection $vaccines;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?AnimalRecord $record = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?CategoryAnimal $category = null;
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    private ?CategoryAnimal $CategoryAnimal = null;
 
     public function __construct()
     {
@@ -165,26 +161,14 @@ class Animal
         return $this;
     }
 
-    public function getRecord(): ?AnimalRecord
+    public function getCategoryAnimal(): ?CategoryAnimal
     {
-        return $this->record;
+        return $this->CategoryAnimal;
     }
 
-    public function setRecord(?AnimalRecord $record): self
+    public function setCategoryAnimal(?CategoryAnimal $CategoryAnimal): self
     {
-        $this->record = $record;
-
-        return $this;
-    }
-
-    public function getCategory(): ?CategoryAnimal
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?CategoryAnimal $category): self
-    {
-        $this->category = $category;
+        $this->CategoryAnimal = $CategoryAnimal;
 
         return $this;
     }
