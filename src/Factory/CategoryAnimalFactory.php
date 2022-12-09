@@ -38,9 +38,10 @@ final class CategoryAnimalFactory extends ModelFactory
 
     protected function getDefaults(): array
     {
+        $name = mb_convert_case(self::faker()->word(), MB_CASE_TITLE);
+
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'name' => self::faker()->text(),
+            'name' => $name,
         ];
     }
 
