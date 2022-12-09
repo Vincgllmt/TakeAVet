@@ -43,6 +43,14 @@ main {
     justify-content: space-around;
 }
 
+.main-content__title {
+    text-align: center;
+}
+
+.main-content__title > span {
+    text-decoration: underline;
+}
+
 :root {
     /* variable blue of buttons */
     --main-color: #0D6EFD;
