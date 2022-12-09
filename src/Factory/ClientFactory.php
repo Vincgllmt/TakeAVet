@@ -52,6 +52,7 @@ final class ClientFactory extends UserFactory
     {
         /** @var ClientFactory $self */
         $self = parent::initialize();
+
         return $self;
     }
 

@@ -75,12 +75,12 @@ class Receipt
     public function setAppointment(?Appointment $appointment): self
     {
         // unset the owning side of the relation if necessary
-        if ($appointment === null && $this->appointment !== null) {
+        if (null === $appointment && null !== $this->appointment) {
             $this->appointment->setReceipt(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($appointment !== null && $appointment->getReceipt() !== $this) {
+        if (null !== $appointment && $appointment->getReceipt() !== $this) {
             $appointment->setReceipt($this);
         }
 

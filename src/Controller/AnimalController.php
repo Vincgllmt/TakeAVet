@@ -19,10 +19,12 @@ class AnimalController extends AbstractController
     public function index(AnimalRepository $animalRepository): Response
     {
         $animals = $animalRepository->findAll();
+
         return $this->render('animal/index.html.twig', [
             'animals' => $animals,
         ]);
     }
+
     #[Route('/animal/{id}/update')]
     #[ParamConverter('animal', class: Animal::class)]
     public function update(Animal $animal, Request $request, AnimalRepository $animalRepository): Response
@@ -52,11 +54,12 @@ class AnimalController extends AbstractController
 
             return $this->redirectToRoute('app_animal');
         }
+
         return $this->renderForm('animal/create.twig', [
             'form' => $form,
         ]);
-
     }
+
     #[Route('/animal/{id}/delete')]
     #[ParamConverter('animal', class: Animal::class)]
     public function delete(Request $request, Animal $animal, AnimalRepository $animalRepository): Response
