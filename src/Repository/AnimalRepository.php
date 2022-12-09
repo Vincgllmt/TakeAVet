@@ -39,6 +39,19 @@ class AnimalRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Animal[]
+     */
+    public function newFindAll(): array
+    {
+        $qb = $this->createQueryBuilder('animal')
+            ->leftJoin('animal.CategoryAnimal', 'category')
+            ->addSelect('category')
+            ->orderBy('animal.name', 'ASC');
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
 //    /**
 //     * @return Animal[] Returns an array of Animal objects
 //     */

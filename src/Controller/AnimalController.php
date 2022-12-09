@@ -18,7 +18,7 @@ class AnimalController extends AbstractController
     #[Route('/animal', name: 'app_animal')]
     public function index(AnimalRepository $animalRepository): Response
     {
-        $animals = $animalRepository->findAll();
+        $animals = $animalRepository->newFindAll();
 
         return $this->render('animal/index.html.twig', [
             'animals' => $animals,
