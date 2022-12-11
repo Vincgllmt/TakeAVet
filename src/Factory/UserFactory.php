@@ -2,7 +2,6 @@
 
 namespace App\Factory;
 
-use App\DataFixtures\ThreadFixtures;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -37,7 +36,6 @@ abstract class UserFactory extends ModelFactory
     {
         parent::__construct();
         $this->passwordHasher = $passwordHasher;
-
     }
 
     protected function getDefaults(): array

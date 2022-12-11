@@ -42,9 +42,9 @@ final class VetoFactory extends UserFactory
     {
         /** @var VetoFactory $self */
         $self = parent::initialize();
+
         return $self;
     }
-
 
     protected static function getClass(): string
     {
