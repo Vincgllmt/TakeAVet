@@ -57,7 +57,7 @@ class AnimalRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('animal')
             ->leftJoin('animal.CategoryAnimal', 'category')
-            ->Join('animal.ClientAnimal', 'client')
+            ->leftJoin('animal.ClientAnimal', 'client')
             ->addSelect('category')
             ->where('client.id = :client_id')
             ->setParameter(':client_id', $clientId)
