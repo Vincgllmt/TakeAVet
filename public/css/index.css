@@ -43,6 +43,14 @@ main {
     justify-content: space-around;
 }
 
+.main-content__title {
+    text-align: center;
+}
+
+.main-content__title > span {
+    text-decoration: underline;
+}
+
 :root {
     /* variable blue of buttons */
     --main-color: #0D6EFD;
@@ -82,7 +90,7 @@ main {
         flex-direction: column;
     }
     /*For: Twitter*/
-    .main-content-home {
+    .main-content__home {
         margin: 0px !important;
     }
     .twitter-timeline {
@@ -96,10 +104,20 @@ main {
     }
 }
 
-.main-content-home {
-    margin: 40px;
+.main-content__home {
+    margin: 0px 40px 40px;
     padding: 50px;
     flex: 1;
+}
+
+.main-content__home > img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.main-content__home > p {
+    text-align: justify;
 }
 
 .twitter-container {
