@@ -116,6 +116,10 @@ main {
     margin-bottom: 10px;
 }
 
+.main-content__home > p {
+    text-align: justify;
+}
+
 .twitter-container {
     height: 100%;
     width: 600px;
