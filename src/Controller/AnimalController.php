@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\Client;
+use App\Entity\User;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -26,6 +28,7 @@ class AnimalController extends AbstractController
             $id = $user->getId();
             $animals = $animalRepository->findAllWithUser($id);
         }
+
         return $this->render('animal/index.html.twig', [
             'animals' => $animals,
             'isClient' => $isClient,
@@ -51,19 +54,27 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/animal/create')]
-    public function create(Request $request, AnimalRepository $animalRepository): Response
+    public function create(Request $request, AnimalRepository $animalRepository)
     {
+        $user = $this->getUser();
+
+        if (!$user instanceof Client) {
+            $this->createNotFoundException();
+        }
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $animalRepository->save($animal, true);
+            /** @var Animal $handledAnimal * */
+            $handledAnimal = $form->getData();
+            $handledAnimal->setClientAnimal($user);
+            $animalRepository->save($handledAnimal, true);
 
             return $this->redirectToRoute('app_animal');
         }
 
         return $this->renderForm('animal/create.twig', [
-            'form' => $form,
+           'form' => $form,
         ]);
     }
 
