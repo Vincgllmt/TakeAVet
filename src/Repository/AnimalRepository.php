@@ -52,12 +52,14 @@ class AnimalRepository extends ServiceEntityRepository
 
         return $query->execute();
     }
+
     public function findAllWithUser(int $clientId)
     {
         $qb = $this->createQueryBuilder('animal')
             ->leftJoin('animal.CategoryAnimal', 'category')
+            ->leftJoin('animal.ClientAnimal', 'client')
             ->addSelect('category')
-            ->where('animal.client_id = :client_id')
+            ->where('client.id = :client_id')
             ->setParameter(':client_id', $clientId)
             ->orderBy('animal.name', 'ASC');
         $query = $qb->getQuery();
