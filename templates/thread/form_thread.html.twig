@@ -3,25 +3,20 @@
 {% block body %}
     {% include('_navbar.html.twig') %}
     <main class="main_form">
-        <div class="main-content form-content" style="padding-top: 50px; padding-bottom: 150px;">
+        <div class="main-content" style="padding-top: 50px; padding-bottom: 150px;">
             <div class="main-title">
                 <h1 class="form_titles">Soumettre une question</h1>
                 <p class="form-p">Pour pouvoir proposer une question à l'un de nos vétérinaires, veuillez remplir ce formulaire.</p>
             </div>
-            <form>
-                <div class="form">
-                    <div class="form-group">
-                        <label for="question">Question demandée (*)</label>
-                        <input type="text" class="form-control" id="question" placeholder="Écrivez une question..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="notes">Précisons à ajouter :</label>
-                        <textarea type="text" class="form-control" id="precisions" placeholder="Si vous avez quelque chose à ajouter..."></textarea>
-                        <small id="indication" class="form-text text-muted">(*) Les champs marqués d'une étoile sont obligatoires.</small>
-                        <button type="submit" class="btn btn-primary button_form">Soumettre ma question</button>
-                    </div>
+            <div class="flex-grow-1">
+                {{ form_start(form) }}
+                {{ form_widget(form)  }}
+                <div class="form-end">
+                    <small id="indication" class="form-text text-muted">(*) Les champs marqués d'une étoile sont obligatoires.</small>
+                    <button type="submit" class="btn btn-primary button_form">Soumettre ma question</button>
                 </div>
-            </form>
+                {{ form_end(form) }}
+            </div>
         </div>
     </main>
     {% include('_footer.html.twig') %}
