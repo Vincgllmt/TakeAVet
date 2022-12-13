@@ -210,16 +210,9 @@ form {
     margin-top: 50px;
 }
 
-div.form-group input {
-    margin-bottom: 15px;
-}
-
-div.form-group label {
-    font-weight: 600;
-}
-
-div.form-group {
-    margin: 0 10%;
+.form-end {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* media query for form */

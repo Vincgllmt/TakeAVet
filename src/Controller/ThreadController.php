@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Thread;
+use App\Entity\User;
+use App\Form\ThreadFormType;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,8 +37,40 @@ class ThreadController extends AbstractController
     }
 
     #[Route('/questions/new', name: 'app_question_form')]
-    public function create(): Response
+    public function create(Request $request, ThreadRepository $threadRepository): Response
     {
-        return $this->render('thread/form_thread.html.twig');
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return $this->createNotFoundException();
+        }
+
+        $thread = new Thread();
+        $form = $this->createForm(ThreadFormType::class, $thread);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Thread $handledThread * */
+            $handledThread = $form->getData();
+
+            if (null === $handledThread->getCreatedAt()) {
+                $handledThread->setCreatedAt(new \DateTimeImmutable());
+            }
+
+            if (null === $handledThread->getAuthor()) {
+                $handledThread->setAuthor($user);
+            }
+
+            $threadRepository->save($handledThread, flush: true);
+
+            return $this->redirectToRoute('app_questions_show', [
+                'id' => $handledThread->getId(),
+            ]);
+        }
+
+        return $this->renderForm('thread/form_thread.html.twig', parameters: [
+            'form' => $form,
+        ]);
     }
 }
