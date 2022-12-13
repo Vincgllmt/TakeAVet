@@ -25,6 +25,7 @@ class ThreadFormType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => 'Précisons à ajouter :',
                 'required' => false,
+                'empty_data' => '',
                 'attr' => [
                     'id' => 'precisions',
                     'placeholder' => 'Si vous avez quelque chose à ajouter...',
