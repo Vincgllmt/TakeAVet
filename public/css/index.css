@@ -105,9 +105,15 @@ main {
 }
 
 .main-content__home {
-    margin: 40px;
+    margin: 0px 40px 40px;
     padding: 50px;
     flex: 1;
+}
+
+.main-content__home > img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 10px;
 }
 
 .twitter-container {
