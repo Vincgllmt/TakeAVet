@@ -43,6 +43,9 @@ class Animal
     #[ORM\ManyToOne(inversedBy: 'animals')]
     private ?CategoryAnimal $CategoryAnimal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    private ?Client $ClientAnimal = null;
+
     public function __construct()
     {
         $this->vaccines = new ArrayCollection();
@@ -169,6 +172,18 @@ class Animal
     public function setCategoryAnimal(?CategoryAnimal $CategoryAnimal): self
     {
         $this->CategoryAnimal = $CategoryAnimal;
+
+        return $this;
+    }
+
+    public function getClientAnimal(): ?Client
+    {
+        return $this->ClientAnimal;
+    }
+
+    public function setClientAnimal(?Client $ClientAnimal): self
+    {
+        $this->ClientAnimal = $ClientAnimal;
 
         return $this;
     }
