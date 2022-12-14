@@ -153,13 +153,10 @@ animal css
     padding: 5px !important;
     border-radius: 15px;
 }
-.animal_nametype {
+.animal_part {
     display: flex;
     justify-content: space-between;
-}
-.animal_button {
-    display: flex;
-    justify-content: end;
+    padding: 5px;
 }
 .list_animal_item {
     display: flex;
