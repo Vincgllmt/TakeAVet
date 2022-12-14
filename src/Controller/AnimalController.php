@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\Client;
-use App\Entity\User;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+// #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class AnimalController extends AbstractController
 {
     #[Route('/animal', name: 'app_animal')]
@@ -83,8 +83,8 @@ class AnimalController extends AbstractController
     public function delete(Request $request, Animal $animal, AnimalRepository $animalRepository): Response
     {
         $form = $this->createFormBuilder($animal)
-            ->add('delete', SubmitType::class, ['label' => 'delete'])
-            ->add('cancel', SubmitType::class, ['label' => 'cancel'])
+            ->add('delete', SubmitType::class, ['label' => 'Oui, supprimer cet animal'])
+            ->add('cancel', SubmitType::class, ['label' => 'Non, annuler'])
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

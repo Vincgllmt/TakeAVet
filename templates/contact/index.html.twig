@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Take'A'Vet - Mes animaux{% endblock %}
+
+{% block body %}
+
+    {% include('_navbar.html.twig') %}
+    <main>
+        <div class="main-content">
+            <h1 class="title"> Nous contacter</h1>
+            <div class="main-content__home">
+                <div class="contact_main">
+                    <div class="contact_contacting">
+                        <h5> Contacter le service</h5>
+                    </div>
+                    <div>
+                        <h5>Nous trouver</h5>
+                    </div>
+                </div>
+                <div> les réseaux</div>
+            </div>
+        </div>
+    </main>
+    {% include('_footer.html.twig') %}
+
+{% endblock %}
