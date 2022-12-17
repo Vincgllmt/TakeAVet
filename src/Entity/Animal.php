@@ -31,9 +31,6 @@ class Animal
     #[ORM\Column(length: 50)]
     private ?string $gender = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $photo = null;
-
     #[ORM\Column]
     private ?bool $isDomestic = null;
 
@@ -45,6 +42,9 @@ class Animal
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
     private ?Client $ClientAnimal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoPath = null;
 
     public function __construct()
     {
@@ -116,18 +116,6 @@ class Animal
         return $this;
     }
 
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto($photo): self
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
     public function isIsDomestic(): ?bool
     {
         return $this->isDomestic;
@@ -184,6 +172,18 @@ class Animal
     public function setClientAnimal(?Client $ClientAnimal): self
     {
         $this->ClientAnimal = $ClientAnimal;
+
+        return $this;
+    }
+
+    public function getPhotoPath(): ?string
+    {
+        return $this->photoPath;
+    }
+
+    public function setPhotoPath(?string $photoPath): self
+    {
+        $this->photoPath = $photoPath;
 
         return $this;
     }
