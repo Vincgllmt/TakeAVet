@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class AnimalType extends AbstractType
 {
@@ -24,6 +25,9 @@ class AnimalType extends AbstractType
             ->add('note', TextareaType::class, [
                 'required' => false,
                 'label' => 'Notes',
+                'attr' => [
+                    'placeholder' => '...',
+                ],
             ])
             ->add('birthday', DateType::class, [
                 'years' => range(1989, date('Y')),
@@ -42,7 +46,19 @@ class AnimalType extends AbstractType
             ])
             ->add('photo', FileType::class, [
                 'data_class' => null,
+                'mapped' => false,
                 'label' => 'Photo',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '7168k', /* ~7mb */
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image',
+                    ]),
+                ],
             ])
             ->add('race', TextType::class, [
                 'required' => false,
@@ -50,6 +66,7 @@ class AnimalType extends AbstractType
             ])
             ->add('isDomestic', CheckboxType::class, [
                 'label' => "S'agit-il d'un animal domestic non issu d'une production animale ?",
+                'required' => false,
             ])
         ;
     }
