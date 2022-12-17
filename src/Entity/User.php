@@ -23,37 +23,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    protected ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    protected array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    protected ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $lastName = null;
+    protected ?string $lastName = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $firstName = null;
+    protected ?string $firstName = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $profilePic = null;
+    protected $profilePic = null;
 
     #[ORM\Column(length: 20, nullable: true)]
-    private ?string $tel = null;
+    protected ?string $tel = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Thread::class, orphanRemoval: true)]
-    private Collection $threads;
+    protected Collection $threads;
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ThreadMessage::class)]
-    private Collection $author;
+    protected Collection $author;
 
     public function __construct()
     {
