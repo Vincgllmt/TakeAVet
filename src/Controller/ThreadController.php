@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Thread;
-use App\Entity\User;
 use App\Form\ThreadFormType;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ThreadController extends AbstractController
 {
-    #[Route('/questions', name: 'app_questions')]
+    #[Route('/threads', name: 'app_threads')]
     public function index(ThreadRepository $threadRepository, Request $request): Response
     {
         $page = $request->query->getInt('page');
@@ -25,8 +25,8 @@ class ThreadController extends AbstractController
         ]);
     }
 
-    #[Route('/questions/{id}',
-        name: 'app_questions_show',
+    #[Route('/threads/{id}',
+        name: 'app_threads_show',
         requirements: ['id' => "\d+"])]
     public function show(Thread $thread, ThreadMessageRepository $messageRepository): Response
     {
@@ -36,14 +36,11 @@ class ThreadController extends AbstractController
         ]);
     }
 
-    #[Route('/questions/new', name: 'app_question_form')]
+    #[IsGranted('ROLE_USER')]
+    #[Route('/thread/create', name: 'app_threads_form')]
     public function create(Request $request, ThreadRepository $threadRepository): Response
     {
         $user = $this->getUser();
-
-        if (!$user instanceof User) {
-            return $this->createNotFoundException();
-        }
 
         $thread = new Thread();
         $form = $this->createForm(ThreadFormType::class, $thread);
@@ -64,7 +61,7 @@ class ThreadController extends AbstractController
 
             $threadRepository->save($handledThread, flush: true);
 
-            return $this->redirectToRoute('app_questions_show', [
+            return $this->redirectToRoute('app_threads_show', [
                 'id' => $handledThread->getId(),
             ]);
         }
