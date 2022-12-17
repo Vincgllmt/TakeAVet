@@ -14,7 +14,9 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-// #[IsGranted('IS_AUTHENTICATED_FULLY')]
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class AnimalController extends AbstractController
 {
     #[Route('/animal', name: 'app_animal')]
@@ -23,7 +25,7 @@ class AnimalController extends AbstractController
         $user = $this->getUser();
         $animals = [];
         $isClient = false;
-        if ($user instanceof \App\Entity\Client) {
+        if ($user instanceof Client) {
             $isClient = true;
             $id = $user->getId();
             $animals = $animalRepository->findAllWithUser($id);
@@ -53,20 +55,45 @@ class AnimalController extends AbstractController
         ]);
     }
 
+    /**
+     * @see https://symfony.com/doc/5.4/controller/upload_file.html
+     */
     #[Route('/animal/create')]
-    public function create(Request $request, AnimalRepository $animalRepository)
+    public function create(Request $request, AnimalRepository $animalRepository, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
 
         if (!$user instanceof Client) {
-            $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
+
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $photoFile */
+            $photoFile = $form->get('photo')->getData();
+
             /** @var Animal $handledAnimal * */
             $handledAnimal = $form->getData();
+
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('animals_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $handledAnimal->setPhotoPath($newFilename);
+            }
+
             $handledAnimal->setClientAnimal($user);
             $animalRepository->save($handledAnimal, true);
 
