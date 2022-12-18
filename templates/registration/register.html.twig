@@ -9,7 +9,9 @@
     {{ form_row(registrationForm.email) }}
     {{ form_row(registrationForm.lastName) }}
     {{ form_row(registrationForm.firstName) }}
-    {{ form_row(registrationForm.isAnHusbandry) }}
+    {% if registrationForm.isAnHusbandry is defined %}
+        {{ form_row(registrationForm.isAnHusbandry) }}
+    {% endif %}
     {{ form_row(registrationForm.plainPassword, {
         label: 'Mot de passe'
     }) }}
