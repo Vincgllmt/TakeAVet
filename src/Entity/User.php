@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\InheritanceType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,6 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[InheritanceType('JOINED')]
 #[DiscriminatorColumn(name: 'discriminator', type: 'string')]
 #[DiscriminatorMap(['veto' => Veto::class, 'client' => Client::class])]
+#[UniqueEntity(fields: ['email'], message: 'Il y a déjà un compte avec cette adresse e-mail.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -32,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string|null The hashed password
      */
     #[ORM\Column]
     protected ?string $password = null;
@@ -43,9 +45,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     protected ?string $firstName = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    protected $profilePic = null;
-
     #[ORM\Column(length: 20, nullable: true)]
     protected ?string $tel = null;
 
@@ -54,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ThreadMessage::class)]
     protected Collection $author;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicPath = null;
 
     public function __construct()
     {
@@ -174,18 +176,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getProfilePic()
-    {
-        return $this->profilePic;
-    }
-
-    public function setProfilePic($profilePic): self
-    {
-        $this->profilePic = $profilePic;
-
-        return $this;
-    }
-
     public function getTel(): ?string
     {
         return $this->tel;
@@ -266,5 +256,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isClient(): bool
     {
         return $this instanceof Client;
+    }
+
+    public function getProfilePicPath(): ?string
+    {
+        return $this->profilePicPath;
+    }
+
+    public function setProfilePicPath(?string $profilePicPath): self
+    {
+        $this->profilePicPath = $profilePicPath;
+
+        return $this;
     }
 }
