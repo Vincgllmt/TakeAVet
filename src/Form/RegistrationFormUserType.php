@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegistrationFormType extends AbstractType
+abstract class RegistrationFormUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -29,10 +29,6 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'required' => true,
                 'label' => 'Prénom',
-            ])
-            ->add('isAnHusbandry', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Éleveur (ferme, etc...)',
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -59,14 +55,6 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Client::class,
-        ]);
+            ]);
     }
 }
