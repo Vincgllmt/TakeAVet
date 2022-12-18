@@ -17,9 +17,12 @@
     }) }}
     {{ form_row(registrationForm.agreeTerms) }}
 
-    <p>
-        <a href="#">Vous êtes vétérinaire, c'est ici !</a>
-    </p>
+    {% if registrationForm.isAnHusbandry is defined %}
+        <p>
+            <a href="{{ path('app_register_vet') }}">Vous êtes vétérinaire, c'est ici !</a>
+        </p>
+    {% endif %}
+
     <button type="submit" class="btn btn-primary">Créer le compte</button>
     {{ form_end(registrationForm) }}
 {% endblock %}
