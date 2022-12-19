@@ -13,6 +13,6 @@ class UserController extends AbstractController
     #[Route('/me', name: 'app_me')]
     public function index(): Response
     {
-        return $this->render('user/index.html.twig');
+        return $this->render('me/index.html.twig');
     }
 }
