@@ -19,7 +19,7 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="#" class="btn btn-primary">TODO</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-2">Déconnexion</a>
-                <img src="https://github.com/mdo.png" alt="avatar" width="32" height="32" class="rounded-circle">
+                <img src="{{ asset(app.user.profilePicPath|default('/media/default-avatar.png')) }}" alt="avatar" width="32" height="32" class="rounded-circle">
             {% else %}
                 <a href="{{ path('app_register') }}" class="btn btn-primary">Créer un compte</a>
                 <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Se connecter</a>
