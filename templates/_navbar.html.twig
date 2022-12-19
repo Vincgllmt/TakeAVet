@@ -20,11 +20,13 @@
                 <a href="#" class="btn btn-primary">TODO</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-2">Déconnexion</a>
 
-                {% if app.user.profilePicPath is not null %}
-                    <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" height="45" class="rounded-circle">
-                {% else %}
-                    <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="45" class="rounded-circle">
-                {% endif %}
+                <a href="{{ path('app_me') }}">
+                    {% if app.user.profilePicPath is not null %}
+                        <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" height="45" class="rounded-circle">
+                    {% else %}
+                        <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="45" class="rounded-circle">
+                    {% endif %}
+                </a>
 
             {% else %}
                 <a href="{{ path('app_register') }}" class="btn btn-primary">Créer un compte</a>
