@@ -35,6 +35,13 @@
                 <input class="btn btn-primary" type="submit" value="Changer le mot de passe">
                 {{ form_end(passwordChangeForm) }}
             </div>
+            <div>
+                {{ form_start(clientInfoChangeForm) }}
+
+                {{ form_widget(clientInfoChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Mettre à jour">
+                {{ form_end(clientInfoChangeForm) }}
+            </div>
         </div>
     </main>
 
