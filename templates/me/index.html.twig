@@ -9,7 +9,12 @@
         <div class="main-content flex-column">
             <h1 class="text-center">Mon compte</h1>
             <div>
-                <img src="{{ asset('/uploads/avatars/' ~ app.user.profilePicPath) }}" width="252">
+
+                {% if app.user.profilePicPath is not null %}
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" width="252"class="rounded-circle">
+                {% else %}
+                    <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" width="252" class="rounded-circle">
+                {% endif %}
 
                 {{ form_start(avatarChangeForm) }}
                 {{ form_widget(avatarChangeForm) }}
