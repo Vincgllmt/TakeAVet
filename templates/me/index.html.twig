@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    {{ include('_navbar.html.twig') }}
+
+    <main>
+        <div class="main-content flex-column">
+            <h1 class="text-center">Mon compte</h1>
+            <div>
+
+                {% if app.user.profilePicPath is not null %}
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" width="252"class="rounded-circle">
+                {% else %}
+                    <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" width="252" class="rounded-circle">
+                {% endif %}
+
+                {{ form_start(avatarChangeForm) }}
+                {{ form_widget(avatarChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Changer">
+                {{ form_end(avatarChangeForm) }}
+
+            </div>
+            <div>
+                {{ form_start(passwordChangeForm) }}
+
+                {% if password_error is defined %}
+                    <div class="alert alert-danger">{{ password_error }}</div>
+                {% elseif password_success is defined %}
+                    <div class="alert alert-success">{{ password_success }}</div>
+                {% endif %}
+
+                {{ form_widget(passwordChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Changer le mot de passe">
+                {{ form_end(passwordChangeForm) }}
+            </div>
+            <div>
+                {{ form_start(clientInfoChangeForm) }}
+
+                {{ form_widget(clientInfoChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Mettre à jour">
+                {{ form_end(clientInfoChangeForm) }}
+            </div>
+        </div>
+    </main>
+
+    {{ include('_footer.html.twig') }}
+{% endblock %}
