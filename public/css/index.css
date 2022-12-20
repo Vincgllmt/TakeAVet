@@ -204,17 +204,6 @@ Threads
     color: gray;
 }
 
-/* form threads */
-
-form {
-    margin-top: 50px;
-}
-
-.form-end {
-    display: flex;
-    justify-content: space-between;
-}
-
 /* media query for form */
 
 @media (min-width: 1300px) {
