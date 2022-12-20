@@ -6,8 +6,17 @@
     {{ include('_navbar.html.twig') }}
 
     <main>
-        <div class="main-content">
-            <h1>Mon compte</h1>
+        <div class="main-content flex-column">
+            <h1 class="text-center">Mon compte</h1>
+            <div>
+                <img src="{{ asset('/uploads/avatars/' ~ app.user.profilePicPath) }}" width="252">
+
+                {{ form_start(avatarChangeForm) }}
+                {{ form_widget(avatarChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Changer">
+                {{ form_end(avatarChangeForm) }}
+
+            </div>
         </div>
     </main>
 
