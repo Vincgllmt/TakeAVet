@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ClientInfoChangeFormType extends AbstractType
 {
@@ -41,6 +42,12 @@ class ClientInfoChangeFormType extends AbstractType
             ->add('tel', TextType::class, [
                 'label' => 'Numéro de téléphone',
                 'required' => false,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\+?\d{10,15}$/',
+                        'message' => 'The phone number must be a valid international phone number',
+                    ]),
+                ],
             ])
             ->add('isAnHusbandry', CheckboxType::class, [
                 'label' => 'Éleveur (ferme, etc...)',
