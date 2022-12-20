@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\User;
 use App\Entity\Veto;
 use App\Form\RegistrationFormClientType;
-use App\Form\RegistrationFormUserType;
 use App\Form\RegistrationFormVetoType;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
