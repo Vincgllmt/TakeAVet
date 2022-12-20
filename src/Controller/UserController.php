@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AvatarChangeFormType;
+use App\Form\PasswordChangeFormType;
 use App\Repository\UserRepository;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -27,7 +29,7 @@ class UserController extends AbstractController
 
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/me', name: 'app_me')]
-    public function index(Request $request, UserRepository $userRepository, SluggerInterface $slugger): Response
+    public function index(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
 
@@ -38,6 +40,9 @@ class UserController extends AbstractController
         $avatarChangeForm = $this->createForm(AvatarChangeFormType::class);
         $avatarChangeForm->handleRequest($request);
 
+        $passwordChangeForm = $this->createForm(PasswordChangeFormType::class);
+        $passwordChangeForm->handleRequest($request);
+
         if ($avatarChangeForm->isSubmitted() && $avatarChangeForm->isValid()) {
             /** @var UploadedFile $avatarFile */
             $avatarFile = $avatarChangeForm->get('avatar')->getData();
@@ -47,7 +52,6 @@ class UserController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.webp';
                 $realFilename = $avatarFile->getRealPath();
-
 
                 // resize at fixed size of 512x512.
                 $image = $this->imagine->open($realFilename)
@@ -71,10 +75,40 @@ class UserController extends AbstractController
                 $user->setProfilePicPath($newFilename);
                 $userRepository->save($user, true);
             }
+        } elseif ($passwordChangeForm->isSubmitted() && $passwordChangeForm->isValid()) {
+            // get the current password the user need to have.
+            $currentPassword = $passwordChangeForm->get('current')->getData();
+
+            // check if the password 'current' is the same as the user.
+            if (!$currentPassword || !$userPasswordHasher->isPasswordValid($user, $currentPassword)) {
+                // if not render an error
+                return $this->renderForm('me/index.html.twig', [
+                    'avatarChangeForm' => $avatarChangeForm,
+                    'passwordChangeForm' => $passwordChangeForm,
+                    'password_error' => 'Le mot de passe ne correspond pas au mot de passe actuel !',
+                ]);
+            } else {
+                // get the new password.
+                $newPassword = $passwordChangeForm->get('password')->getData();
+
+                if ($newPassword) {
+                    // change the new password with the hashed one and save/flush.
+                    $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
+                    $userRepository->save($user, true);
+
+                    // render the success !
+                    return $this->renderForm('me/index.html.twig', [
+                        'avatarChangeForm' => $avatarChangeForm,
+                        'passwordChangeForm' => $passwordChangeForm,
+                        'password_success' => 'Le mot de passe a été modifié avec succès !',
+                    ]);
+                }
+            }
         }
 
         return $this->renderForm('me/index.html.twig', [
             'avatarChangeForm' => $avatarChangeForm,
+            'passwordChangeForm' => $passwordChangeForm,
         ]);
     }
 }
