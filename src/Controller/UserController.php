@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AvatarChangeFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,10 @@ class UserController extends AbstractController
     #[Route('/me', name: 'app_me')]
     public function index(): Response
     {
-        return $this->render('me/index.html.twig');
+        $avatarChangeForm = $this->createForm(AvatarChangeFormType::class);
+
+        return $this->renderForm('me/index.html.twig', [
+            'avatarChangeForm' => $avatarChangeForm,
+        ]);
     }
 }
