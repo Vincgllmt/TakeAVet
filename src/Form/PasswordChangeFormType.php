@@ -26,7 +26,7 @@ class PasswordChangeFormType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs du mot de passe doivent correspondre.',
                 'first_options' => ['label' => 'Mot de passe (Nouveau)'],
-                'second_options' => ['label' => 'Répéter: Mot de passe'],
+                'second_options' => ['label' => 'Répéter: Mot de passe (Nouveau)'],
             ]);
     }
 }
