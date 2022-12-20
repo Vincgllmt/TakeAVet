@@ -22,9 +22,9 @@
 
                 <a href="{{ path('app_me') }}">
                     {% if app.user.profilePicPath is not null %}
-                        <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" height="45" class="rounded-circle">
+                        <img src="{{ asset('uploads/avatars/' ~ app.user.profilePicPath) }}" alt="avatar" height="45" class="rounded-circle" loading="lazy">
                     {% else %}
-                        <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="45" class="rounded-circle">
+                        <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="45" class="rounded-circle" loading="lazy">
                     {% endif %}
                 </a>
 
