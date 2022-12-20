@@ -29,7 +29,7 @@ class ClientInfoChangeFormType extends AbstractType
                 ],
             ])
             ->add('firstName', TextType::class, [
-                'label' => 'Prenom',
+                'label' => 'Prénom',
                 'required' => false,
                 'constraints' => [
                     new NotBlank(),
