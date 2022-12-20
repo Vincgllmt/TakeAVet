@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -120,5 +121,26 @@ class UserController extends AbstractController
             'passwordChangeForm' => $passwordChangeForm,
             'clientInfoChangeForm' => $clientInfoChangeForm,
         ]);
+    }
+
+    #[Route('/me/delete', name: 'app_me_delete')]
+    public function delete(UserRepository $userRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // TODO: Delete form !
+
+        // disconnect the user
+        $session = new Session();
+        $session->invalidate();
+
+        // remove the user and redirect to app_home.
+        $userRepository->remove($user, true);
+
+        return $this->redirectToRoute('app_home');
     }
 }
