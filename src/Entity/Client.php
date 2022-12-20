@@ -13,7 +13,7 @@ class Client extends User
     #[ORM\Column]
     private ?bool $isAnHusbandry = null;
 
-    #[ORM\OneToMany(mappedBy: 'ClientAnimal', targetEntity: Animal::class)]
+    #[ORM\OneToMany(mappedBy: 'ClientAnimal', targetEntity: Animal::class, cascade: ['remove'])]
     private Collection $animals;
 
     public function __construct()
