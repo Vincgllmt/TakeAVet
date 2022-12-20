@@ -89,6 +89,7 @@ class UserController extends AbstractController
                 return $this->renderForm('me/index.html.twig', [
                     'avatarChangeForm' => $avatarChangeForm,
                     'passwordChangeForm' => $passwordChangeForm,
+                    'clientInfoChangeForm' => $clientInfoChangeForm,
                     'password_error' => 'Le mot de passe ne correspond pas au mot de passe actuel !',
                 ]);
             } else {
@@ -104,6 +105,7 @@ class UserController extends AbstractController
                     return $this->renderForm('me/index.html.twig', [
                         'avatarChangeForm' => $avatarChangeForm,
                         'passwordChangeForm' => $passwordChangeForm,
+                        'clientInfoChangeForm' => $clientInfoChangeForm,
                         'password_success' => 'Le mot de passe a été modifié avec succès !',
                     ]);
                 }
