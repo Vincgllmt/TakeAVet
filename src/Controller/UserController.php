@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AvatarChangeFormType;
+use App\Form\ClientInfoChangeFormType;
 use App\Form\PasswordChangeFormType;
 use App\Repository\UserRepository;
 use Imagine\Gd\Imagine;
@@ -42,6 +43,9 @@ class UserController extends AbstractController
 
         $passwordChangeForm = $this->createForm(PasswordChangeFormType::class);
         $passwordChangeForm->handleRequest($request);
+
+        $clientInfoChangeForm = $this->createForm(ClientInfoChangeFormType::class, $user);
+        $clientInfoChangeForm->handleRequest($request);
 
         if ($avatarChangeForm->isSubmitted() && $avatarChangeForm->isValid()) {
             /** @var UploadedFile $avatarFile */
@@ -104,11 +108,15 @@ class UserController extends AbstractController
                     ]);
                 }
             }
+        } elseif ($clientInfoChangeForm->isSubmitted() && $clientInfoChangeForm->isValid()) {
+            $updatedUser = $clientInfoChangeForm->getData();
+            $userRepository->save($updatedUser, true);
         }
 
         return $this->renderForm('me/index.html.twig', [
             'avatarChangeForm' => $avatarChangeForm,
             'passwordChangeForm' => $passwordChangeForm,
+            'clientInfoChangeForm' => $clientInfoChangeForm,
         ]);
     }
 }
