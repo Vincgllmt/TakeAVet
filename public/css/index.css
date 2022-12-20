@@ -29,6 +29,7 @@ body {
 main {
     flex: 1;
     background-size: cover;
+    /*noinspection CssUnknownTarget*/
     background: url("/media/background/chihuahua.jpg")  no-repeat center fixed;
 }
 
@@ -63,6 +64,7 @@ main {
 
 .main-title > h1:after {
     content: ' ';
+    /*noinspection CssUnknownTarget*/
     background-image: url("/media/cat.svg");
     background-size: contain;
     background-repeat: no-repeat;
