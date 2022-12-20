@@ -22,6 +22,19 @@
                 {{ form_end(avatarChangeForm) }}
 
             </div>
+            <div>
+                {{ form_start(passwordChangeForm) }}
+
+                {% if password_error is defined %}
+                    <div class="alert alert-danger">{{ password_error }}</div>
+                {% elseif password_success is defined %}
+                    <div class="alert alert-success">{{ password_success }}</div>
+                {% endif %}
+
+                {{ form_widget(passwordChangeForm) }}
+                <input class="btn btn-primary" type="submit" value="Changer le mot de passe">
+                {{ form_end(passwordChangeForm) }}
+            </div>
         </div>
     </main>
 
