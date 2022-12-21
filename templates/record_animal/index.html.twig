@@ -7,7 +7,9 @@
 <main>
     <div class="main-content">
         <div class="main-content__home">
+            {% for animal in animals %}
             <h1 class="title">Dernières fiches de {{ animal.name }}</h1>
+            {% endfor %}
         </div>
     </div>
 </main>
