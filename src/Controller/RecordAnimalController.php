@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Entity\Client;
 use App\Repository\AnimalRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class RecordAnimalController extends AbstractController
 {
     #[Route('/record/animal/{id}', name: 'app_record_animal')]
