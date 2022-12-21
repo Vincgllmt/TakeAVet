@@ -76,7 +76,7 @@ class AnimalRepository extends ServiceEntityRepository
             ->where('client.id = :client_id')
             ->andWhere('animal.id = :id')
             ->setParameter(':client_id', $clientId)
-            ->setParameter(':animal_id', $id)
+            ->setParameter(':id', $id)
             ->orderBy('animal.name', 'ASC');
         $query = $qb->getQuery();
 
