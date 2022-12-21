@@ -27,6 +27,7 @@ class RecordAnimalController extends AbstractController
         }
         return $this->render('record_animal/index.html.twig', [
             'records' => $records,
+            'animal' => $animal,
             'isClient' => $isClient,
         ]);
     }
