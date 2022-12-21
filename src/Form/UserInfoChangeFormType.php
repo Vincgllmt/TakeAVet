@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Client;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class ClientInfoChangeFormType extends AbstractType
+class UserInfoChangeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -49,17 +50,17 @@ class ClientInfoChangeFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('isAnHusbandry', CheckboxType::class, [
+            /*->add('isAnHusbandry', CheckboxType::class, [
                 'label' => 'Éleveur (ferme, etc...)',
                 'required' => false,
-            ])
+            ])*/
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Client::class,
+            'data_class' => User::class,
         ]);
     }
 }
