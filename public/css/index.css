@@ -74,9 +74,7 @@ main {
 
 }
 
-/*Can be changed !!!*/
-/*NOT FINAL !!!*/
-@media (max-width: 766px){
+@media (max-width: 600px){
     .main-content {
         flex-direction: column;
         flex-wrap: nowrap;
@@ -88,9 +86,9 @@ main {
 }
 
 @media (max-width: 1400px) {
-    .main-content {
+    /*.main-content {
         flex-direction: column;
-    }
+    }*/
     /*For: Twitter*/
     .main-content__home {
         margin: 0px !important;
