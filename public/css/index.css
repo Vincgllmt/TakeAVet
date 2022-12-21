@@ -182,26 +182,9 @@ li a.nav-link.link-dark:hover {
 Threads
 ----------------------------------------*/
 
-.thread-messages-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 10px;
-    /*padding: 100px !important;*/
-}
-
-.thread-messages-item {
+.thread__item {
     padding: 30px;
     border: 1px dotted;
-}
-
-.thread-messages-item-promote {
-    border-color: greenyellow;
-    background-color: rgba(255, 255, 0, 0.5);
-}
-
-.thread-messages-author {
-    color: gray;
 }
 
 /* media query for form */
@@ -233,6 +216,52 @@ Threads
         margin-top: 20px;
     }
 }
+/*----------------------------------------
+Thread Message (/thread/...)
+----------------------------------------*/
+
+.thread__tag {
+    font-weight: bold;
+}
+
+.thread__description {
+    margin: 15px;
+    text-align: justify;
+}
+
+.thread__messages_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+
+    flex-grow: 1;
+    padding-top: 0px !important;
+}
+
+.thread__messages_item {
+    padding: 30px;
+    border: 1px dotted;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.thread__messages_item_promote {
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
+.thread__messages_item_message {
+    text-align: justify;
+}
+
+.thread__messages_item_author {
+    color: gray;
+    margin: 0;
+}
+
 /*----------------------------------------
 Contact
 ----------------------------------------*/
