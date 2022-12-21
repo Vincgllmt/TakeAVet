@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\Client;
-use App\Repository\AnimalRepository;
+use App\Repository\AnimalRecordRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,19 +15,18 @@ class RecordAnimalController extends AbstractController
 {
     #[Route('/record/animal/{id}', name: 'app_record_animal')]
     #[ParamConverter('animal', class: Animal::class)]
-    public function index(Animal $animalUser, AnimalRepository $animalRepository): Response
+    public function index(AnimalRecordRepository $animalRecordRepository, Animal $animal): Response
     {
         $user = $this->getUser();
         $isClient = false;
+        $animalId = $animal->getId();
         if ($user instanceof Client) {
             $isClient = true;
             $clientId = $user->getId();
-            $id = $animalUser->getId();
-            $animals = $animalRepository->findById($clientId, $id);
+            $records = $animalRecordRepository->findByAnimal($animalId);
         }
-
         return $this->render('record_animal/index.html.twig', [
-            'animals' => $animals,
+            'records' => $records,
             'isClient' => $isClient,
         ]);
     }
