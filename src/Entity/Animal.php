@@ -46,9 +46,13 @@ class Animal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoPath = null;
 
+    #[ORM\OneToMany(mappedBy: 'Avoir', targetEntity: AnimalRecord::class)]
+    private Collection $animalRecords;
+
     public function __construct()
     {
         $this->vaccines = new ArrayCollection();
+        $this->animalRecords = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +188,36 @@ class Animal
     public function setPhotoPath(?string $photoPath): self
     {
         $this->photoPath = $photoPath;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalRecord>
+     */
+    public function getAnimalRecords(): Collection
+    {
+        return $this->animalRecords;
+    }
+
+    public function addAnimalRecord(AnimalRecord $animalRecord): self
+    {
+        if (!$this->animalRecords->contains($animalRecord)) {
+            $this->animalRecords->add($animalRecord);
+            $animalRecord->setAvoir($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalRecord(AnimalRecord $animalRecord): self
+    {
+        if ($this->animalRecords->removeElement($animalRecord)) {
+            // set the owning side to null (unless already changed)
+            if ($animalRecord->getAvoir() === $this) {
+                $animalRecord->setAvoir(null);
+            }
+        }
 
         return $this;
     }

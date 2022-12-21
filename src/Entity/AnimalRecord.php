@@ -25,6 +25,9 @@ class AnimalRecord
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $healthInfos = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animalRecords')]
+    private ?Animal $Avoir = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class AnimalRecord
     public function setHealthInfos(?string $healthInfos): self
     {
         $this->healthInfos = $healthInfos;
+
+        return $this;
+    }
+
+    public function getAvoir(): ?Animal
+    {
+        return $this->Avoir;
+    }
+
+    public function setAvoir(?Animal $Avoir): self
+    {
+        $this->Avoir = $Avoir;
 
         return $this;
     }
