@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -89,6 +90,7 @@ class UserController extends AbstractController
                 return $this->renderForm('me/index.html.twig', [
                     'avatarChangeForm' => $avatarChangeForm,
                     'passwordChangeForm' => $passwordChangeForm,
+                    'clientInfoChangeForm' => $clientInfoChangeForm,
                     'password_error' => 'Le mot de passe ne correspond pas au mot de passe actuel !',
                 ]);
             } else {
@@ -104,6 +106,7 @@ class UserController extends AbstractController
                     return $this->renderForm('me/index.html.twig', [
                         'avatarChangeForm' => $avatarChangeForm,
                         'passwordChangeForm' => $passwordChangeForm,
+                        'clientInfoChangeForm' => $clientInfoChangeForm,
                         'password_success' => 'Le mot de passe a été modifié avec succès !',
                     ]);
                 }
@@ -118,5 +121,26 @@ class UserController extends AbstractController
             'passwordChangeForm' => $passwordChangeForm,
             'clientInfoChangeForm' => $clientInfoChangeForm,
         ]);
+    }
+
+    #[Route('/me/delete', name: 'app_me_delete')]
+    public function delete(UserRepository $userRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // TODO: Delete form !
+
+        // disconnect the user
+        $session = new Session();
+        $session->invalidate();
+
+        // remove the user and redirect to app_home.
+        $userRepository->remove($user, true);
+
+        return $this->redirectToRoute('app_home');
     }
 }
