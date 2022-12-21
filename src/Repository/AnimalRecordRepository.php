@@ -39,6 +39,17 @@ class AnimalRecordRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByAnimal(int $id)
+    {
+        $qb = $this->createQueryBuilder('record')
+            ->leftJoin('record.Avoir', 'animal')
+            ->where('animal.id = :id')
+            ->setParameter(':id', $id)
+            ->orderBy('record.id', 'ASC');
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
 //    /**
 //     * @return AnimalRecord[] Returns an array of AnimalRecord objects
 //     */
