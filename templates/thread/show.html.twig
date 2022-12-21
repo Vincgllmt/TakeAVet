@@ -5,20 +5,39 @@
     <main>
         <div class="main-content">
             <h2 class="m-3">
-                <span class="" style="font-weight:bold;">Thread #{{ thread.id }}:</span>
+                <span class="thread__tag">Thread #{{ thread.id }}:</span>
                 {{ thread.lib }}
             </h2>
-            <p style="margin: 15px; text-align: justify">
+            <p class="thread__description">
                 {{ thread.message }}
             </p>
-            <section class="thread-messages-list" style="padding-top: 0px !important;">
-                {% for msg in messages %}
-                    <div class="thread-messages-item {{ msg.user.isVeto() ? 'thread-messages-item-promote' : '' }}">
-                        <p style="text-align: justify">{{ msg.message }}</p>
-                        <p class="thread-messages-author">{{ msg.createdAt|date('d-m-Y') }} | {{ msg.user.lastName }} {{ msg.user.firstName }}</p>
-                    </div>
-                {% endfor %}
-            </section>
+            <div class="flex-grow-1">
+                <section class="thread__messages_list">
+                    {% for i, msg in messages %}
+                        <div class="thread__messages_item {{ msg.user.isVeto() ? 'thread__messages_item_promote' : '' }}">
+
+                            {% if msg.user.profilePicPath is not null %}
+                                <img src="{{ asset('uploads/avatars/' ~ msg.user.profilePicPath) }}" alt="avatar" height="45" class="rounded-circle" loading="lazy">
+                            {% else %}
+                                <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="45" class="rounded-circle" loading="lazy">
+                            {% endif %}
+
+                            <div class="flex-grow-1">
+                                <p class="thread__messages_item_message">{{ msg.message }}</p>
+                                <p class="thread__messages_item_author">{{ msg.createdAt|date('d/m/Y') }} | {{ msg.user.lastName }} {{ msg.user.firstName }}</p>
+                            </div>
+
+                            <p>#{{ i+1 }}</p>
+                        </div>
+                    {% endfor %}
+                </section>
+                <section>
+                    {{ form_start(replyForm) }}
+                    {{ form_widget(replyForm) }}
+                    <input type="submit" class="btn btn-primary" value="Répondre">
+                    {{ form_end(replyForm) }}
+                </section>
+            </div>
         </div>
     </main>
     {% include('_footer.html.twig') %}
