@@ -41,7 +41,7 @@ class ThreadMessageRepository extends ServiceEntityRepository
     }
 
     /**
-     * Tri les messages d'un thread par date et passe les messages des vétèrinaire en premier.
+     * Tri les messages d'un thread par date et passe les messages des vétérinaires en premier.
      *
      * @param Thread $thread Le thread
      *
@@ -50,9 +50,17 @@ class ThreadMessageRepository extends ServiceEntityRepository
     public function findSortByVeto(Thread $thread): array
     {
         $messages = $this->findBy(['thread' => $thread], ['createdAt' => 'DESC']);
-        usort($messages, function (ThreadMessage $first) {
+
+        foreach ($messages as $key => $element) {
+            if ($element->getUser()->isVeto()) {
+                array_splice($messages, $key, 1); // Remove element from array
+                array_unshift($messages, $element); // Add element to beginning of array
+            }
+        }
+
+        /*usort($messages, function (ThreadMessage $first) {
             return !$first->getUser()->isVeto();
-        });
+        });*/
 
         return $messages;
     }

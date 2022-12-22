@@ -20,7 +20,7 @@ class ThreadMessage
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'author')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
 
     #[ORM\ManyToOne(inversedBy: 'replies')]

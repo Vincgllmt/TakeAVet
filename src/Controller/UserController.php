@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AvatarChangeFormType;
-use App\Form\ClientInfoChangeFormType;
+use App\Form\UserInfoChangeFormType;
 use App\Form\PasswordChangeFormType;
 use App\Repository\UserRepository;
 use Imagine\Gd\Imagine;
@@ -45,8 +45,8 @@ class UserController extends AbstractController
         $passwordChangeForm = $this->createForm(PasswordChangeFormType::class);
         $passwordChangeForm->handleRequest($request);
 
-        $clientInfoChangeForm = $this->createForm(ClientInfoChangeFormType::class, $user);
-        $clientInfoChangeForm->handleRequest($request);
+        $userInfoChangeForm = $this->createForm(UserInfoChangeFormType::class, $user);
+        $userInfoChangeForm->handleRequest($request);
 
         if ($avatarChangeForm->isSubmitted() && $avatarChangeForm->isValid()) {
             /** @var UploadedFile $avatarFile */
@@ -90,7 +90,7 @@ class UserController extends AbstractController
                 return $this->renderForm('me/index.html.twig', [
                     'avatarChangeForm' => $avatarChangeForm,
                     'passwordChangeForm' => $passwordChangeForm,
-                    'clientInfoChangeForm' => $clientInfoChangeForm,
+                    'userInfoChangeForm' => $userInfoChangeForm,
                     'password_error' => 'Le mot de passe ne correspond pas au mot de passe actuel !',
                 ]);
             } else {
@@ -106,20 +106,20 @@ class UserController extends AbstractController
                     return $this->renderForm('me/index.html.twig', [
                         'avatarChangeForm' => $avatarChangeForm,
                         'passwordChangeForm' => $passwordChangeForm,
-                        'clientInfoChangeForm' => $clientInfoChangeForm,
+                        'userInfoChangeForm' => $userInfoChangeForm,
                         'password_success' => 'Le mot de passe a été modifié avec succès !',
                     ]);
                 }
             }
-        } elseif ($clientInfoChangeForm->isSubmitted() && $clientInfoChangeForm->isValid()) {
-            $updatedUser = $clientInfoChangeForm->getData();
+        } elseif ($userInfoChangeForm->isSubmitted() && $userInfoChangeForm->isValid()) {
+            $updatedUser = $userInfoChangeForm->getData();
             $userRepository->save($updatedUser, true);
         }
 
         return $this->renderForm('me/index.html.twig', [
             'avatarChangeForm' => $avatarChangeForm,
             'passwordChangeForm' => $passwordChangeForm,
-            'clientInfoChangeForm' => $clientInfoChangeForm,
+            'userInfoChangeForm' => $userInfoChangeForm,
         ]);
     }
 

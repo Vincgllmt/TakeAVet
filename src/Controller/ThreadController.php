@@ -3,9 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Thread;
+use App\Entity\ThreadMessage;
 use App\Form\ThreadFormType;
+use App\Form\ThreadReplyFormType;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ThreadController extends AbstractController
 {
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     #[Route('/threads', name: 'app_threads')]
     public function index(ThreadRepository $threadRepository, Request $request): Response
     {
@@ -28,11 +36,28 @@ class ThreadController extends AbstractController
     #[Route('/threads/{id}',
         name: 'app_threads_show',
         requirements: ['id' => "\d+"])]
-    public function show(Thread $thread, ThreadMessageRepository $messageRepository): Response
+    public function show(Thread $thread, ThreadMessageRepository $messageRepository, Request $request): Response
     {
-        return $this->render('thread/show.html.twig', [
+        $reply = new ThreadMessage();
+
+        $reply->setUser($this->getUser());
+        $reply->setThread($thread);
+
+        $replyForm = $this->createForm(ThreadReplyFormType::class, $reply);
+        $replyForm->handleRequest($request);
+
+        if ($replyForm->isSubmitted() && $replyForm->isValid()) {
+            /** @var ThreadMessage $reply */
+            $reply = $replyForm->getData();
+
+            $reply->setCreatedAt(new \DateTimeImmutable());
+            $messageRepository->save($reply, true);
+        }
+
+        return $this->renderForm('thread/show.html.twig', [
             'thread' => $thread,
             'messages' => $messageRepository->findSortByVeto($thread),
+            'replyForm' => $replyForm,
         ]);
     }
 
