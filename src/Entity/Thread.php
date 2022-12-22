@@ -31,6 +31,9 @@ class Thread
     #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class)]
     private Collection $replies;
 
+    #[ORM\Column]
+    private ?bool $resolved = null;
+
     public function __construct()
     {
         $this->replies = new ArrayCollection();
@@ -115,6 +118,18 @@ class Thread
                 $reply->setThread(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isResolved(): ?bool
+    {
+        return $this->resolved;
+    }
+
+    public function setResolved(bool $resolved): self
+    {
+        $this->resolved = $resolved;
 
         return $this;
     }
