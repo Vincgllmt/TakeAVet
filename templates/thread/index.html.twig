@@ -11,12 +11,16 @@
                     reprehenderit sit sunt voluptatem.</p>
             </div>
 
-            <form class="row m-2">
-                <div class="col-auto align-self-center">
+            <form class="row m-2 w-100 justify-content-center align-items-center">
+                <div class="col-auto">
                     <label>Page: {{ page }}</label>
                 </div>
                 <div class="col-auto">
-                    <input class="form-control" type="search" name="search">
+                    <input class="form-control" type="search" name="search"
+                           {% if search is defined %}
+                                value="{{ search }}"
+                           {% endif %}
+                    >
                 </div>
                 <div class="col-auto">
                     <button class="form-control" type="submit">Rechercher</button>
@@ -25,6 +29,13 @@
             </form>
 
             <section class="thread__messages_list">
+
+                {% if threads is empty %}
+                    <div class="thread__item">
+                        <h4>Pas de résultat.</h4>
+                    </div>
+                {% endif %}
+
                 {% for thread in threads %}
                     <div class="thread__item">
                         <h4>{{ thread.lib }}</h4>
