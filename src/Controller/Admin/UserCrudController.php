@@ -5,12 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Client;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -49,7 +47,6 @@ class UserCrudController extends AbstractCrudController
         parent::persistEntity($entityManager, $entityInstance);
     }
 
-
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -67,6 +64,12 @@ class UserCrudController extends AbstractCrudController
                 ->setRequired(false)
                 ->setEmptyData('')
                 ->setCustomOption('autocomplete', false),
+            TextField::new('lastName', 'Nom'),
+            TextField::new('firstName', 'Prénom'),
+            TextField::new('tel', 'Telephone'),
+            ImageField::new('profilePicPath', 'Avatar')
+                ->setBasePath('uploads/avatars/')
+                ->setRequired(false),
         ];
     }
 }
