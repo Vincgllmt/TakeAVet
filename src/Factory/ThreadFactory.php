@@ -40,6 +40,7 @@ final class ThreadFactory extends ModelFactory
             'lib' => self::faker()->realTextBetween(50, 254).'?',
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'message' => self::faker()->text(1024),
+            'resolved' => self::faker()->boolean(),
         ];
     }
 

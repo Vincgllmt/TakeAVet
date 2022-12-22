@@ -8,8 +8,6 @@ use App\Form\ThreadFormType;
 use App\Form\ThreadReplyFormType;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,18 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ThreadController extends AbstractController
 {
-    /**
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
     #[Route('/threads', name: 'app_threads')]
     public function index(ThreadRepository $threadRepository, Request $request): Response
     {
         $page = $request->query->getInt('page');
+        $search = $request->query->get('search', '');
+
+        $allPagesCount = (int) round($threadRepository->countBy([]) / 15);
 
         return $this->render('thread/index.html.twig', [
-            'threads' => $threadRepository->findAllWithName($page, 15),
+            'threads' => $threadRepository->findAllWithName($search, $page, 15),
             'page' => $page,
+            'search' => $search,
+            'pages_count' => $allPagesCount,
         ]);
     }
 
@@ -84,6 +83,7 @@ class ThreadController extends AbstractController
                 $handledThread->setAuthor($user);
             }
 
+            $handledThread->setResolved(false);
             $threadRepository->save($handledThread, flush: true);
 
             return $this->redirectToRoute('app_threads_show', [

@@ -11,12 +11,16 @@
                     reprehenderit sit sunt voluptatem.</p>
             </div>
 
-            <form class="row m-2">
-                <div class="col-auto align-self-center">
-                    <label>Page: {{ page }}</label>
+            <form class="row m-2 w-100 justify-content-center align-items-center">
+                <div class="col-auto">
+                    <label>Page: {{ page }} / {{ pages_count }}</label>
                 </div>
                 <div class="col-auto">
-                    <input class="form-control" type="search" name="search">
+                    <input class="form-control" type="search" name="search"
+                           {% if search is defined %}
+                                value="{{ search }}"
+                           {% endif %}
+                    >
                 </div>
                 <div class="col-auto">
                     <button class="form-control" type="submit">Rechercher</button>
@@ -25,11 +29,22 @@
             </form>
 
             <section class="thread__messages_list">
+
+                {% if threads is empty %}
+                    <div class="thread__item">
+                        <h4>Pas de résultat.</h4>
+                    </div>
+                {% endif %}
+
                 {% for thread in threads %}
                     <div class="thread__item">
                         <h4>{{ thread.lib }}</h4>
                         <p>{{ thread.message|u.truncate(150, '...')}}
-                            <span class="badge bg-primary rounded-pill">{{ thread.count }} réponses</span></p>
+                            <span class="badge bg-primary rounded-pill">{{ thread.count }} réponses</span>
+                            {% if thread.resolved %}
+                                <span class="badge bg-success rounded-pill">Question résolue</span>
+                            {% endif %}
+                        </p>
                         <p class="thread__messages_item_author">{{ thread.createdAt|date('d-m-Y') }} | {{ thread.name }}</p>
                         <div class="mt-2">
                             <a class="btn btn-primary" href="{{ path('app_threads_show', {'id':  thread.id}) }}">Voir le message</a>
@@ -38,6 +53,24 @@
                     </div>
                 {% endfor %}
             </section>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item
+
+                        {% if page == 0 %}
+                            disabled
+                        {% endif %}
+                        ">
+                        <a class="page-link" href="?page={{ page-1 }}" tabindex="-1">Précédent</a>
+                    </li>
+                    {% for i in range(max(0,min(pages_count, page-2)), min(pages_count, page+2)) %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page+1 }}">Suivant</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </main>
     {% include('_footer.html.twig') %}

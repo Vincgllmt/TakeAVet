@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -42,54 +40,41 @@ class ThreadRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request.
+     * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request, this adds a search and pagination param.
      *
-     * @throws NonUniqueResultException
-     * @throws NoResultException
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html
      */
-    public function findAllWithName(int $page, int $perPage): array
+    public function findAllWithName(string $search = '', int $page, int $perPage): array
     {
-        /* https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html */
-
         return $this->createQueryBuilder('t')
             ->select('t.id as id')
             ->addSelect('t.lib as lib')
             ->addSelect('t.createdAt as createdAt')
             ->addSelect('t.message as message')
+            ->addSelect('t.resolved as resolved')
             ->addSelect('COUNT(replies.id) as count')
             ->addSelect("CONCAT(author.lastName, ' ',author.firstName) as name")
             ->innerJoin('t.author', 'author')
             ->leftJoin('t.replies', 'replies')
+            ->where('t.lib LIKE :search OR t.message LIKE :search')
             ->orderBy('t.createdAt', 'DESC')
             ->groupBy('t.id')
+            ->setParameter('search', "%$search%")
             ->getQuery()
             ->setFirstResult($page * $perPage)
             ->setMaxResults($perPage)
             ->execute();
     }
 
-//    /**
-//     * @return Thread[] Returns an array of Thread objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Count in the database with a criteria.
+     *
+     * @see https://stackoverflow.com/questions/19103699/doctrine-counting-an-entitys-items-with-a-condition
+     */
+    public function countBy(array $criteria): int
+    {
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
 
-//    public function findOneBySomeField($value): ?Thread
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $persister->count($criteria);
+    }
 }
