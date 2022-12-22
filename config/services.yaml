@@ -6,6 +6,7 @@
 parameters:
     animal_directory: '%kernel.project_dir%/public/uploads/animals'
     avatar_directory: '%kernel.project_dir%/public/uploads/avatars'
+    avatar_directory_rel: 'public/uploads/avatars'
 
 services:
     # default configuration for services in *this* file
