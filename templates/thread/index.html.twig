@@ -13,7 +13,7 @@
 
             <form class="row m-2 w-100 justify-content-center align-items-center">
                 <div class="col-auto">
-                    <label>Page: {{ page }}</label>
+                    <label>Page: {{ page }} / {{ pages_count }}</label>
                 </div>
                 <div class="col-auto">
                     <input class="form-control" type="search" name="search"
@@ -53,6 +53,24 @@
                     </div>
                 {% endfor %}
             </section>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item
+
+                        {% if page == 0 %}
+                            disabled
+                        {% endif %}
+                        ">
+                        <a class="page-link" href="?page={{ page-1 }}" tabindex="-1">Précédent</a>
+                    </li>
+                    {% for i in range(max(0,min(pages_count, page-2)), min(pages_count, page+2)) %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page+1 }}">Suivant</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </main>
     {% include('_footer.html.twig') %}
