@@ -6,20 +6,24 @@ use App\Entity\Client;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
 {
     private UserPasswordHasherInterface $userPasswordHasher;
+    private ParameterBagInterface $params;
 
-    public function __construct(UserPasswordHasherInterface $userPasswordHasher)
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher, ParameterBagInterface $params)
     {
         $this->userPasswordHasher = $userPasswordHasher;
+        $this->params = $params;
     }
 
     public function updateEntity(EntityManagerInterface $manager, $entity): void
@@ -69,6 +73,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('tel', 'Telephone'),
             ImageField::new('profilePicPath', 'Avatar')
                 ->setBasePath('uploads/avatars/')
+                ->setUploadDir($this->getParameter('avatar_directory_rel'))
                 ->setRequired(false),
         ];
     }
