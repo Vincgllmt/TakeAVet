@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Thread;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,11 +41,11 @@ class ThreadRepository extends ServiceEntityRepository
 
     /**
      * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request, this adds a search and pagination param.
+     *
+     * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html
      */
     public function findAllWithName(string $search = '', int $page, int $perPage): array
     {
-        /* https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html */
-
         return $this->createQueryBuilder('t')
             ->select('t.id as id')
             ->addSelect('t.lib as lib')
@@ -66,5 +64,17 @@ class ThreadRepository extends ServiceEntityRepository
             ->setFirstResult($page * $perPage)
             ->setMaxResults($perPage)
             ->execute();
+    }
+
+    /**
+     * Count in the database with a criteria.
+     *
+     * @see https://stackoverflow.com/questions/19103699/doctrine-counting-an-entitys-items-with-a-condition
+     */
+    public function countBy(array $criteria): int
+    {
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
+
+        return $persister->count($criteria);
     }
 }
