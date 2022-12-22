@@ -42,12 +42,9 @@ class ThreadRepository extends ServiceEntityRepository
     }
 
     /**
-     * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request.
-     *
-     * @throws NonUniqueResultException
-     * @throws NoResultException
+     * Return all thread (id, lib, createdAt) with author in 'name' in one SQL request, this adds a search and pagination param.
      */
-    public function findAllWithName(int $page, int $perPage): array
+    public function findAllWithName(string $search = '', int $page, int $perPage): array
     {
         /* https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html */
 
@@ -61,36 +58,13 @@ class ThreadRepository extends ServiceEntityRepository
             ->addSelect("CONCAT(author.lastName, ' ',author.firstName) as name")
             ->innerJoin('t.author', 'author')
             ->leftJoin('t.replies', 'replies')
+            ->where('t.lib LIKE :search OR t.message LIKE :search')
             ->orderBy('t.createdAt', 'DESC')
             ->groupBy('t.id')
+            ->setParameter('search', "%$search%")
             ->getQuery()
             ->setFirstResult($page * $perPage)
             ->setMaxResults($perPage)
             ->execute();
     }
-
-//    /**
-//     * @return Thread[] Returns an array of Thread objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Thread
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
