@@ -25,6 +25,9 @@ class Address
     #[ORM\Column(length: 50)]
     private ?string $city = null;
 
+    #[ORM\ManyToOne(inversedBy: 'adresses')]
+    private ?Client $client = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Address
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

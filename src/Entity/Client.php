@@ -16,10 +16,14 @@ class Client extends User
     #[ORM\OneToMany(mappedBy: 'ClientAnimal', targetEntity: Animal::class, cascade: ['remove'])]
     private Collection $animals;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Address::class)]
+    private Collection $adresses;
+
     public function __construct()
     {
         parent::__construct();
         $this->animals = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function isIsAnHusbandry(): ?bool
@@ -58,6 +62,36 @@ class Client extends User
             // set the owning side to null (unless already changed)
             if ($animal->getClientAnimal() === $this) {
                 $animal->setClientAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Address $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Address $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getClient() === $this) {
+                $adress->setClient(null);
             }
         }
 
