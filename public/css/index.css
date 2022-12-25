@@ -267,6 +267,32 @@ Contact
     display: flex;
     justify-content: space-between;
 }
+
+/*----------------------------------------
+Address (/address/)
+----------------------------------------*/
+
+.address__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid;
+    padding: 5px;
+}
+.address__item {
+    padding: 10px;
+    border: 1px dotted gray;
+}
+
+.address__links {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
 /*----------------------------------------
 Transitions & utils
 ----------------------------------------*/
