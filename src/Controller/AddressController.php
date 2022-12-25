@@ -48,7 +48,9 @@ class AddressController extends AbstractController
         ]);
     }
 
-    #[Route('/address/update/{id}', name: 'app_address_update')]
+    #[Route('/address/update/{id}',
+        name: 'app_address_update',
+        requirements: ['id' => "\d+"])]
     public function update(AddressRepository $repository, Request $request, Address $address): Response
     {
         $client = $this->getUser();
