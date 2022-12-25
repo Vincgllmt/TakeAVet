@@ -28,7 +28,7 @@ class AddressFormType extends AbstractType
                     ],
                 ]
             )
-            ->add('pc', NumberType::class, [
+            ->add('pc', TextType::class, [
                 'label' => 'Code Postal',
                 'attr' => [
                     'placeholder' => 'XXXXX',
