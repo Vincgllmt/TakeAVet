@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class AddressFormType extends AbstractType
 {
@@ -16,16 +17,34 @@ class AddressFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Exemple: Chez moi',
+                ],
             ])
             ->add('ad', TextType::class, [
                     'label' => 'Adresse',
+                    'attr' => [
+                        'placeholder' => 'Exemple: 4 Rue de Paris',
+                    ],
                 ]
             )
             ->add('pc', NumberType::class, [
                 'label' => 'Code Postal',
+                'attr' => [
+                    'placeholder' => 'XXXXX',
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 5,
+                        'max' => 5,
+                    ]),
+                ],
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
+                'attr' => [
+                    'placeholder' => 'Exemple: Paris',
+                ],
             ])
         ;
     }
