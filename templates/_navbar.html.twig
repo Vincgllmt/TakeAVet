@@ -10,7 +10,7 @@
             <li><a href="#" class="nav-link px-2 link-dark">Planning</a></li>
             <li><a href="{{ path('app_threads') }}" class="nav-link px-2 link-dark">FAQ</a></li>
             <li><a href="/contact" class="nav-link px-2 link-dark">Contact</a></li>
-            {% if app.user.client %}
+            {% if app.user is not null and app.user.client %}
             <li><a href="{{ path('app_animal') }}" class="nav-link px-2 link-dark">Mes Animaux</a></li>
                 <li><a href="{{ path('app_address') }}" class="nav-link px-2 link-dark">Mes Adresses</a></li>
             {% endif %}
