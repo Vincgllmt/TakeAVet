@@ -31,7 +31,7 @@
                             <h4>Rendez-vous du {{ appointment.dateApp|format_datetime('full', locale='fr') }} </h4>
                             <div>
                                 <span>Notes :</span>
-                                <p class="appointment__notes">{{ appointment.note ?? 'Pas de note' }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est explicabo modi nemo odit sequi vero voluptates voluptatibus. Animi aut dolor exercitationem id ipsam molestias nostrum officiis possimus, quae quos saepe.</p>
+                                <p class="appointment__notes">{{ appointment.note|default('Aucune note complémentaire n\'a été enregistrée pour ce rendez-vous.') }}</p>
                             </div>
                             <p>Vous avez pris rendez-vous pour une consultation à domicile avec notre vétérinaire expérimenté, le <strong>Dr {{ appointment.veto.lastName }} {{ appointment.veto.firstName }}</strong>. Le rendez-vous a été pris pour <strong>{{ appointment.type.duration }} minutes</strong>, <strong>{{ appointment.type.libTypeApp}}</strong> et se déroulera à l'addresse suivante, <strong>{{ appointment.address.ad }}, {{ appointment.address.city}}, {{ appointment.address.pc}} ({{ appointment.address.name }}) </strong>, afin de permettre à votre animal de recevoir les soins nécessaires dans un environnement familier. Notre vétérinaire se déplacera jusqu'à cette addresse avec tout le matériel nécessaire pour procéder à l'examen de votre.vos animal.aux et lui prodiguer les soins appropriés. N'hésitez pas à nous contacter si vous avez des questions ou des préoccupations avant le rendez-vous.</p>
                         </div>
