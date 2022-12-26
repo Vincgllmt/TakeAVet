@@ -37,6 +37,14 @@ class Appointment
     #[ORM\JoinColumn(nullable: false)]
     private ?Address $address = null;
 
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $client = null;
+
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Veto $veto = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +130,30 @@ class Appointment
     public function setAddress(?Address $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getVeto(): ?Veto
+    {
+        return $this->veto;
+    }
+
+    public function setVeto(?Veto $veto): self
+    {
+        $this->veto = $veto;
 
         return $this;
     }
