@@ -294,6 +294,31 @@ Address (/address/)
 }
 
 /*----------------------------------------
+Appointments (/appointments/)
+----------------------------------------*/
+
+.appointment__list{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 5px;
+}
+
+.appointment__item {
+    padding: 10px;
+    border: 1px dotted gray;
+    border-radius: 15px;
+    box-shadow: -2px 5px 2px 1px rgba(128, 128, 128, 0.7);
+}
+
+
+.appointment__notes {
+    border: 1px dotted gray;
+    padding: 10px;
+    text-align: justify;
+    color: #6b6b6b;
+}
+/*----------------------------------------
 Transitions & utils
 ----------------------------------------*/
 
