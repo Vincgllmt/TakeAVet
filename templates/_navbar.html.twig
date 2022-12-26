@@ -10,7 +10,7 @@
             <li><a href="#" class="nav-link px-2 link-dark">Planning</a></li>
             <li><a href="{{ path('app_threads') }}" class="nav-link px-2 link-dark">FAQ</a></li>
             <li><a href="/contact" class="nav-link px-2 link-dark">Contact</a></li>
-            {% if app.user.client %}
+            {% if app.user is not null and app.user.client %}
             <li><a href="{{ path('app_animal') }}" class="nav-link px-2 link-dark">Mes Animaux</a></li>
                 <li><a href="{{ path('app_address') }}" class="nav-link px-2 link-dark">Mes Adresses</a></li>
             {% endif %}
@@ -18,7 +18,11 @@
 
         <div class="d-flex align-items-center flex-grow-1 justify-content-evenly gap-3 mx-3">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <a href="#" class="btn btn-primary">TODO</a>
+                {% if app.user.client %}
+                    <a href="{{ path('app_appointments') }}" class="btn btn-primary">Mes rendez-vous</a>
+                {% elseif app.user.veto %}
+                    <a href="#" class="btn btn-primary">Mon dashboard</a>
+                {% endif %}
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-2">Déconnexion</a>
 
                 <a href="{{ path('app_me') }}">

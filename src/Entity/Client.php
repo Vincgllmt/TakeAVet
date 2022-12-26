@@ -19,11 +19,15 @@ class Client extends User
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Address::class)]
     private Collection $adresses;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Appointment::class)]
+    private Collection $appointments;
+
     public function __construct()
     {
         parent::__construct();
         $this->animals = new ArrayCollection();
         $this->adresses = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     public function isIsAnHusbandry(): ?bool
@@ -92,6 +96,36 @@ class Client extends User
             // set the owning side to null (unless already changed)
             if ($adress->getClient() === $this) {
                 $adress->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getClient() === $this) {
+                $appointment->setClient(null);
             }
         }
 
