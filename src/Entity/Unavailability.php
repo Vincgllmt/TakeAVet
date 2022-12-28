@@ -14,45 +14,24 @@ class Unavailability
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $libUnavailability = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
-
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $duration = null;
 
     #[ORM\Column]
     private ?bool $isRepeated = null;
 
+    #[ORM\ManyToOne(inversedBy: 'unavailabilities')]
+    private ?Agenda $agenda = null;
+
+    #[ORM\Column(length: 30)]
+    private ?string $lib = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLibUnavailability(): ?int
-    {
-        return $this->libUnavailability;
-    }
-
-    public function setLibUnavailability(int $libUnavailability): self
-    {
-        $this->libUnavailability = $libUnavailability;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
     }
 
     public function getDuration(): ?int
@@ -75,6 +54,42 @@ class Unavailability
     public function setIsRepeated(bool $isRepeated): self
     {
         $this->isRepeated = $isRepeated;
+
+        return $this;
+    }
+
+    public function getAgenda(): ?Agenda
+    {
+        return $this->agenda;
+    }
+
+    public function setAgenda(?Agenda $agenda): self
+    {
+        $this->agenda = $agenda;
+
+        return $this;
+    }
+
+    public function getLib(): ?string
+    {
+        return $this->lib;
+    }
+
+    public function setLib(string $lib): self
+    {
+        $this->lib = $lib;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

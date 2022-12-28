@@ -15,14 +15,17 @@ class Agenda
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Unavailability::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Unavailability::class)]
     private Collection $unavailabilities;
 
-    #[ORM\ManyToMany(targetEntity: Vacation::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Vacation::class)]
     private Collection $vacations;
 
-    #[ORM\ManyToMany(targetEntity: AgendaDay::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: AgendaDay::class)]
     private Collection $days;
+
+    #[ORM\OneToOne(mappedBy: 'agenda', cascade: ['persist', 'remove'])]
+    private ?Veto $veto = null;
 
     public function __construct()
     {
@@ -48,6 +51,7 @@ class Agenda
     {
         if (!$this->unavailabilities->contains($unavailability)) {
             $this->unavailabilities->add($unavailability);
+            $unavailability->setAgenda($this);
         }
 
         return $this;
@@ -55,7 +59,12 @@ class Agenda
 
     public function removeUnavailability(Unavailability $unavailability): self
     {
-        $this->unavailabilities->removeElement($unavailability);
+        if ($this->unavailabilities->removeElement($unavailability)) {
+            // set the owning side to null (unless already changed)
+            if ($unavailability->getAgenda() === $this) {
+                $unavailability->setAgenda(null);
+            }
+        }
 
         return $this;
     }
@@ -72,6 +81,7 @@ class Agenda
     {
         if (!$this->vacations->contains($vacation)) {
             $this->vacations->add($vacation);
+            $vacation->setAgenda($this);
         }
 
         return $this;
@@ -79,7 +89,12 @@ class Agenda
 
     public function removeVacation(Vacation $vacation): self
     {
-        $this->vacations->removeElement($vacation);
+        if ($this->vacations->removeElement($vacation)) {
+            // set the owning side to null (unless already changed)
+            if ($vacation->getAgenda() === $this) {
+                $vacation->setAgenda(null);
+            }
+        }
 
         return $this;
     }
@@ -96,6 +111,7 @@ class Agenda
     {
         if (!$this->days->contains($day)) {
             $this->days->add($day);
+            $day->setAgenda($this);
         }
 
         return $this;
@@ -103,8 +119,36 @@ class Agenda
 
     public function removeDay(AgendaDay $day): self
     {
-        $this->days->removeElement($day);
+        if ($this->days->removeElement($day)) {
+            // set the owning side to null (unless already changed)
+            if ($day->getAgenda() === $this) {
+                $day->setAgenda(null);
+            }
+        }
 
         return $this;
     }
+
+    public function getVeto(): ?Veto
+    {
+        return $this->veto;
+    }
+
+    public function setVeto(?Veto $veto): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($veto === null && $this->veto !== null) {
+            $this->veto->setAgenda(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($veto !== null && $veto->getAgenda() !== $this) {
+            $veto->setAgenda($this);
+        }
+
+        $this->veto = $veto;
+
+        return $this;
+    }
+
 }

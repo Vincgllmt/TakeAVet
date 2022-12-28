@@ -20,6 +20,12 @@ class AgendaDay
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $endHour = null;
 
+    #[ORM\Column]
+    private ?int $day = null;
+
+    #[ORM\ManyToOne(inversedBy: 'days')]
+    private ?Agenda $agenda = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +51,30 @@ class AgendaDay
     public function setEndHour(\DateTimeInterface $endHour): self
     {
         $this->endHour = $endHour;
+
+        return $this;
+    }
+
+    public function getDay(): ?int
+    {
+        return $this->day;
+    }
+
+    public function setDay(int $day): self
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    public function getAgenda(): ?Agenda
+    {
+        return $this->agenda;
+    }
+
+    public function setAgenda(?Agenda $agenda): self
+    {
+        $this->agenda = $agenda;
 
         return $this;
     }
