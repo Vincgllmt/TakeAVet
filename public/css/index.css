@@ -46,6 +46,10 @@ main {
 
 .main-content__title {
     text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-shadow: 6px 4px 20px rgb(134, 246, 200);
+    color: rgb(43, 180, 121);
 }
 
 .main-content__title > span {
@@ -74,6 +78,15 @@ main {
 
 }
 
+.main_buttons__list {
+    margin-bottom: 15px;
+}
+
+.main_buttons__link {
+    width: 100%;
+    margin: 10px;
+}
+
 @media (max-width: 600px){
     .main-content {
         flex-direction: column;
@@ -86,27 +99,32 @@ main {
 }
 
 @media (max-width: 1400px) {
-    /*.main-content {
-        flex-direction: column;
-    }*/
     /*For: Twitter*/
     .main-content__home {
         margin: 0px !important;
     }
     .twitter-timeline {
-        width: 50% !important;
         flex: 1;
     }
-    .twitter-container {
+    .main-content__aside_home {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         width: auto !important;
+    }
+
+    .main_buttons__list{
+        flex-grow: 1;
+    }
+
+    .main_buttons__link {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
 .main-content__home {
     margin: 0px 40px 40px;
-    padding: 50px;
     flex: 1;
     width: 100%;
 }
@@ -121,7 +139,7 @@ main {
     text-align: justify;
 }
 
-.twitter-container {
+.main-content__aside_home {
     height: 100%;
     width: 600px;
     margin: 30px;
