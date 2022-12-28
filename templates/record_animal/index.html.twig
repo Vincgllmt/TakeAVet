@@ -2,9 +2,7 @@
 
 {% block title %}Take'A'Vet - Mes animaux!{% endblock %}
 
-{% block body %}
-    {% include('_navbar.html.twig') %}
-<main>
+{% block main %}
     <div class="main-content">
         <div class="main-content__home">
             <h1 class="title">Derniers récapitulatifs de {{ animal.name }}</h1>
@@ -12,5 +10,4 @@
             {% endfor %}
         </div>
     </div>
-</main>
 {% endblock %}
