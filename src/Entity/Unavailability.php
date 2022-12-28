@@ -26,6 +26,9 @@ class Unavailability
     #[ORM\Column]
     private ?bool $isRepeated = null;
 
+    #[ORM\ManyToOne(inversedBy: 'unavailabilities')]
+    private ?Agenda $agenda = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Unavailability
     public function setIsRepeated(bool $isRepeated): self
     {
         $this->isRepeated = $isRepeated;
+
+        return $this;
+    }
+
+    public function getAgenda(): ?Agenda
+    {
+        return $this->agenda;
+    }
+
+    public function setAgenda(?Agenda $agenda): self
+    {
+        $this->agenda = $agenda;
 
         return $this;
     }
