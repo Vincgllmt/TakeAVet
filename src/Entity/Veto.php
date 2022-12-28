@@ -13,6 +13,9 @@ class Veto extends User
     #[ORM\OneToMany(mappedBy: 'veto', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\OneToOne(inversedBy: 'veto', cascade: ['persist', 'remove'])]
+    private ?Agenda $agenda = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -45,6 +48,18 @@ class Veto extends User
                 $appointment->setVeto(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAgenda(): ?Agenda
+    {
+        return $this->agenda;
+    }
+
+    public function setAgenda(?Agenda $agenda): self
+    {
+        $this->agenda = $agenda;
 
         return $this;
     }

@@ -24,6 +24,9 @@ class Agenda
     #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: AgendaDay::class)]
     private Collection $days;
 
+    #[ORM\OneToOne(mappedBy: 'agenda', cascade: ['persist', 'remove'])]
+    private ?Veto $veto = null;
+
     public function __construct()
     {
         $this->unavailabilities = new ArrayCollection();
@@ -122,6 +125,28 @@ class Agenda
                 $day->setAgenda(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVeto(): ?Veto
+    {
+        return $this->veto;
+    }
+
+    public function setVeto(?Veto $veto): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($veto === null && $this->veto !== null) {
+            $this->veto->setAgenda(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($veto !== null && $veto->getAgenda() !== $this) {
+            $veto->setAgenda($this);
+        }
+
+        $this->veto = $veto;
 
         return $this;
     }
