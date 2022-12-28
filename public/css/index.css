@@ -40,8 +40,13 @@ main {
     border-radius: 30px;
 
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.col-row-responsive {
+    flex-direction: row;
 }
 
 .main-content__title {
