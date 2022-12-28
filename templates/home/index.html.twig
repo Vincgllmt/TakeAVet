@@ -59,9 +59,14 @@
                     porttitor felis enim ut dui. Curabitur feugiat elementum magna, ut ultricies elit placerat
                     quis. </p>
             </section>
-            <aside class="twitter-container">
+            <aside class="main-content__aside_home">
+                <div class="main_buttons__list">
+                    <a class="btn btn-outline-success main_buttons__link" href="#">Prendre rendez-vous, chez vous <i class="fa-solid fa-house"></i></a>
+                    <a class="btn btn-outline-success main_buttons__link" href="{{ path('app_threads_form') }}">Poser une question <i class="fa-solid fa-question"></i></a>
+                    <a class="btn btn-outline-success main_buttons__link" href="{{ path('app_planning') }}">Consulter le planning des vétérinaires <i class="fa-solid fa-calendar-days"></i></a>
+                </div>
                 <a class="twitter-timeline" data-height="1200"
-                   href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a>
+                   href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Loading Tweets... <i class="fa-brands fa-twitter"></i></a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </aside>
         </div>
