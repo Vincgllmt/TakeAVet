@@ -87,6 +87,15 @@ main {
     margin: 10px;
 }
 
+a.twitter-timeline {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: large;
+}
+
 @media (max-width: 600px){
     .main-content {
         flex-direction: column;
@@ -94,14 +103,14 @@ main {
         margin: 0;
         padding-top: 10px;
 
-        border-radius: 0px;
+        border-radius: 0;
     }
 }
 
 @media (max-width: 1400px) {
     /*For: Twitter*/
     .main-content__home {
-        margin: 0px !important;
+        margin: 0 !important;
     }
     .twitter-timeline {
         flex: 1;
@@ -124,7 +133,7 @@ main {
 }
 
 .main-content__home {
-    margin: 0px 40px 40px;
+    margin: 0 40px 40px;
     flex: 1;
     width: 100%;
 }
@@ -252,7 +261,7 @@ Thread Message (/thread/...)
     margin: 10px;
 
     flex-grow: 1;
-    padding-top: 0px !important;
+    padding-top: 0 !important;
 }
 
 .thread__messages_item {
