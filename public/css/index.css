@@ -33,6 +33,10 @@ main {
     background-size: cover;
 }
 
+header {
+    z-index: 99999;
+}
+
 .main-content {
     padding: 20px;
     background: white;
