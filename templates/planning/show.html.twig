@@ -6,11 +6,27 @@
 
 {% block main %}
     <div class="main-content">
-        <h1 class="text-center">Planning de {{ agenda.veto.lastName|upper }} {{ agenda.veto.firstName }}</h1>
+        <div class="text-center">
+            {% if agenda.veto.profilePicPath is not null %}
+                <img src="{{ asset('uploads/avatars/' ~ agenda.veto.profilePicPath) }}" alt="avatar" height="128"
+                class="rounded-circle" loading="lazy">
+            {% else %}
+                <img src="{{ asset('media/default-avatar.png') }}" alt="avatar" height="128"
+                class="rounded-circle" loading="lazy">
+            {% endif %}
+            <h1>Planning de {{ agenda.veto.lastName|upper }} {{ agenda.veto.firstName }}</h1>
+        </div>
+
+        <h3>Horaires</h3>
 
         {% for day in agenda.days %}
             {# convert int to days #}
             <p>{{ ("Sunday + #{day.day} days"|date("U"))|format_datetime(pattern="EEEE", locale='fr')|capitalize }} ({{ day.startHour|date('H:i') }} / {{ day.endHour|date('H:i') }})</p>
+        {% endfor %}
+
+        <h3>Vacances</h3>
+        {% for vacation in agenda.vacations %}
+            <p>{{ vacation.libVacation }} - {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }} à {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }}</p>
         {% endfor %}
     </div>
 {% endblock %}
