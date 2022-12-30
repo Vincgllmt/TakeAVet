@@ -4,10 +4,49 @@
 
 {% block main %}
     <div class="main-content col-row-responsive">
-        <section class="main-content__home">
+        <section class="main-section">
             <h1 class="main-content__title">Bienvenue sur <span>Take'A'Vet</span></h1>
 
-            <img src="https://via.placeholder.com/1080x720.png">
+            <!--<img class="p-5" src="https://via.placeholder.com/1080x720.png" alt="">-->
+
+            <div id="carouselCaptions" class="carousel slide p-4">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://placeimg.com/1080/500/animals" class="d-block w-100" alt="image">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Lorem ipsum dolor sit</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placeimg.com/1080/500/nature" class="d-block w-100" alt="image">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Lorem ipsum dolor sit</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://placeimg.com/1080/500/people" class="d-block w-100" alt="image">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Lorem ipsum dolor sit</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
 
             <figure>
                 <blockquote class="blockquote text-justify">
@@ -40,13 +79,13 @@
                 </figcaption>
             </figure>
         </section>
-        <aside class="main-content__aside_home">
+        <aside class="twitter-container">
             <div class="main_buttons__list">
-                <a class="btn btn-outline-success main_buttons__link" href="#">Prendre rendez-vous, chez vous <i
+                <a class="btn btn-outline-success" href="#">Prendre rendez-vous, chez vous <i
                             class="fa-solid fa-house"></i></a>
-                <a class="btn btn-outline-success main_buttons__link" href="{{ path('app_threads_form') }}">Poser une
+                <a class="btn btn-outline-success" href="{{ path('app_threads_form') }}">Poser une
                     question <i class="fa-solid fa-question"></i></a>
-                <a class="btn btn-outline-success main_buttons__link" href="{{ path('app_planning') }}">Consulter le
+                <a class="btn btn-outline-success" href="{{ path('app_planning') }}">Consulter le
                     planning des vétérinaires <i class="fa-solid fa-calendar-days"></i></a>
             </div>
             <a class="twitter-timeline" data-height="1200"
