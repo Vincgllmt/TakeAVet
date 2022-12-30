@@ -129,6 +129,14 @@ a.twitter-timeline {
     text-align: center;
 }
 
+@media screen and (min-width: 700px)
+{
+    .center-on-mobile {
+        text-align: start;
+    }
+}
+
+
 @media screen and (min-width: 1500px)
 {
     .main-content {
@@ -146,9 +154,6 @@ a.twitter-timeline {
 
     .col-row-responsive {
         flex-direction: row;
-    }
-    .center-on-mobile {
-        text-align: start;
     }
 }
 
