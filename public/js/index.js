@@ -5,12 +5,10 @@ document.addEventListener("DOMContentLoaded", function(){
         let lastScrollTop = 0;
         window.addEventListener('scroll', function() {
             let scrollTop = window.scrollY;
-            if(scrollTop < lastScrollTop && scrollTop > 100) {
-                console.log(scrollTop);
+            if(scrollTop < lastScrollTop && scrollTop > 100 && window.screen.width > 700) {
                 headerElm.classList.add('navbar-fixed');
             }
             else {
-                console.log(scrollTop);
                 headerElm.classList.remove('navbar-fixed');
             }
             lastScrollTop = scrollTop;
