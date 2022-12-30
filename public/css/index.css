@@ -125,6 +125,18 @@ a.twitter-timeline {
     font-size: large;
 }
 
+.center-on-mobile {
+    text-align: center;
+}
+
+@media screen and (min-width: 700px)
+{
+    .center-on-mobile {
+        text-align: start;
+    }
+}
+
+
 @media screen and (min-width: 1500px)
 {
     .main-content {
