@@ -18,13 +18,14 @@ class AgendaFormType extends AbstractType
                 'mapped' => false,
                 'label' => 'Heure de début de votre journée',
             ])
-            ->add('timeStop', TimeType::class, [
+            ->add('timeEnd', TimeType::class, [
                 'mapped' => false,
                 'label' => 'Heure de fin de votre journée',
             ])
-            ->add('weekend', CheckboxType::class, [
+            ->add('sunday', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'Prendre aussi le weekend ?',
+                'required' => false,
+                'label' => 'Prendre aussi le dimanche ?',
             ]);
     }
 
