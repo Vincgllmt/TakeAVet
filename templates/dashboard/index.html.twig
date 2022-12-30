@@ -8,13 +8,9 @@
 
         {% if veto.agenda is null %}
             <h3 class="text-center">Vous n'avais pas de planning, commencer par en créer un !</h3>
+            <a href="{{ path('app_planning_create') }}" class="btn btn-primary">Créer mon planning</a>
+        {% else %}
+            <a href="#" class="btn btn-primary">Éditer mon planning</a>
         {% endif %}
-
-        <a class="btn btn-primary
-            {% if veto.agenda is not null %}
-                disabled
-            {% endif %}
-        ">Créer mon planning</a>
-
     </div>
 {% endblock %}
