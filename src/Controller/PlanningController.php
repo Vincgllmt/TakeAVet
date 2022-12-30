@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Agenda;
+use App\Entity\AgendaDay;
 use App\Entity\Veto;
 use App\Form\AgendaFormType;
+use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
 use App\Repository\VetoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +40,7 @@ class PlanningController extends AbstractController
     }
 
     #[Route('/planning/create', name: 'app_planning_create')]
-    public function create(Request $request, AgendaRepository $agendaRepository): Response
+    public function create(Request $request, AgendaRepository $agendaRepository, AgendaDayRepository $dayRepository): Response
     {
         $user = $this->getUser();
         if (!$user instanceof Veto) {
@@ -52,7 +54,21 @@ class PlanningController extends AbstractController
             $agenda = new Agenda();
             $agenda->setVeto($user);
 
-            $agendaRepository->save($agenda, true);
+            $agendaRepository->save($agenda, false);
+
+            // check for no sunday
+            $dayCount = $agendaForm->get('sunday')->getData() ? 8 : 7;
+            for ($i = 1; $i < $dayCount; ++$i) {
+                $day = new AgendaDay();
+                $day->setAgenda($agenda);
+                $day->setDay($i);
+                $day->setStartHour($agendaForm->get('timeStart')->getData());
+                $day->setEndHour($agendaForm->get('timeEnd')->getData());
+
+                $dayRepository->save($day, true);
+            }
+
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->renderForm('planning/create.html.twig', [
