@@ -160,6 +160,10 @@ li a.nav-link.link-dark:hover {
     color: var(--main-color) !important;
 }
 
+.carousel-item > img {
+    border-radius: 10px;
+}
+
 /*----------------------------------------
 animal css
 ----------------------------------------*/
