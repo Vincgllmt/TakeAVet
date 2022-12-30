@@ -5,5 +5,16 @@
 {% block main %}
     <div class="main-content">
         <h1 class="text-center">Mon Dashboard</h1>
+
+        {% if veto.agenda is null %}
+            <h3 class="text-center">Vous n'avais pas de planning, commencer par en créer un !</h3>
+        {% endif %}
+
+        <a class="btn btn-primary
+            {% if veto.agenda is not null %}
+                disabled
+            {% endif %}
+        ">Créer mon planning</a>
+
     </div>
 {% endblock %}
