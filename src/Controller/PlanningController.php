@@ -75,4 +75,20 @@ class PlanningController extends AbstractController
             'agenda_form' => $agendaForm,
         ]);
     }
+
+    #[Route('/planning/{id}/edit',
+        name: 'app_planning_edit',
+        requirements: ['id' => "\d+"])]
+    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda): Response
+    {
+        $user = $this->getUser();
+        if (!$user instanceof Veto || $agenda->getVeto() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $this->render('planning/edit.html.twig', [
+            'agenda' => $agenda,
+            'veto' => $user,
+        ]);
+    }
 }
