@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Agenda: {{ agenda.id }}
+{% endblock %}
+
+{% block main %}
+    <div class="main-content">
+        <h1 class="text-center">Edition du planning de {{ veto.lastName|upper }} {{ veto.firstName }}</h1>
+    </div>
+{% endblock %}
+

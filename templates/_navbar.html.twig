@@ -23,7 +23,7 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
                 {% if app.user.veto %}
-                    <a href="#" class="btn btn-primary">Mon dashboard</a>
+                    <a href="{{ path('app_dashboard') }}" class="btn btn-primary"><i class="fa-solid fa-paw"></i> Mon Dashboard</a>
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}

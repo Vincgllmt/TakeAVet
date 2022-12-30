@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon vet'dashboard{% endblock %}
+
+{% block main %}
+    <div class="main-content">
+        <h1 class="text-center">Mon Dashboard</h1>
+
+        {% if veto.agenda is null %}
+            <h3 class="text-center">Vous n'avais pas de planning, commencer par en créer un !</h3>
+            <a href="{{ path('app_planning_create') }}" class="btn btn-primary">Créer mon planning</a>
+        {% else %}
+            <a href="#" class="btn btn-primary">Éditer mon planning</a>
+        {% endif %}
+    </div>
+{% endblock %}
