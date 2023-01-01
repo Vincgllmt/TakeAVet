@@ -151,7 +151,7 @@ class Agenda
         return $this;
     }
 
-    public function canTakeAt(\DateTimeImmutable $dateTime, TypeAppointment $appointmentType): bool
+    public function canTakeAt(\DateTime $dateTime, TypeAppointment $appointmentType): bool
     {
         // TODO: canTakeAt
         return true;

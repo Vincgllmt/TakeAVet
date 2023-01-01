@@ -41,7 +41,7 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function hasAppointmentAt(\DateTimeImmutable $datetime, TypeAppointment $type, Client $client): bool
+    public function hasAppointmentAt(\DateTime $datetime, TypeAppointment $type, Client $client): bool
     {
         // TODO: hasAppointmentAt
         return false;
