@@ -82,6 +82,8 @@ class AppointmentsController extends AbstractController
                 $appointment->setNote($appointmentNote);
 
                 $appointmentRepository->save($appointment, true);
+
+                return $this->redirectToRoute('app_appointments');
             } else {
                 $appointmentsForm->get('date')->addError(new FormError('Impossible de prendre un rendez-vous a cette date'));
             }
