@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\AnimalRecord;
 use App\Entity\Client;
+use App\Form\AnimalRecordFormType;
 use App\Form\AnimalType;
 use App\Repository\AnimalRecordRepository;
 use App\Repository\AnimalRepository;
@@ -36,18 +38,18 @@ class RecordAnimalController extends AbstractController
     }
     #[Route('/animal/{id}/record/update')]
     #[ParamConverter('animal', class: Animal::class)]
-    public function update(Animal $animal, Request $request, AnimalRepository $animalRepository): Response
+    public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository): Response
     {
-        $form = $this->createForm(AnimalType::class, $animal);
+        $form = $this->createForm(AnimalRecordFormType::class, $animalRecord);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $animalRepository->save($animal, true);
+            $recordRepository->save($animalRecord, true);
 
             return $this->redirectToRoute('app_animal');
         }
 
-        return $this->renderForm('animal/update.twig', [
-            'animal' => $animal,
+        return $this->renderForm('animal/record/update.twig', [
+            'record' => $animalRecord,
             'form' => $form,
         ]);
     }
