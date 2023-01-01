@@ -11,6 +11,7 @@ use App\Form\AppointmentFormType;
 use App\Repository\AppointmentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,7 +59,7 @@ class AppointmentsController extends AbstractController
             /* @var TypeAppointment $appointmentType */
             $appointmentType = $appointmentsForm->get('type')->getData();
 
-            /* @var Address $address */
+            /* @var Address $appointmentAddress */
             $appointmentAddress = $appointmentsForm->get('address')->getData();
 
             /* @var bool $appointmentUrgent */
@@ -67,11 +68,8 @@ class AppointmentsController extends AbstractController
             /* @var string $appointmentNote */
             $appointmentNote = $appointmentsForm->get('note')->getData();
 
-            // TODO: Check for null $appointmentAgenda
-
             $isAppointmentValid = !$appointmentRepository->hasAppointmentAt($appointmentDate, $appointmentType, $user)
                                   && $appointmentAgenda->canTakeAt($appointmentDate, $appointmentType);
-
             if ($isAppointmentValid) {
                 $appointment = new Appointment();
                 $appointment->setType($appointmentType);
@@ -84,6 +82,8 @@ class AppointmentsController extends AbstractController
                 $appointment->setNote($appointmentNote);
 
                 $appointmentRepository->save($appointment, true);
+            } else {
+                $appointmentsForm->get('date')->addError(new FormError('Impossible de prendre un rendez-vous a cette date'));
             }
         }
 
