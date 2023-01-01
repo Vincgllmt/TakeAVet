@@ -40,8 +40,8 @@ class RecordAnimalController extends AbstractController
             'isClient' => $isClient,
         ]);
     }
-    #[Route('/animal/{id}/record/update')]
-    #[ParamConverter('animal', class: Animal::class)]
+    #[Route('/animal/record/{id}/update')]
+    #[ParamConverter('record', class: AnimalRecord::class)]
     public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository): Response
     {
         $user = $this->getUser();
