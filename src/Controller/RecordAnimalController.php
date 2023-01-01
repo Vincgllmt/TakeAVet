@@ -15,6 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class RecordAnimalController extends AbstractController
 {
@@ -48,7 +50,7 @@ class RecordAnimalController extends AbstractController
             return $this->redirectToRoute('app_animal');
         }
 
-        return $this->renderForm('animal/record/update.twig', [
+        return $this->renderForm('record/update.twig', [
             'record' => $animalRecord,
             'form' => $form,
         ]);
