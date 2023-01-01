@@ -22,7 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class RecordAnimalController extends AbstractController
 {
-    #[Route('/record/animal/{id}', name: 'app_record_animal')]
+    #[Route('/record/{id}', name: 'app_record_animal')]
     #[ParamConverter('animal', class: Animal::class)]
     public function index(AnimalRecordRepository $animalRecordRepository, Animal $animal): Response
     {
@@ -40,7 +40,7 @@ class RecordAnimalController extends AbstractController
             'isClient' => $isClient,
         ]);
     }
-    #[Route('/animal/record/{id}/update')]
+    #[Route('/record/{id}/update')]
     #[ParamConverter('record', class: AnimalRecord::class)]
     public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository): Response
     {
@@ -65,7 +65,7 @@ class RecordAnimalController extends AbstractController
     /**
      * @see https://symfony.com/doc/5.4/controller/upload_file.html
      */
-    #[Route('/animal/create')]
+    #[Route('/record/create')]
     public function create(Request $request, AnimalRepository $animalRepository, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
