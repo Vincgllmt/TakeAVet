@@ -137,12 +137,12 @@ class Agenda
     public function setVeto(?Veto $veto): self
     {
         // unset the owning side of the relation if necessary
-        if ($veto === null && $this->veto !== null) {
+        if (null === $veto && null !== $this->veto) {
             $this->veto->setAgenda(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($veto !== null && $veto->getAgenda() !== $this) {
+        if (null !== $veto && $veto->getAgenda() !== $this) {
             $veto->setAgenda($this);
         }
 
@@ -151,4 +151,9 @@ class Agenda
         return $this;
     }
 
+    public function canTakeAt(\DateTime $dateTime, TypeAppointment $appointmentType): bool
+    {
+        // TODO: canTakeAt
+        return true;
+    }
 }

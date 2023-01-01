@@ -92,4 +92,9 @@ class Address
 
         return $this;
     }
+
+    public function getDisplayName(): string
+    {
+        return "$this->ad, $this->city, $this->pc ($this->name)";
+    }
 }
