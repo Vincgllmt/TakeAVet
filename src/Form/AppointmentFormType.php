@@ -19,11 +19,15 @@ class AppointmentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date', DateTimeType::class)
+            ->add('date', DateTimeType::class, [
+                'label' => 'Date et Heure',
+            ])
             ->add('isUrgent', CheckboxType::class, [
+                'label' => 'Le rendez-vous est t\'il urgent (Attention, ne le faites que si le rendez-vous ne nécessite une arrivée immédiate d\'un vétérinaire.)',
                 'required' => false,
             ])
             ->add('vet', EntityType::class, [
+                'label' => 'Vétérinaire',
                 'class' => Veto::class,
                 'choice_label' => function (Veto $veto) {
                     return $veto->getDisplayName();
@@ -35,6 +39,7 @@ class AppointmentFormType extends AbstractType
                 },
             ])
             ->add('type', EntityType::class, [
+                'label' => 'Type + Durée',
                 'class' => TypeAppointment::class,
                 'choice_label' => function (TypeAppointment $typeAppointment) {
                     $durationInMin = $typeAppointment->getDuration();
@@ -44,12 +49,20 @@ class AppointmentFormType extends AbstractType
                 },
             ])
             ->add('address', EntityType::class, [
+                'label' => 'Adresse',
                 'class' => Address::class,
                 'choice_label' => function (Address $address) {
                     return $address->getDisplayName();
                 },
             ])
-            ->add('note', TextareaType::class)
+            ->add('note', TextareaType::class, [
+                'label' => 'Vos Notes',
+                'attr' => [
+                    'placeholder' => 'Symptome ou autres informations...',
+                ],
+                'required' => false,
+                'empty_data' => '',
+            ])
         ;
     }
 
