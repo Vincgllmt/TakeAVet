@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\NonUniqueResultException;
 
 #[ORM\Entity(repositoryClass: AgendaRepository::class)]
 class Agenda
@@ -151,9 +153,18 @@ class Agenda
         return $this;
     }
 
-    public function canTakeAt(\DateTime $dateTime, TypeAppointment $appointmentType): bool
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function canTakeAt(\DateTime $dateTime, AgendaDayRepository $agendaDayRepository, TypeAppointment $appointmentType): bool
     {
+        $dayNumber = date('w', $dateTime) + 1;
+
+        // null: Vet is not working this day or $dateTime is not valid, not null: OK
+        $agendaDay = $agendaDayRepository->findAt($dayNumber, $this, $dateTime);
+        $isDateValidWithDays = null !== $agendaDay;
+
         // TODO: canTakeAt
-        return true;
+        return $isDateValidWithDays;
     }
 }
