@@ -21,6 +21,7 @@ class RegistrationFormClientType extends RegistrationFormUserType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'data_class' => Client::class,
         ]);
