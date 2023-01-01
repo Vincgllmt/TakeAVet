@@ -78,6 +78,8 @@ header {
     height: 28px;
     width: 28px;
     display: inline-block;
+    margin-left: 15px;
+    transform: rotate(10deg);
 }
 
 .main_buttons__list {
@@ -351,6 +353,15 @@ Appointments (/appointments/)
     text-align: justify;
     color: #6b6b6b;
 }
+
+/*----------------------------------------
+Forms
+----------------------------------------*/
+
+.form_container > * {
+    margin: 10px;
+}
+
 /*----------------------------------------
 Transitions & utils
 ----------------------------------------*/
