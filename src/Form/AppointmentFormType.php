@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Address;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
+use App\Repository\TypeAppointmentRepository;
 use App\Repository\VetoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,6 +47,10 @@ class AppointmentFormType extends AbstractType
                     $timeStr = sprintf('%02dh%02d', floor($durationInMin / 60), $durationInMin % 60);
 
                     return "{$typeAppointment->getLibTypeApp()} ($timeStr)";
+                },
+                'query_builder' => function (TypeAppointmentRepository $typeAppointmentRepository) {
+                    return $typeAppointmentRepository->createQueryBuilder('ta')
+                        ->orderBy('ta.duration', 'ASC');
                 },
             ])
             ->add('address', EntityType::class, [
