@@ -63,4 +63,9 @@ class Veto extends User
 
         return $this;
     }
+
+    public function getDisplayName(): string
+    {
+        return sprintf("Dr %s $this->firstName", strtoupper($this->lastName));
+    }
 }
