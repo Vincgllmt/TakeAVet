@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Appointment;
+use App\Entity\Client;
+use App\Entity\TypeAppointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +41,9 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Appointment[] Returns an array of Appointment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Appointment
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function hasAppointmentAt(\DateTimeImmutable $datetime, TypeAppointment $type, Client $client): bool
+    {
+        // TODO: hasAppointmentAt
+        return false;
+    }
 }
