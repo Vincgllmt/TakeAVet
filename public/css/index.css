@@ -358,10 +358,8 @@ Appointments (/appointments/)
 Forms
 ----------------------------------------*/
 
-.form__title {
-    font-weight: normal;
-    margin-bottom: 1rem;
-
+.form_container > * {
+    margin: 10px;
 }
 
 /*----------------------------------------
