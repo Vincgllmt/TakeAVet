@@ -21,6 +21,7 @@ class AppointmentFormType extends AbstractType
     {
         $builder
             ->add('date', DateTimeType::class, [
+                'required' => true,
                 'label' => 'Date et Heure',
             ])
             ->add('isUrgent', CheckboxType::class, [
@@ -28,6 +29,7 @@ class AppointmentFormType extends AbstractType
                 'required' => false,
             ])
             ->add('vet', EntityType::class, [
+                'required' => true,
                 'label' => 'Vétérinaire',
                 'class' => Veto::class,
                 'choice_label' => function (Veto $veto) {
@@ -40,6 +42,7 @@ class AppointmentFormType extends AbstractType
                 },
             ])
             ->add('type', EntityType::class, [
+                'required' => true,
                 'label' => 'Type + Durée',
                 'class' => TypeAppointment::class,
                 'choice_label' => function (TypeAppointment $typeAppointment) {
@@ -54,6 +57,7 @@ class AppointmentFormType extends AbstractType
                 },
             ])
             ->add('address', EntityType::class, [
+                'required' => true,
                 'label' => 'Adresse',
                 'class' => Address::class,
                 'choice_label' => function (Address $address) {
