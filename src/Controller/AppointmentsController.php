@@ -8,6 +8,7 @@ use App\Entity\Client;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
 use App\Form\AppointmentFormType;
+use App\Repository\AgendaDayRepository;
 use App\Repository\AppointmentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +38,7 @@ class AppointmentsController extends AbstractController
 
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/appointments/take', name: 'app_appointments_take')]
-    public function take(Request $request, AppointmentRepository $appointmentRepository): Response
+    public function take(Request $request, AppointmentRepository $appointmentRepository, AgendaDayRepository $agendaDayRepository): Response
     {
         $user = $this->getUser();
 
@@ -69,7 +70,7 @@ class AppointmentsController extends AbstractController
             $appointmentNote = $appointmentsForm->get('note')->getData();
 
             $isAppointmentValid = !$appointmentRepository->hasAppointmentAt($appointmentDate, $appointmentType, $user)
-                                  && $appointmentAgenda->canTakeAt($appointmentDate, $appointmentType);
+                                  && $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
             if ($isAppointmentValid) {
                 $appointment = new Appointment();
                 $appointment->setType($appointmentType);
