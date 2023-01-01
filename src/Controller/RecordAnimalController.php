@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Entity\AnimalRecord;
 use App\Entity\Client;
+use App\Entity\Veto;
 use App\Form\AnimalRecordFormType;
 use App\Form\AnimalType;
 use App\Repository\AnimalRecordRepository;
@@ -12,6 +13,7 @@ use App\Repository\AnimalRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +44,10 @@ class RecordAnimalController extends AbstractController
     #[ParamConverter('animal', class: Animal::class)]
     public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository): Response
     {
+        $user = $this->getUser();
+        if (!$user instanceof Veto) {
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(AnimalRecordFormType::class, $animalRecord);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,11 +69,9 @@ class RecordAnimalController extends AbstractController
     public function create(Request $request, AnimalRepository $animalRepository, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
-
-        if (!$user instanceof Client) {
-            throw $this->createNotFoundException();
+        if (!$user instanceof Veto) {
+            throw $this->createAccessDeniedException();
         }
-
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class, $animal);
         $form->handleRequest($request);
