@@ -39,9 +39,10 @@ final class AnimalRecordFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'weight' => self::faker()->randomFloat(),
             'height' => self::faker()->randomFloat(),
+            'health_infos' => self::faker()->realTextBetween(10, 1024),
+            'other_infos' => self::faker()->realTextBetween(10, 1024),
         ];
     }
 
