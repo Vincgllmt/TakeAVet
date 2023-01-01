@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Créer un compte sur Take'A'Vet{% endblock %}
 
 {% block main %}
     <div class="main-content">
-        <h1>Créer un compte</h1>
+        <div class="main-title">
+            <h1>Créer un compte
+                {% if registrationForm.isAnHusbandry is not defined %}
+                 pro
+                {% endif %}
+            </h1>
+        </div>
 
         {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
