@@ -42,31 +42,35 @@ class AgendaDayRepository extends ServiceEntityRepository
     }
 
     /**
-     * UNTESTED.
+     * TODO: Test this !!.
      *
      * @throws NonUniqueResultException
      */
-    public function findAt(int $dayIndex, Agenda $agenda, \DateTime $dateTime): AgendaDay|null
+    public function findAndCheckAt(int $dayIndex, Agenda $agenda, \DateTime $datetimeStart, int $duration): AgendaDay|null
     {
+        // add $duration minutes to the start datetime
+        $datetimeEnd = (clone $datetimeStart)->add(new \DateInterval("PT{$duration}M"));
+
+        dump($duration);
+        dump($datetimeStart);
+        dump($datetimeEnd);
+
         return $this->createQueryBuilder('a')
             ->where('a.day = :index')
-            ->andWhere(':datetime BETWEEN a.startHour AND a.endHour')
-            ->addWhere('a.agenda = :agenda')
+            // start time and end time must be in between startHour and endHour
+            ->andWhere(':datetimeStart BETWEEN a.startHour AND a.endHour')
+            ->andWhere(':datetimeEnd BETWEEN a.startHour AND a.endHour')
+            ->andWhere('a.agenda = :agenda')
             ->getQuery()
             ->setParameters([
-                'datetime' => $dateTime,
+                // define the bounds
+                'datetimeStart' => $datetimeStart,
+                'datetimeEnd' => $datetimeEnd,
                 'index' => $dayIndex,
                 'agenda' => $agenda,
                 ]
             )
             ->getOneOrNullResult();
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
     }
 
 //    /**
