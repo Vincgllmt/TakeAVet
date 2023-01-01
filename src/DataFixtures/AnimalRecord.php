@@ -14,4 +14,10 @@ class AnimalRecord extends Fixture
 
         $manager->flush();
     }
+    public function getDependencies(): array
+    {
+        return [
+            AnimalFixtures::class,
+        ];
+    }
 }
