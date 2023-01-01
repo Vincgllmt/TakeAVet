@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Agenda;
 use App\Entity\AgendaDay;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,34 @@ class AgendaDayRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * UNTESTED.
+     *
+     * @throws NonUniqueResultException
+     */
+    public function findAt(int $dayIndex, Agenda $agenda, \DateTime $dateTime): AgendaDay|null
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.day = :index')
+            ->andWhere(':datetime BETWEEN a.startHour AND a.endHour')
+            ->addWhere('a.agenda = :agenda')
+            ->getQuery()
+            ->setParameters([
+                'datetime' => $dateTime,
+                'index' => $dayIndex,
+                'agenda' => $agenda,
+                ]
+            )
+            ->getOneOrNullResult();
+//            ->andWhere('a.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('a.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
     }
 
 //    /**
