@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Address;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
 use App\Repository\VetoRepository;
@@ -19,8 +20,8 @@ class AppointmentFormType extends AbstractType
             ->add('date', DateTimeType::class)
             ->add('vet', EntityType::class, [
                 'class' => Veto::class,
-                'choice_label' => function (Veto $vetoRepository) {
-                    return $vetoRepository->getDisplayName();
+                'choice_label' => function (Veto $veto) {
+                    return $veto->getDisplayName();
                 },
                 'query_builder' => function (VetoRepository $vetoRepository) {
                     return $vetoRepository->createQueryBuilder('v')
@@ -33,7 +34,14 @@ class AppointmentFormType extends AbstractType
                 'choice_label' => function (TypeAppointment $typeAppointment) {
                     $durationInMin = $typeAppointment->getDuration();
                     $timeStr = sprintf('%02dh%02d', floor($durationInMin / 60), $durationInMin % 60);
+
                     return "{$typeAppointment->getLibTypeApp()} ($timeStr)";
+                },
+            ])
+            ->add('address', EntityType::class, [
+                'class' => Address::class,
+                'choice_label' => function (Address $address) {
+                    return $address->getDisplayName();
                 },
             ])
         ;
