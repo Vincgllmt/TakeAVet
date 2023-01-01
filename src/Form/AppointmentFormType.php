@@ -8,7 +8,9 @@ use App\Entity\Veto;
 use App\Repository\VetoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +20,9 @@ class AppointmentFormType extends AbstractType
     {
         $builder
             ->add('date', DateTimeType::class)
+            ->add('isUrgent', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('vet', EntityType::class, [
                 'class' => Veto::class,
                 'choice_label' => function (Veto $veto) {
@@ -44,6 +49,7 @@ class AppointmentFormType extends AbstractType
                     return $address->getDisplayName();
                 },
             ])
+            ->add('note', TextareaType::class)
         ;
     }
 
