@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Agenda;
 use App\Entity\AgendaDay;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,40 @@ class AgendaDayRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * TODO: Test this !!.
+     *
+     * @param int       $dayIndex      the day index to find, from 1 to 7 (1 --> monday, 7 --> sunday)
+     * @param Agenda    $agenda        the agenda to search in
+     * @param \DateTime $datetimeStart the start time of the task
+     * @param int       $duration      the duration of the dask (in minutes)
+     *
+     * @return AgendaDay|null an agenda day or null if no Agenda day was found in the bounds
+     *
+     * @throws NonUniqueResultException
+     */
+    public function findAndCheckAt(int $dayIndex, Agenda $agenda, \DateTime $datetimeStart, int $duration): AgendaDay|null
+    {
+        // add $duration minutes to the start datetime
+        $datetimeEnd = (clone $datetimeStart)->add(new \DateInterval("PT{$duration}M"));
+
+        return $this->createQueryBuilder('a')
+            ->where('a.day = :index')
+            // start time and end time must be in between startHour and endHour
+            ->andWhere(':datetimeStart BETWEEN a.startHour AND a.endHour')
+            ->andWhere(':datetimeEnd BETWEEN a.startHour AND a.endHour')
+            ->andWhere('a.agenda = :agenda')
+            ->getQuery()
+            // define the bounds
+            // FIX: with TimeType::class this is making an error
+            ->setParameter('datetimeStart', $datetimeStart->format('H:i:s')) // define start time.
+            ->setParameter('datetimeEnd', $datetimeEnd->format('H:i:s')) // define end time.
+            ->setParameter('index', $dayIndex) // define the day index, 1 to 7
+            // define the agenda to use
+            ->setParameter('agenda', $agenda)
+            ->getOneOrNullResult();
     }
 
 //    /**

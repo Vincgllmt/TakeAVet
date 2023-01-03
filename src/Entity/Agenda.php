@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\NonUniqueResultException;
 
 #[ORM\Entity(repositoryClass: AgendaRepository::class)]
 class Agenda
@@ -151,9 +154,32 @@ class Agenda
         return $this;
     }
 
-    public function canTakeAt(\DateTime $dateTime, TypeAppointment $appointmentType): bool
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function canTakeAt(\DateTime $dateTime, AgendaDayRepository $agendaDayRepository, TypeAppointment $appointmentType): bool
     {
+        // to convert this $dateTime to a number from 1 to 7.
+        $dayNumber = self::getDayNumberFromDateTime($dateTime);
+
+        // null: Vet is not working this day or $dateTime is not valid, not null: OK
+        $agendaDay = $agendaDayRepository->findAndCheckAt($dayNumber, $this, $dateTime, $appointmentType->getDuration());
+
+        // the appointment can be taken on this day at this time for this vet (with no verification on the already existing appointments)
+        $isDateValidWithDays = null !== $agendaDay;
+
         // TODO: canTakeAt
-        return true;
+        return $isDateValidWithDays;
+    }
+
+    /**
+     * For php sunday is 0, so this convert from 1 for Monday to 7 for sunday.
+     *
+     * @param \DateTime $dateTime the datetime
+     */
+    private static function getDayNumberFromDateTime(\DateTime $dateTime): int
+    {
+        $dayNumber = (int) $dateTime->format('w');
+        return 0 == $dayNumber ? 7 : $dayNumber;
     }
 }
