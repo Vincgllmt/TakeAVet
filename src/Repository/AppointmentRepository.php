@@ -6,6 +6,7 @@ use App\Entity\Appointment;
 use App\Entity\Client;
 use App\Entity\TypeAppointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -41,13 +42,22 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function getAppointmentAt(\DateTime $datetime, TypeAppointment $type, Client $client): Appointment|null
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getAppointmentAt(\DateTime $datetimeStart, TypeAppointment $type, Client $client): Appointment|null
     {
+        // add $duration minutes to the start datetime
+        $datetimeEnd = (clone $datetimeStart)->add(new \DateInterval("PT{$type->getDuration()}M"));
 
-
-
-
-        // TODO: hasAppointmentAt
-        return null;
+        // get the appointment if it exists.
+        return $this->createQueryBuilder('a')
+            ->where('a.client = :client')
+            ->andWhere('(:dtStart BETWEEN a.dateApp AND a.dateEnd) OR (:dtEnd BETWEEN a.dateApp AND a.dateEnd)')
+            ->getQuery()
+            ->setParameter('client', $client)
+            ->setParameter('dtStart', $datetimeStart) // define start time.
+            ->setParameter('dtEnd', $datetimeEnd) // define end time.
+            ->getOneOrNullResult();
     }
 }
