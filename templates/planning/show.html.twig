@@ -18,10 +18,19 @@
         </div>
 
         <div class="center-on-mobile">
-            <h3>Horaires</h3>
+            <h3>Horaires, du {{ date('monday this week')|format_date }} au {{ date('sunday this week')|format_date }} </h3>
             {% for day in agenda.days %}
+                {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
+
                 {# convert int to days #}
-                <p>{{ ("Sunday + #{day.day} days"|date("U"))|format_datetime(pattern="EEEE", locale='fr')|capitalize }} ({{ day.startHour|date('H:i') }} / {{ day.endHour|date('H:i') }})</p>
+                <p>{{ dateDay|format_datetime(pattern="EEEE", locale='fr')|capitalize }} ({{ day.startHour|date('H:i') }} / {{ day.endHour|date('H:i') }})</p>
+
+                {% for a in appointments %}
+                    {% if a.dateApp|date('D') == dateDay|date('D') %}
+                        <p>- {{ a.dateApp|date }}</p>
+                    {% endif %}
+                {% endfor %}
+
             {% endfor %}
 
             <h3>Vacances</h3>
