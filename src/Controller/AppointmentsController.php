@@ -86,7 +86,6 @@ class AppointmentsController extends AbstractController
 
             // add errors
             if ($alreadyAnAppointment) {
-                // TODO: Show minutes
                 $appointmentsForm->get('date')->addError(new FormError("Impossible de prendre un rendez-vous a cette date, il y en a déjà un de {$appointmentAtDate->getType()->getDuration()} minutes"));
             }
             if (!$validDay) {
