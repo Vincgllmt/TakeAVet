@@ -44,16 +44,19 @@ class AgendaDayRepository extends ServiceEntityRepository
     /**
      * TODO: Test this !!.
      *
+     * @param int       $dayIndex      the day index to find, from 1 to 7 (1 --> monday, 7 --> sunday)
+     * @param Agenda    $agenda        the agenda to search in
+     * @param \DateTime $datetimeStart the start time of the task
+     * @param int       $duration      the duration of the dask (in minutes)
+     *
+     * @return AgendaDay|null an agenda day or null if no Agenda day was found in the bounds
+     *
      * @throws NonUniqueResultException
      */
     public function findAndCheckAt(int $dayIndex, Agenda $agenda, \DateTime $datetimeStart, int $duration): AgendaDay|null
     {
         // add $duration minutes to the start datetime
         $datetimeEnd = (clone $datetimeStart)->add(new \DateInterval("PT{$duration}M"));
-
-        dump($duration);
-        dump($datetimeStart);
-        dump($datetimeEnd);
 
         return $this->createQueryBuilder('a')
             ->where('a.day = :index')
