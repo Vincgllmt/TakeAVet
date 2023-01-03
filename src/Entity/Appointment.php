@@ -45,6 +45,9 @@ class Appointment
     #[ORM\JoinColumn(nullable: false)]
     private ?Veto $veto = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateEnd = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +157,18 @@ class Appointment
     public function setVeto(?Veto $veto): self
     {
         $this->veto = $veto;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(?\DateTimeInterface $dateEnd): self
+    {
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }
