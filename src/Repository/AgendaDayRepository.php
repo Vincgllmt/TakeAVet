@@ -65,14 +65,13 @@ class AgendaDayRepository extends ServiceEntityRepository
             ->andWhere(':datetimeEnd BETWEEN a.startHour AND a.endHour')
             ->andWhere('a.agenda = :agenda')
             ->getQuery()
-            ->setParameters([
-                // define the bounds
-                'datetimeStart' => $datetimeStart,
-                'datetimeEnd' => $datetimeEnd,
-                'index' => $dayIndex,
-                'agenda' => $agenda,
-                ]
-            )
+            // define the bounds
+            // FIX: with TimeType::class this is making an error
+            ->setParameter('datetimeStart', $datetimeStart->format('H:i:s')) // define start time.
+            ->setParameter('datetimeEnd', $datetimeEnd->format('H:i:s')) // define end time.
+            ->setParameter('index', $dayIndex) // define the day index, 1 to 7
+            // define the agenda to use
+            ->setParameter('agenda', $agenda)
             ->getOneOrNullResult();
     }
 
