@@ -44,7 +44,7 @@ class ThreadRepository extends ServiceEntityRepository
      *
      * @see https://www.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/pagination.html
      */
-    public function findAllWithName(string $search = '', int $page, int $perPage): array
+    public function findAllWithName(string $search, int $page, int $perPage): array
     {
         return $this->createQueryBuilder('t')
             ->select('t.id as id')
