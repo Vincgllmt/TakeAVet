@@ -3,11 +3,25 @@
 {% block title %}Take'A'Vet - Mes animaux!{% endblock %}
 
 {% block main %}
+    <main>
     <div class="main-content">
         <div class="main-content__home">
             <h1 class="title">Derniers récapitulatifs de {{ animal.name }}</h1>
-            {% for record in records %}
-            {% endfor %}
         </div>
-    </div>
+        <ul class="list_animal">
+            {% for record in records %}
+            <div>
+                <div>
+                    <p>Poids de {{ animal.name }} : {{record.weight}}kg</p>
+                    <p>Taille de {{ animal.name }} : {{record.height}}cm</p>
+                </div>
+                <div>
+                    <p>{{ record.otherInfos }}</p>
+                    <p> {{ record.healthInfos }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+        </div>
+    </main>
 {% endblock %}

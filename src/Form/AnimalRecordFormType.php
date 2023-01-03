@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Animal;
 use App\Entity\AnimalRecord;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +18,14 @@ class AnimalRecordFormType extends AbstractType
             ->add('height')
             ->add('otherInfos')
             ->add('healthInfos')
-            ->add('Avoir')
+            ->add('Avoir', EntityType::class,
+                [
+                    'class' => Animal::class,
+                    'required' => true,
+                    'choice_label' => function (Animal $animal) {
+                        return $animal->getDisplayName();
+                    },
+                ])
         ;
     }
 

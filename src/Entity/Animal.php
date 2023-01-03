@@ -221,4 +221,10 @@ class Animal
 
         return $this;
     }
+
+    public function getDisplayName(): string
+    {
+        $category = $this->CategoryAnimal->getName();
+        return "$this->name".' '."$category";
+    }
 }

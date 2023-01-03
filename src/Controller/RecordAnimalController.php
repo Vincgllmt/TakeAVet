@@ -23,18 +23,14 @@ class RecordAnimalController extends AbstractController
     public function index(AnimalRecordRepository $animalRecordRepository, Animal $animal): Response
     {
         $user = $this->getUser();
-        $isClient = false;
         $animalId = $animal->getId();
-        if ($user instanceof Client) {
-            $isClient = true;
-            $clientId = $user->getId();
-            $records = $animalRecordRepository->findByAnimal($animalId);
+        if ($user instanceof Client && $animal->getClientAnimal() !== $user) {
+            throw $this->createAccessDeniedException();
         }
-
+        $records = $animalRecordRepository->findByAnimal($animalId);
         return $this->render('record_animal/index.html.twig', [
             'records' => $records,
             'animal' => $animal,
-            'isClient' => $isClient,
         ]);
     }
 
@@ -58,7 +54,8 @@ class RecordAnimalController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/record/create')]
+
+    #[Route('/record/create', priority: 2)]
     public function create(Request $request, AnimalRecordRepository $animalRecordRepository): Response
     {
         $user = $this->getUser();
