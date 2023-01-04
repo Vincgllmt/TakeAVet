@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Entity\Animal;
 use App\Entity\AnimalRecord;
 use App\Repository\AnimalRecordRepository;
 use Zenstruck\Foundry\RepositoryProxy;
