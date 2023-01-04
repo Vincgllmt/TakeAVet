@@ -18,7 +18,7 @@
         </div>
 
         <div class="center-on-mobile">
-            <h3>Horaires, du {{ date('monday this week')|format_date }} au {{ date('sunday this week')|format_date }} </h3>
+            <h3>Horaires, du {{ firstDayOfWeek|format_date }} au {{ lastDayOfWeek|format_date }} </h3>
             {% for day in agenda.days %}
                 {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
 
