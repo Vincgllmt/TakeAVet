@@ -37,12 +37,18 @@ class PlanningController extends AbstractController
 
         $allApps = $appointmentRepository->findByVetoOnWeek($agenda->getVeto(), $weekOffset);
 
+        // date('monday this week')|format_date
+        $firstDayOfWeek = (new \DateTime('monday this week'))->modify("+{$weekOffset} week");
+        $lastDayOfWeek = (new \DateTime('sunday this week'))->modify("+{$weekOffset} week");
+
         dump($agenda);
         dump($allApps);
 
         return $this->render('planning/show.html.twig', [
             'agenda' => $agenda,
             'appointments' => $allApps,
+            'firstDayOfWeek' => $firstDayOfWeek,
+            'lastDayOfWeek' => $lastDayOfWeek,
         ]);
     }
 
