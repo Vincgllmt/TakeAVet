@@ -9,7 +9,6 @@ use App\Entity\Veto;
 use App\Form\AnimalRecordFormType;
 use App\Repository\AnimalRecordRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecordAnimalController extends AbstractController
 {
     #[Route('/record/{id}', name: 'app_record_animal')]
-    #[ParamConverter('animal', class: Animal::class)]
     public function index(AnimalRecordRepository $animalRecordRepository, Animal $animal): Response
     {
         $user = $this->getUser();
@@ -28,6 +26,7 @@ class RecordAnimalController extends AbstractController
             throw $this->createAccessDeniedException();
         }
         $records = $animalRecordRepository->findByAnimal($animalId);
+
         return $this->render('record_animal/index.html.twig', [
             'records' => $records,
             'animal' => $animal,
