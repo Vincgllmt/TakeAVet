@@ -27,6 +27,10 @@ class AnimalRecord
     private ?string $healthInfos = null;
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateRecord = null;
+
+    #[ORM\ManyToOne(inversedBy: 'animalRecords')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Animal $Animal = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +92,18 @@ class AnimalRecord
     public function setDateRecord(\DateTimeInterface $dateRecord): self
     {
         $this->dateRecord = $dateRecord;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->Animal;
+    }
+
+    public function setAnimal(?Animal $Animal): self
+    {
+        $this->Animal = $Animal;
 
         return $this;
     }
