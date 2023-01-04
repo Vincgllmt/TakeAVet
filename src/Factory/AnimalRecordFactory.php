@@ -43,7 +43,7 @@ final class AnimalRecordFactory extends ModelFactory
             'height' => self::faker()->randomFloat(),
             'health_infos' => self::faker()->realTextBetween(10, 1024),
             'other_infos' => self::faker()->realTextBetween(10, 1024),
-            'dateRecord' => self::faker()->date('YYYY-DD-MM'),
+            'dateRecord' => self::faker()->dateTime(),
         ];
     }
 
