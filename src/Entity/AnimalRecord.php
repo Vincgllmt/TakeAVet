@@ -29,7 +29,7 @@ class AnimalRecord
     private ?\DateTimeInterface $dateRecord = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalRecords')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Animal $Animal = null;
     public function getId(): ?int
     {
