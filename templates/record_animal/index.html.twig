@@ -12,6 +12,7 @@
             {% for record in records %}
             <div>
                 <div>
+                    <p>Récap du : {{ record.dateRecord }}</p>
                     <p>Poids de {{ animal.name }} : {{record.weight}}kg</p>
                     <p>Taille de {{ animal.name }} : {{record.height}}cm</p>
                 </div>
