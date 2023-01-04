@@ -40,7 +40,7 @@ final class UnavailabilityFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'lib' => self::faker()->words(3, asText: true),
+            'lib' => $lib = self::faker()->word(),
             'date' => self::faker()->dateTimeBetween('now', '+1 year'),
             'duration' => self::faker()->numberBetween(1, 3), // 1 to 3 hours
             'isRepeated' => false,
