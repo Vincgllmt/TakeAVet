@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Entity\Animal;
 use App\Entity\AnimalRecord;
 use App\Repository\AnimalRecordRepository;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -43,6 +44,7 @@ final class AnimalRecordFactory extends ModelFactory
             'height' => self::faker()->randomFloat(),
             'health_infos' => self::faker()->realTextBetween(10, 1024),
             'other_infos' => self::faker()->realTextBetween(10, 1024),
+            'dateRecord' => self::faker()->dateTime(),
         ];
     }
 

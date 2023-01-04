@@ -46,7 +46,7 @@ class Animal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoPath = null;
 
-    #[ORM\OneToMany(mappedBy: 'Avoir', targetEntity: AnimalRecord::class)]
+    #[ORM\OneToMany(mappedBy: 'Animal', targetEntity: AnimalRecord::class)]
     private Collection $animalRecords;
 
     public function __construct()
@@ -192,6 +192,12 @@ class Animal
         return $this;
     }
 
+    public function getDisplayName(): string
+    {
+        $category = $this->CategoryAnimal?->getName();
+        return "$this->name".' '."$category";
+    }
+
     /**
      * @return Collection<int, AnimalRecord>
      */
@@ -204,7 +210,7 @@ class Animal
     {
         if (!$this->animalRecords->contains($animalRecord)) {
             $this->animalRecords->add($animalRecord);
-            $animalRecord->setAvoir($this);
+            $animalRecord->setAnimal($this);
         }
 
         return $this;
@@ -214,17 +220,11 @@ class Animal
     {
         if ($this->animalRecords->removeElement($animalRecord)) {
             // set the owning side to null (unless already changed)
-            if ($animalRecord->getAvoir() === $this) {
-                $animalRecord->setAvoir(null);
+            if ($animalRecord->getAnimal() === $this) {
+                $animalRecord->setAnimal(null);
             }
         }
 
         return $this;
-    }
-
-    public function getDisplayName(): string
-    {
-        $category = $this->CategoryAnimal->getName();
-        return "$this->name".' '."$category";
     }
 }

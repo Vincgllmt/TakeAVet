@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRecordRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRecordRepository::class)]
@@ -24,10 +25,12 @@ class AnimalRecord
 
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $healthInfos = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateRecord = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalRecords')]
-    private ?Animal $Avoir = null;
-
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Animal $Animal = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -81,14 +84,26 @@ class AnimalRecord
         return $this;
     }
 
-    public function getAvoir(): ?Animal
+    public function getDateRecord(): ?\DateTimeInterface
     {
-        return $this->Avoir;
+        return $this->dateRecord;
     }
 
-    public function setAvoir(?Animal $Avoir): self
+    public function setDateRecord(\DateTimeInterface $dateRecord): self
     {
-        $this->Avoir = $Avoir;
+        $this->dateRecord = $dateRecord;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->Animal;
+    }
+
+    public function setAnimal(?Animal $Animal): self
+    {
+        $this->Animal = $Animal;
 
         return $this;
     }
