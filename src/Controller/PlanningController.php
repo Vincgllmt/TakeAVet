@@ -49,6 +49,7 @@ class PlanningController extends AbstractController
             'appointments' => $allApps,
             'firstDayOfWeek' => $firstDayOfWeek,
             'lastDayOfWeek' => $lastDayOfWeek,
+            'weekOffset' => $weekOffset,
         ]);
     }
 
