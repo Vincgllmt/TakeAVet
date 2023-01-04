@@ -54,7 +54,7 @@ class AppointmentsController extends AbstractController
 
         $appointmentsForm->handleRequest($request);
         if ($appointmentsForm->isSubmitted() && $appointmentsForm->isValid()) {
-            /* @var DateTimeImmutable $appointmentDate */
+            /* @var \DateTime $appointmentDate */
             $appointmentDate = $appointmentsForm->get('date')->getData();
 
             /* @var Veto $appointmentVeto */
@@ -86,7 +86,6 @@ class AppointmentsController extends AbstractController
 
             // add errors
             if ($alreadyAnAppointment) {
-                // TODO: Show minutes
                 $appointmentsForm->get('date')->addError(new FormError("Impossible de prendre un rendez-vous a cette date, il y en a déjà un de {$appointmentAtDate->getType()->getDuration()} minutes"));
             }
             if (!$validDay) {
@@ -106,6 +105,9 @@ class AppointmentsController extends AbstractController
                 $appointment->setIsCompleted(false);
                 $appointment->setIsUrgent($appointmentUrgent);
                 $appointment->setNote($appointmentNote);
+
+                // pre-calc of the end datetime.
+                $appointment->setDateEnd((clone $appointmentDate)->modify("+{$appointmentType->getDuration()} minute"));
 
                 $appointmentRepository->save($appointment, true);
 

@@ -8,6 +8,7 @@ use App\Entity\Veto;
 use App\Form\AgendaFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
+use App\Repository\AppointmentRepository;
 use App\Repository\VetoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,12 +31,18 @@ class PlanningController extends AbstractController
     #[Route('/planning/{id}/',
         name: 'app_planning_show',
         requirements: ['id' => "\d+"])]
-    public function show(Agenda $agenda): Response
+    public function show(Agenda $agenda, AppointmentRepository $appointmentRepository, Request $request): Response
     {
+        $weekOffset = $request->query->get('offset', 0);
+
+        $allApps = $appointmentRepository->findByVetoOnWeek($agenda->getVeto(), $weekOffset);
+
         dump($agenda);
+        dump($allApps);
 
         return $this->render('planning/show.html.twig', [
             'agenda' => $agenda,
+            'appointments' => $allApps,
         ]);
     }
 
