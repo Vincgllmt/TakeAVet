@@ -18,7 +18,7 @@ class AnimalRecordFormType extends AbstractType
             ->add('height')
             ->add('otherInfos')
             ->add('healthInfos')
-            ->add('Avoir', EntityType::class,
+            ->add('Animal', EntityType::class,
                 [
                     'class' => Animal::class,
                     'required' => true,
