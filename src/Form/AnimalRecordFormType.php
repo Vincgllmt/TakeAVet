@@ -26,6 +26,7 @@ class AnimalRecordFormType extends AbstractType
                         return $animal->getDisplayName();
                     },
                 ])
+            ->add('dateRecord')
         ;
     }
 
