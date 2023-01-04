@@ -30,8 +30,7 @@ class AnimalRecord
     private ?Animal $Avoir = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
-
+    private ?\DateTimeInterface $dateRecord = null;
     public function getId(): ?int
     {
         return $this->id;
@@ -97,14 +96,14 @@ class AnimalRecord
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDateRecord(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->dateRecord;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDateRecord(\DateTimeInterface $dateRecord): self
     {
-        $this->date = $date;
+        $this->dateRecord = $dateRecord;
 
         return $this;
     }
