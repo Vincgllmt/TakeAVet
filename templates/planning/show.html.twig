@@ -17,26 +17,67 @@
             <h1>Planning de {{ agenda.veto.lastName|upper }} {{ agenda.veto.firstName }}</h1>
         </div>
 
-        <div class="center-on-mobile">
-            <h3>Horaires, du {{ date('monday this week')|format_date }} au {{ date('sunday this week')|format_date }} </h3>
-            {% for day in agenda.days %}
-                {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
+        <div class="text-center">
+            <div class="container py-5">
+                <h3 class="text-primary">Horaires, du {{ firstDayOfWeek|format_date }} au {{ lastDayOfWeek|format_date }} </h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        {% for day in agenda.days %}
+                            {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
+                            {% set startDayString = dateDay|format_datetime(pattern="EEEE", locale='fr')|capitalize %}
+                            <th scope="col">{{ startDayString }} | {{ dateDay|format_date }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for day in agenda.days %}
+                            <td>
+                                Rendez-vous possible de {{ day.startHour|date('H:i') }}h à {{ day.endHour|date('H:i') }}h
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                    {% for day in agenda.days %}
+                        <td>
+                            {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
 
-                {# convert int to days #}
-                <p>{{ dateDay|format_datetime(pattern="EEEE", locale='fr')|capitalize }} ({{ day.startHour|date('H:i') }} / {{ day.endHour|date('H:i') }})</p>
+                            {% set hasAppInTd = false %}
 
-                {% for a in appointments %}
-                    {% if a.dateApp|date('D') == dateDay|date('D') %}
-                        <p>- {{ a.dateApp|date }}</p>
-                    {% endif %}
-                {% endfor %}
+                            <ul class="list-group list-group-flush">
+                            {% for a in appointments %}
+                                {% if a.dateApp|date('D') == dateDay|date('D') %}
+                                    <li class="list-group-item">{{ a.dateApp|date }}</li>
+                                    {% set hasAppInTd = true %}
+                                {% endif %}
+                            {% endfor %}
+                            </ul>
 
-            {% endfor %}
+                            {% if not hasAppInTd %}
+                                <p>///////</p>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex" style="justify-content: space-around; align-items: center;">
+                    <a class="btn btn-outline-primary" href="?offset={{ weekOffset-1 }}"><i class="fa-sharp fa-solid fa-arrow-left"></i></a>
+                    <p style="margin-bottom: 0;" class="text-secondary">Semaine: {{ (weekOffset > 0 ? '+' : '') ~ weekOffset }}</p>
+                    <a class="btn btn-outline-primary" href="?offset={{ weekOffset+1 }}"><i class="fa-sharp fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
 
             <h3>Vacances</h3>
-            {% for vacation in agenda.vacations %}
-                <p>{{ vacation.libVacation }} - {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }} à {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }}</p>
-            {% endfor %}
+
+            {% if agenda.vacations is not empty %}
+                {% for vacation in agenda.vacations %}
+                    <p>{{ vacation.libVacation }} - {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }} à {{ vacation.dateStart|format_datetime("full", "none", locale='fr') }}</p>
+                {% endfor %}
+            {% else %}
+                <p style="text-align: center;">Le vétérinaire n'a pas spécifié cela.</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

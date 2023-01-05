@@ -10,6 +10,10 @@ class VetoFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        VetoFactory::createMany(15);
+        VetoFactory::createMany(15, function () {
+            return [
+                'tel' => VetoFactory::faker()->boolean() ? VetoFactory::faker()->phoneNumber() : null,
+            ];
+        });
     }
 }
