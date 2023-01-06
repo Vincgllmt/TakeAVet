@@ -1,12 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Agenda: {{ agenda.id }}
+    Edit'Planning
 {% endblock %}
 
 {% block main %}
     <div class="main-content">
         <h1 class="text-center">Edition de votre planning</h1>
+        <hr>
+        <h3 class="mx-3">Mon Planning</h3>
+        <div class="d-flex align-items-center gap-4">
+            <i class="fa-solid fa-arrow-right-long"></i>
+            <div class="d-flex gap-2">
+                <div>
+                    <h4>Vacances ({{ agenda.vacations|length }})</h4>
+                    <ul>
+                        {% for v in agenda.vacations %}
+                            <li>{{ v.libVacation }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h4>Absences ({{ agenda.unavailabilities|length }})</h4>
+                    <ul>
+                        {% for a in agenda.unavailabilities %}
+                            <li>{{ a.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr>
 
         {% if success is defined and success %}
             <div class="alert alert-success" role="alert">
@@ -14,13 +39,23 @@
             </div>
         {% endif %}
 
-        <div>
-            <h3>Saisie des vacances</h3>
+        <div class="m-3 d-flex flex-column gap-3">
+            <div>
+                <h3>Saisie des vacances</h3>
+                {{ form_start(vacation_add_form) }}
+                {{ form_widget(vacation_add_form) }}
+                <input type="submit" class="btn btn-primary" value="Ajouter">
+                {{ form_end(vacation_add_form) }}
+            </div>
+            <hr>
+            <div>
+                <h3>Saisie des absences</h3>
 
-            {{ form_start(vacation_add_form) }}
-            {{ form_widget(vacation_add_form) }}
-            <input type="submit" class="btn btn-primary" value="Ajouter">
-            {{ form_end(vacation_add_form) }}
+                {{ form_start(unavailability_add_form) }}
+                {{ form_widget(unavailability_add_form) }}
+                <input type="submit" class="btn btn-primary" value="Ajouter">
+                {{ form_end(unavailability_add_form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
