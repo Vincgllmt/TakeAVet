@@ -134,8 +134,6 @@ class PlanningController extends AbstractController
             'vacation_add_form' => $vacationAddForm,
             'unavailability_add_form' => $unavailabilityAddForm,
             'success' => $success,
-            'vacation_count' => $vacationRepository->countBy(['agenda' => $agenda]),
-            'unavailability_count' => $unavailabilityAddForm->count(['agenda' => $agenda]),
         ]);
     }
 }
