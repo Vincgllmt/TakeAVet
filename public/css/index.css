@@ -317,8 +317,7 @@ div.contact_networks_icones {
 .contact_main, 
 .networks_main,
 .networks_icones {
-    background: rgb(229,229,231);
-    background: linear-gradient(90deg, rgba(229,229,231,.3) 0%, rgb(194, 218, 253) 94%);
+    background-color: white;
     padding: 5px 0px;
     border-radius: 15px;
     width: 400px;
@@ -381,39 +380,43 @@ div.label_message label.label_msg {
     margin-bottom: -10px;
 }
 
-div.contact_main h5.title_form {
-    position: relative;
-}
-
-div.contact_main h5.title_form::after {
-    content: '';
-    width: max-content;
-    height: 30px;
-    background-color: white;
-    position: absolute;
-    bottom: 0;
-}
-
 div.networks_main h5 {
     text-align: center;
     padding-top: 20px;
+    color: #0d5e42;
+}
+
+div.networks_main p {
+    color: black;
+    text-align: left;
+    font-size: 15px;
 }
 
 div.networks_main iframe {
     display: block;
     margin: 20px auto;
+    position: relative;
+}
+
+div.line_under_iframe {
+    width: 60%;
+    height: 2px;
+    position: relative;
+    background-color: rgb(203, 203, 203);
+    margin-inline: auto;
+    margin-top: 45px;
+    margin-bottom: 25px;
 }
 
 div.networks_main div.address_takeavet {
     margin-left: 20px;
-    font-weight: bold;
     overflow: hidden;
 }
 
 div.networks_icones {
     text-align: center;
     width: 400px;
-    margin: 40px auto -20px;
+    margin: 10px auto -20px;
 }
 
 div.networks_icones a {
@@ -422,6 +425,11 @@ div.networks_icones a {
 
 div.networks_icones a:nth-child(2n) {
     margin-inline: 20px;
+}
+
+button#btn_contact {
+    margin-top: 20px;
+    float: right;
 }
 
 /*----------------------------------------
