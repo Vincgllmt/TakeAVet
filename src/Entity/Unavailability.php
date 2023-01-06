@@ -14,9 +14,6 @@ class Unavailability
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $duration = null;
-
     #[ORM\Column]
     private ?bool $isRepeated = null;
 
@@ -26,24 +23,15 @@ class Unavailability
     #[ORM\Column(length: 30)]
     private ?string $lib = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateDeb = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateEnd = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDuration(): ?int
-    {
-        return $this->duration;
-    }
-
-    public function setDuration(int $duration): self
-    {
-        $this->duration = $duration;
-
-        return $this;
     }
 
     public function isIsRepeated(): ?bool
@@ -82,14 +70,26 @@ class Unavailability
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDateDeb(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->dateDeb;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDateDeb(\DateTimeInterface $dateDeb): self
     {
-        $this->date = $date;
+        $this->dateDeb = $dateDeb;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(\DateTimeInterface $dateEnd): self
+    {
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }
