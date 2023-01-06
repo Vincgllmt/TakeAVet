@@ -16,7 +16,7 @@
                     <h4>Vacances ({{ agenda.vacations|length }})</h4>
                     <ul>
                         {% for v in agenda.vacations %}
-                            <li>{{ v.libVacation }}</li>
+                            <li>{{ v.libVacation }} <a class="text-danger" href="#"><i class="fa-solid fa-xmark"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -24,7 +24,7 @@
                     <h4>Absences ({{ agenda.unavailabilities|length }})</h4>
                     <ul>
                         {% for a in agenda.unavailabilities %}
-                            <li>{{ a.name }}</li>
+                            <li>{{ a.lib }} <a class="text-danger" href="#"><i class="fa-solid fa-xmark"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>
