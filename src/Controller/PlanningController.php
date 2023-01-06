@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Agenda;
 use App\Entity\AgendaDay;
+use App\Entity\Unavailability;
 use App\Entity\Vacation;
 use App\Entity\Veto;
 use App\Form\AgendaFormType;
+use App\Form\UnavailabilityFormType;
 use App\Form\VacationFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\UnavailabilityRepository;
 use App\Repository\VacationRepository;
 use App\Repository\VetoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -96,7 +99,7 @@ class PlanningController extends AbstractController
     #[Route('/planning/{id}/edit',
         name: 'app_planning_edit',
         requirements: ['id' => "\d+"])]
-    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda, VacationRepository $vacationRepository): Response
+    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda, VacationRepository $vacationRepository, UnavailabilityRepository $unavailabilityRepository): Response
     {
         $user = $this->getUser();
         if (!$user instanceof Veto || $agenda->getVeto() !== $user) {
@@ -108,11 +111,20 @@ class PlanningController extends AbstractController
         $vacationAddForm = $this->createForm(VacationFormType::class);
         $vacationAddForm->handleRequest($request);
 
+        $unavailabilityAddForm = $this->createForm(UnavailabilityFormType::class);
+        $unavailabilityAddForm->handleRequest($request);
+
         if ($vacationAddForm->isSubmitted() && $vacationAddForm->isValid()) {
             /** @var Vacation $newVacation */
             $newVacation = $vacationAddForm->getData();
             $newVacation->setAgenda($agenda);
             $vacationRepository->save($newVacation, true);
+            $success = true;
+        } elseif ($unavailabilityAddForm->isSubmitted() && $unavailabilityAddForm->isValid()) {
+            /** @var Unavailability $newUnavailability */
+            $newUnavailability = $unavailabilityAddForm->getData();
+            $newUnavailability->setAgenda($agenda);
+            $unavailabilityRepository->save($newUnavailability, true);
             $success = true;
         }
 
@@ -120,7 +132,10 @@ class PlanningController extends AbstractController
             'agenda' => $agenda,
             'veto' => $user,
             'vacation_add_form' => $vacationAddForm,
+            'unavailability_add_form' => $unavailabilityAddForm,
             'success' => $success,
+            'vacation_count' => $vacationRepository->countBy(['agenda' => $agenda]),
+            'unavailability_count' => $unavailabilityAddForm->count(['agenda' => $agenda]),
         ]);
     }
 }
