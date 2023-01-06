@@ -10,7 +10,8 @@
             <h3 class="text-center">Vous n'avais pas de planning, commencer par en créer un !</h3>
             <a href="{{ path('app_planning_create') }}" class="btn btn-primary">Créer mon planning</a>
         {% else %}
-            <a href="#" class="btn btn-primary">Éditer mon planning</a>
+            <a href="{{ path('app_planning_edit', {id: veto.agenda.id}) }}" class="btn btn-primary">Éditer mon planning</a>
+            <a class="btn btn-danger" href="{{ path('app_planning_delete', {id: veto.agenda.id}) }}">Supprimer le planning</a>
         {% endif %}
     </div>
 {% endblock %}

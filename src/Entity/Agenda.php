@@ -18,16 +18,16 @@ class Agenda
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Unavailability::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Unavailability::class, cascade: ['persist', 'remove'])]
     private Collection $unavailabilities;
 
-    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Vacation::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: Vacation::class, cascade: ['persist', 'remove'])]
     private Collection $vacations;
 
-    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: AgendaDay::class)]
+    #[ORM\OneToMany(mappedBy: 'agenda', targetEntity: AgendaDay::class, cascade: ['persist', 'remove'])]
     private Collection $days;
 
-    #[ORM\OneToOne(mappedBy: 'agenda', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'agenda')]
     private ?Veto $veto = null;
 
     public function __construct()

@@ -4,12 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Agenda;
 use App\Entity\AgendaDay;
+use App\Entity\Unavailability;
+use App\Entity\Vacation;
 use App\Entity\Veto;
 use App\Form\AgendaFormType;
+use App\Form\UnavailabilityFormType;
+use App\Form\VacationFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\UnavailabilityRepository;
+use App\Repository\VacationRepository;
 use App\Repository\VetoRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +60,29 @@ class PlanningController extends AbstractController
         ]);
     }
 
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[Route('/planning/{id}/delete',
+        name: 'app_planning_delete',
+        requirements: ['id' => "\d+"])]
+    public function delete(Agenda $agenda, AgendaRepository $agendaRepository, VetoRepository $vetoRepository, Request $request): Response
+    {
+        $user = $this->getUser();
+        if (!$user instanceof Veto) {
+            throw $this->createAccessDeniedException();
+        } elseif ($user->getAgenda() !== $agenda) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // remove agenda instance from the current user (agenda is from this veto) and save it to the db.
+        $user->setAgenda(null);
+        $vetoRepository->save($user);
+
+        // to complete remove the agenda instance
+        $agendaRepository->remove($agenda, true);
+
+        return $this->redirectToRoute('app_planning');
+    }
+
     #[Route('/planning/create', name: 'app_planning_create')]
     public function create(Request $request, AgendaRepository $agendaRepository, AgendaDayRepository $dayRepository): Response
     {
@@ -93,16 +123,41 @@ class PlanningController extends AbstractController
     #[Route('/planning/{id}/edit',
         name: 'app_planning_edit',
         requirements: ['id' => "\d+"])]
-    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda): Response
+    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda, VacationRepository $vacationRepository, UnavailabilityRepository $unavailabilityRepository): Response
     {
         $user = $this->getUser();
         if (!$user instanceof Veto || $agenda->getVeto() !== $user) {
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('planning/edit.html.twig', [
+        $success = false;
+
+        $vacationAddForm = $this->createForm(VacationFormType::class);
+        $vacationAddForm->handleRequest($request);
+
+        $unavailabilityAddForm = $this->createForm(UnavailabilityFormType::class);
+        $unavailabilityAddForm->handleRequest($request);
+
+        if ($vacationAddForm->isSubmitted() && $vacationAddForm->isValid()) {
+            /** @var Vacation $newVacation */
+            $newVacation = $vacationAddForm->getData();
+            $newVacation->setAgenda($agenda);
+            $vacationRepository->save($newVacation, true);
+            $success = true;
+        } elseif ($unavailabilityAddForm->isSubmitted() && $unavailabilityAddForm->isValid()) {
+            /** @var Unavailability $newUnavailability */
+            $newUnavailability = $unavailabilityAddForm->getData();
+            $newUnavailability->setAgenda($agenda);
+            $unavailabilityRepository->save($newUnavailability, true);
+            $success = true;
+        }
+
+        return $this->renderForm('planning/edit.html.twig', [
             'agenda' => $agenda,
             'veto' => $user,
+            'vacation_add_form' => $vacationAddForm,
+            'unavailability_add_form' => $unavailabilityAddForm,
+            'success' => $success,
         ]);
     }
 }
