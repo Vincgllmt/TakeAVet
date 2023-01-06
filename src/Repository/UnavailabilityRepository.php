@@ -39,6 +39,18 @@ class UnavailabilityRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Count in the database with a criteria.
+     *
+     * @see https://stackoverflow.com/questions/19103699/doctrine-counting-an-entitys-items-with-a-condition
+     */
+    public function countBy(array $criteria): int
+    {
+        $persister = $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName);
+
+        return $persister->count($criteria);
+    }
+
 //    /**
 //     * @return Unavailability[] Returns an array of Unavailability objects
 //     */
