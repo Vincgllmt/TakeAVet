@@ -16,7 +16,7 @@
                     <h4>Vacances ({{ agenda.vacations|length }})</h4>
                     <ul>
                         {% for v in agenda.vacations %}
-                            <li>{{ v.libVacation }} <a class="text-danger" href="#"><i class="fa-solid fa-xmark"></i></a></li>
+                            <li>{{ v.libVacation }} <a class="text-danger" href="{{ path('app_vacation_delete', {id: v.id}) }}"><i class="fa-solid fa-xmark"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>
