@@ -38,11 +38,16 @@ final class UnavailabilityFactory extends ModelFactory
 
     protected function getDefaults(): array
     {
+        $dateStart = self::faker()->dateTimeBetween('now', '+1 year')
+            ->setTime(8, 0);
+
+        $hours = self::faker()->numberBetween(1, 3);
+        $dateEnd = (clone $dateStart)->modify("+$hours hours");
+
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'lib' => $lib = self::faker()->word(),
-            'date' => self::faker()->dateTimeBetween('now', '+1 year'),
-            'duration' => self::faker()->numberBetween(1, 3), // 1 to 3 hours
+            'dateDeb' => $dateStart,
+            'dateEnd' => $dateEnd,
             'isRepeated' => false,
         ];
     }
