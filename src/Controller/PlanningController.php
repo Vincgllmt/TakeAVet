@@ -16,6 +16,7 @@ use App\Repository\AppointmentRepository;
 use App\Repository\UnavailabilityRepository;
 use App\Repository\VacationRepository;
 use App\Repository\VetoRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,29 @@ class PlanningController extends AbstractController
             'lastDayOfWeek' => $lastDayOfWeek,
             'weekOffset' => $weekOffset,
         ]);
+    }
+
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[Route('/planning/{id}/delete',
+        name: 'app_planning_delete',
+        requirements: ['id' => "\d+"])]
+    public function delete(Agenda $agenda, AgendaRepository $agendaRepository, VetoRepository $vetoRepository, Request $request): Response
+    {
+        $user = $this->getUser();
+        if (!$user instanceof Veto) {
+            throw $this->createAccessDeniedException();
+        } elseif ($user->getAgenda() !== $agenda) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // remove agenda instance from the current user (agenda is from this veto) and save it to the db.
+        $user->setAgenda(null);
+        $vetoRepository->save($user);
+
+        // to complete remove the agenda instance
+        $agendaRepository->remove($agenda, true);
+
+        return $this->redirectToRoute('app_planning');
     }
 
     #[Route('/planning/create', name: 'app_planning_create')]
