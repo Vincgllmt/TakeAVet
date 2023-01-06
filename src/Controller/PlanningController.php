@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Agenda;
 use App\Entity\AgendaDay;
+use App\Entity\Vacation;
 use App\Entity\Veto;
 use App\Form\AgendaFormType;
+use App\Form\VacationFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\VacationRepository;
 use App\Repository\VetoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,16 +96,31 @@ class PlanningController extends AbstractController
     #[Route('/planning/{id}/edit',
         name: 'app_planning_edit',
         requirements: ['id' => "\d+"])]
-    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda): Response
+    public function edit(Request $request, AgendaRepository $agendaRepository, Agenda $agenda, VacationRepository $vacationRepository): Response
     {
         $user = $this->getUser();
         if (!$user instanceof Veto || $agenda->getVeto() !== $user) {
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('planning/edit.html.twig', [
+        $success = false;
+
+        $vacationAddForm = $this->createForm(VacationFormType::class);
+        $vacationAddForm->handleRequest($request);
+
+        if ($vacationAddForm->isSubmitted() && $vacationAddForm->isValid()) {
+            /** @var Vacation $newVacation */
+            $newVacation = $vacationAddForm->getData();
+            $newVacation->setAgenda($agenda);
+            $vacationRepository->save($newVacation, true);
+            $success = true;
+        }
+
+        return $this->renderForm('planning/edit.html.twig', [
             'agenda' => $agenda,
             'veto' => $user,
+            'vacation_add_form' => $vacationAddForm,
+            'success' => $success,
         ]);
     }
 }
