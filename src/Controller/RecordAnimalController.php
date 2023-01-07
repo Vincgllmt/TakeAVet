@@ -54,7 +54,7 @@ class RecordAnimalController extends AbstractController
         ]);
     }
 
-    #[Route('/record/create', priority: 2)]
+    #[Route('/record/create', name: 'app_record_create', priority: 2)]
     public function create(Request $request, AnimalRecordRepository $animalRecordRepository): Response
     {
         $user = $this->getUser();
