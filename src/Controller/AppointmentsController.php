@@ -10,6 +10,8 @@ use App\Entity\Veto;
 use App\Form\AppointmentFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\UnavailabilityRepository;
+use App\Repository\VacationRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,7 +44,7 @@ class AppointmentsController extends AbstractController
      */
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/appointments/take', name: 'app_appointments_take')]
-    public function take(Request $request, AppointmentRepository $appointmentRepository, AgendaDayRepository $agendaDayRepository): Response
+    public function take(Request $request, AppointmentRepository $appointmentRepository, AgendaDayRepository $agendaDayRepository, UnavailabilityRepository $unavailabilityRepository, VacationRepository $vacationRepository): Response
     {
         $user = $this->getUser();
 
@@ -74,28 +76,46 @@ class AppointmentsController extends AbstractController
             $appointmentNote = $appointmentsForm->get('note')->getData();
 
             // need to be after now.
-            $afterDate = $appointmentDate > new \DateTime();
+            $isAfterThatDate = $appointmentDate > new \DateTime();
 
-            $appointmentAtDate = $appointmentRepository->getAppointmentAt($appointmentDate, $appointmentType, $user);
-            $validDay = $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
-            $alreadyAnAppointment = null !== $appointmentAtDate;
+            // get null or one appointment at the date, if there is an appointment, no appointment can be taken at this datetime.
+            $appointmentAtDate = $appointmentRepository->getAppointmentAt($appointmentDate, $appointmentType, $appointmentVeto);
+            $unavailabilityAtDate = $unavailabilityRepository->getUnavailabilityAt($appointmentDate, $appointmentType, $appointmentAgenda);
+            $vacationAtDate = $vacationRepository->getVacationAt($appointmentDate, $appointmentAgenda);
 
-            $isAppointmentValid = !$alreadyAnAppointment
-                && $validDay
-                && $afterDate;
+            $isValidWorkDay = $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
+            $hasAppointment = null !== $appointmentAtDate;
+            $hasUnavailability = null !== $unavailabilityAtDate;
+            $hasVacation = null !== $vacationAtDate;
 
             // add errors
-            if ($alreadyAnAppointment) {
+            if ($hasAppointment) {
                 $appointmentsForm->get('date')->addError(new FormError("Impossible de prendre un rendez-vous a cette date, il y en a déjà un de {$appointmentAtDate->getType()->getDuration()} minutes"));
             }
-            if (!$validDay) {
+            if ($hasUnavailability) {
+                $appointmentsForm->get('date')->addError(new FormError("Le vétérinaire n'est pas disponible a cette date '{$unavailabilityAtDate->getLib()}', merci de consulter le planning du {$appointmentVeto->getDisplayName()}."));
+            }
+            if ($hasVacation) {
+                $appointmentsForm->get('date')->addError(new FormError("Le vétérinaire est en vacances du {$vacationAtDate->getDateStart()->format('d/m/Y')} au {$vacationAtDate->getDateEnd()->format('d/m/Y')}."));
+            }
+            if (!$isValidWorkDay) {
                 $appointmentsForm->get('date')->addError(new FormError("Cette journée est hors horaire pour le vétérinaire, merci de consulter le planning du {$appointmentVeto->getDisplayName()}."));
             }
-            if (!$afterDate) {
+            if (!$isAfterThatDate) {
                 $appointmentsForm->get('date')->addError(new FormError('La date ne peut pas être antérieur à la date actuelle.'));
             }
 
-            if ($isAppointmentValid) {
+            // If
+            // - No appointment found at this date
+            // - No unavailability found at this date
+            // - No vacation found at this date
+            // - Is a valid day of work for the vet
+            // - Date is correct
+            if (!$hasAppointment
+                && !$hasUnavailability
+                && !$hasVacation
+                && $isValidWorkDay
+                && $isAfterThatDate) {
                 $appointment = new Appointment();
                 $appointment->setType($appointmentType);
                 $appointment->setVeto($appointmentVeto);

@@ -27,18 +27,15 @@ class PlanningController extends AbstractController
     #[Route('/planning', name: 'app_planning')]
     public function index(VetoRepository $vetoRepository): Response
     {
-        $vets = $vetoRepository->findAll();
-        dump($vets);
-
         return $this->render('planning/index.html.twig', [
-            'vets' => $vets,
+            'vets' => $vetoRepository->findAll(),
         ]);
     }
 
     #[Route('/planning/{id}/',
         name: 'app_planning_show',
         requirements: ['id' => "\d+"])]
-    public function show(Agenda $agenda, AppointmentRepository $appointmentRepository, Request $request): Response
+    public function show(Agenda $agenda, AppointmentRepository $appointmentRepository, VacationRepository $vacationRepository, Request $request): Response
     {
         $weekOffset = $request->query->get('offset', 0);
 
@@ -48,8 +45,7 @@ class PlanningController extends AbstractController
         $firstDayOfWeek = (new \DateTime('monday this week'))->modify("+{$weekOffset} week");
         $lastDayOfWeek = (new \DateTime('sunday this week'))->modify("+{$weekOffset} week");
 
-        dump($agenda);
-        dump($allApps);
+        $vacations = $vacationRepository->findBy(['agenda' => $agenda], ['dateStart' => 'ASC']);
 
         return $this->render('planning/show.html.twig', [
             'agenda' => $agenda,
@@ -57,6 +53,7 @@ class PlanningController extends AbstractController
             'firstDayOfWeek' => $firstDayOfWeek,
             'lastDayOfWeek' => $lastDayOfWeek,
             'weekOffset' => $weekOffset,
+            'vacations' => $vacations,
         ]);
     }
 
