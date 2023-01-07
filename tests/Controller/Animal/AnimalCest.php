@@ -12,12 +12,11 @@ use DateTimeZone;
 class AnimalCest
 {
 
-    public function TestAnimalAdded(ControllerTester $I) {
+    public function TestAnimalAddedAndDeleted(ControllerTester $I) {
         $clientProxy = ClientFactory::createOne();
         $client = $clientProxy->object();
 
         $I->amLoggedInAs($client);
-        AnimalFactory::createMany(2);
 
         $I->amOnPage('/animal');
         $I->click('Ajouter un nouvel animal');
@@ -34,6 +33,30 @@ class AnimalCest
         $I->click('Oui, supprimer cet animal');
         $I->seeCurrentUrlEquals('/animal');
         $I->dontSee('Alphonse');
+    }
+
+
+    public function TestAnimalEdited(ControllerTester $I) {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+
+        $I->amOnPage('/animal');
+        $I->click('Ajouter un nouvel animal');
+        $I->seeCurrentUrlEquals('/animal/create');
+        $I->fillField('Nom', 'Roger');
+        $I->selectOption('animal[birthday][day]', '12');
+        $I->selectOption('animal[birthday][month]', 'août');
+        $I->selectOption('animal[birthday][year]', '1989');
+        $I->click('créer');
+        $I->seeCurrentUrlEquals('/animal');
+        $I->click('Modifier cet animal');
+        $I->see('Édition de Roger');
+        $I->fillField('Nom', 'Roger le chien');
+        $I->click('modifier');
+        $I->seeCurrentUrlEquals('/animal');
+        $I->see('Roger le chien');
     }
 
 }
