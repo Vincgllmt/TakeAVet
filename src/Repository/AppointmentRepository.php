@@ -47,17 +47,17 @@ class AppointmentRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getAppointmentAt(\DateTime $datetimeStart, TypeAppointment $type, Client $client): Appointment|null
+    public function getAppointmentAt(\DateTime $datetimeStart, TypeAppointment $type, Veto $veto): Appointment|null
     {
         // add $duration minutes to the start datetime
         $datetimeEnd = (clone $datetimeStart)->add(new \DateInterval("PT{$type->getDuration()}M"));
 
         // get the appointment if it exists.
         return $this->createQueryBuilder('a')
-            ->where('a.client = :client')
+            ->where('a.veto = :veto')
             ->andWhere('(:dtStart BETWEEN a.dateApp AND a.dateEnd) OR (:dtEnd BETWEEN a.dateApp AND a.dateEnd)')
             ->getQuery()
-            ->setParameter('client', $client)
+            ->setParameter('veto', $veto)
             ->setParameter('dtStart', $datetimeStart) // define start time.
             ->setParameter('dtEnd', $datetimeEnd) // define end time.
             ->getOneOrNullResult();
