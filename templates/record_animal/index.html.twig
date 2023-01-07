@@ -17,8 +17,10 @@
                     <p>Taille de {{ animal.name }} : {{record.height}}cm</p>
                 </div>
                 <div>
-                    <p> Informations autres : {{ record.otherInfos }}</p>
-                    <p> Informations concernant la santé de l'animal : {{ record.healthInfos }}</p>
+                    <p class="title">Informations concernant la santé de l'animal :</p>
+                    <p> {{ record.healthInfos }} </p>
+                    <p class="title"> Informations autres : </p>
+                    <p> {{ record.otherInfos }} </p>
                 </div>
             </div>
             {% endfor %}
