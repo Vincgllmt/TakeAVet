@@ -34,7 +34,7 @@ class RecordAnimalController extends AbstractController
     }
 
     #[Route('/record/update/{id}', requirements: ['id' => "\d+"])]
-    public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository): Response
+    public function update(AnimalRecord $animalRecord, Request $request, AnimalRecordRepository $recordRepository, Animal $animal): Response
     {
         $user = $this->getUser();
         if (!$user instanceof Veto) {
@@ -51,6 +51,7 @@ class RecordAnimalController extends AbstractController
         return $this->renderForm('record_animal/update.twig', [
             'record' => $animalRecord,
             'form' => $form,
+            'animal' => $animal,
         ]);
     }
 
