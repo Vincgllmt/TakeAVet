@@ -7,12 +7,17 @@ use App\Tests\ControllerTester;
 
 class LogoutCest
 {
-    public function _before(ControllerTester $I)
-    {
-    }
 
-    // tests
-    public function tryToTest(ControllerTester $I)
-    {
-    }
+        public function logout(ControllerTester $I)
+        {
+            $I->amOnPage('/');
+            $I->click('Se connecter');
+            $I->fillField('Email', 'admin@take.vet');
+            $I->fillField('Mot de passe', 'admin');
+            $I->click('Sign in');
+            $I->see('Menu admin');
+            $I->see('Déconnexion');
+            $I->click('Déconnexion');
+            $I->see('Se connecter');
+        }
 }
