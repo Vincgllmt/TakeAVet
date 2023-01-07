@@ -83,7 +83,7 @@ class UnavailabilityRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('u')
             ->where('u.agenda = :agenda')
-            ->andWhere('(:start BETWEEN u.dateDeb AND u.dateEnd) OR (:end NOT BETWEEN u.dateDeb AND u.dateEnd)')
+            ->andWhere('(:start BETWEEN u.dateDeb AND u.dateEnd) OR (:end BETWEEN u.dateDeb AND u.dateEnd)')
             ->getQuery()
             ->setParameter('agenda', $agenda)
             ->setParameter('start', $start)
