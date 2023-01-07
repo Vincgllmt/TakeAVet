@@ -90,4 +90,55 @@ class UnavailabilityRepository extends ServiceEntityRepository
             ->setParameter('end', $end)
             ->getOneOrNullResult();
     }
+
+    /**
+     * Get all Unavailability of a date.
+     *
+     * @return Unavailability[]
+     */
+    public function findAllOnDate(Agenda $agenda, \DateTime $date): array
+    {
+        // we take only the date between, not the time, the difference between is 1 day.
+        $dateDayStart = (clone $date)->setTime(0, 0);
+        $dateDayEnd = (clone $date)->setTime(23, 59, 59);
+
+        return $this->findAllBetweenDate($agenda, $dateDayStart, $dateDayEnd);
+    }
+
+    /**
+     * Get all Unavailability between two date.
+     *
+     * @see https://stackoverflow.com/questions/25998255/using-date-in-doctrine-querybuilder
+     *
+     * @return Unavailability[]
+     */
+    public function findAllBetweenDate(Agenda $agenda, \DateTime $startDate, \DateTime $endDate): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.agenda = :agenda')
+            ->andWhere('(u.dateDeb >= :date_day_start AND u.dateDeb <= :date_day_end) OR (u.dateEnd >= :date_day_start AND u.dateEnd <= :date_day_end)')
+            ->getQuery()
+            ->setParameter('agenda', $agenda)
+            ->setParameter('date_day_start', $startDate)
+            ->setParameter('date_day_end', $endDate)
+            ->getArrayResult();
+    }
+
+    /**
+     * Get all Unavailability of a datetime week.
+     *
+     * @return Unavailability[]
+     */
+    public function findAllOnWeek(Agenda $agenda, \DateTime $week): array
+    {
+        // Calculate the timestamp for the start of the week.
+        $startOfWeekTimestamp = time() - date('w', time()) * 86400 + 86400;
+
+        // convert timestamp to date.
+        $startOfWeek = new \DateTime(date('Y-m-d', $startOfWeekTimestamp));
+        $endOfWeek = (new \DateTime(date('Y-m-d', $startOfWeekTimestamp + 6 * 86400 - 1)))
+            ->setTime(23, 59, 59); // pickup all the last day of week.
+
+        return $this->findAllBetweenDate($agenda, $startOfWeek->setTime(23, 59, 59), $endOfWeek);
+    }
 }
