@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Agenda;
+use App\Entity\TypeAppointment;
 use App\Entity\Unavailability;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -75,4 +77,17 @@ class UnavailabilityRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getUnavailabilityAt(\DateTime $start, TypeAppointment $type, Agenda $agenda): Unavailability|null
+    {
+        $end = (clone $start)->add(new \DateInterval("PT{$type->getDuration()}M"));
+
+        return $this->createQueryBuilder('u')
+            ->where('u.agenda = :agenda')
+            ->andWhere('(:start BETWEEN u.dateDeb AND u.dateEnd) OR (:end NOT BETWEEN u.dateDeb AND u.dateEnd)')
+            ->getQuery()
+            ->setParameter('agenda', $agenda)
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getOneOrNullResult();
+    }
 }
