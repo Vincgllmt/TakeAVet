@@ -36,4 +36,19 @@ class LoginCest
         $I->see('Mes adresses');
     }
 
+    public function loginForVeto(ControllerTester $I) {
+        $client = VetoFactory::createOne([
+            'email' => 'vetotesting@takevet.net',
+            'password' => 'vetoveto',
+        ]);
+        $I->amOnPage('/');
+
+        $I->click('Se connecter');
+        $I->fillField('Email', 'vetotesting@takevet.net');
+        $I->fillField('Mot de passe', 'vetoveto');
+        $I->click('Sign in');
+        $I->see('Mon Dashboard');
+        $I->see('Créer un récap');
+    }
+
 }
