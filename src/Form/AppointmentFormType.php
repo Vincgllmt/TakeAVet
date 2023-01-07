@@ -19,10 +19,14 @@ class AppointmentFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $curYear = (int) date('Y');
+        $nextYearsRange = range($curYear, $curYear + 10);
+
         $builder
             ->add('date', DateTimeType::class, [
                 'required' => true,
                 'label' => 'Date et Heure',
+                'years' => $nextYearsRange,
             ])
             ->add('isUrgent', CheckboxType::class, [
                 'label' => 'Le rendez-vous est t\'il urgent (Attention, ne le faites que si le rendez-vous ne nécessite une arrivée immédiate d\'un vétérinaire.)',
