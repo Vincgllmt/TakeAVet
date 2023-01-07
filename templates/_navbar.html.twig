@@ -10,6 +10,9 @@
             <li><a href="{{ path('app_planning') }}" class="nav-link px-2 link-dark">Planning</a></li>
             <li><a href="{{ path('app_threads') }}" class="nav-link px-2 link-dark">FAQ</a></li>
             <li><a href="/contact" class="nav-link px-2 link-dark">Contact</a></li>
+            {% if app.user is not null and app.user.veto %}
+                <li><a href="{{ path('app_record_create') }}" class="nav-link px-2 link-dark">Créer un récap</a></li>
+            {% endif %}
             {% if app.user is not null and app.user.client %}
                 <li><a href="{{ path('app_animal') }}" class="nav-link px-2 link-dark"><i class="fa-solid fa-paw"></i>
                         Mes animaux</a></li>
