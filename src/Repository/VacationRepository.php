@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Agenda;
 use App\Entity\Vacation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -75,4 +76,14 @@ class VacationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function getVacationAt(\DateTime $appointmentDate, Agenda $agenda): Vacation|null
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.agenda = :agenda')
+            ->andWhere(':datetime BETWEEN v.dateStart AND v.dateEnd')
+            ->getQuery()
+            ->setParameter('agenda', $agenda)
+            ->setParameter('datetime', $appointmentDate)
+            ->getOneOrNullResult();
+    }
 }
