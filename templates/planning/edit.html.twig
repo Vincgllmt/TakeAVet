@@ -23,8 +23,8 @@
                 <div>
                     <h4>Absences ({{ agenda.unavailabilities|length }})</h4>
                     <ul>
-                        {% for a in agenda.unavailabilities %}
-                            <li>{{ a.lib }} <a class="text-danger" href="#"><i class="fa-solid fa-xmark"></i></a></li>
+                        {% for u in agenda.unavailabilities %}
+                            <li>{{ u.lib }} <a class="text-danger" href="{{ path('app_unavailability_delete', {id: u.id}) }}"><i class="fa-solid fa-xmark"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>
