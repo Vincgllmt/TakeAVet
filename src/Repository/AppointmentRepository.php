@@ -6,11 +6,11 @@ use App\Entity\Animal;
 use App\Entity\Appointment;
 use App\Entity\CategoryAnimal;
 use App\Entity\Client;
-use App\Entity\TypeAnimal;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -83,8 +83,6 @@ class AppointmentRepository extends ServiceEntityRepository
 
     /**
      * Find all appointment on a given date and if it's completed.
-     *
-     * @return array
      */
     public function findAllOnDate(Veto $veto, \DateTime $date, bool $getCompleted): array
     {
@@ -113,5 +111,21 @@ class AppointmentRepository extends ServiceEntityRepository
             ->setParameter('veto', $veto)
             ->setParameter('date', $date->format('Y-m-d'))
             ->getArrayResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function updateNote(int $appointmentId, string $note): int
+    {
+        return $this->createQueryBuilder('a')
+            ->update()
+            ->set('a.note', ':note')
+            ->where('a.id = :id')
+            ->getQuery()
+            ->setParameter('id', $appointmentId)
+            ->setParameter('note', $note)
+            ->getSingleScalarResult();
     }
 }
