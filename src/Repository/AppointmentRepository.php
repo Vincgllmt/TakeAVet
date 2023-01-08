@@ -2,9 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Agenda;
 use App\Entity\Appointment;
-use App\Entity\Client;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -77,5 +75,15 @@ class AppointmentRepository extends ServiceEntityRepository
             ->setParameter('start', $start_week)
             ->setParameter('end', $end_week)
             ->getArrayResult();
+    }
+
+    /**
+     * Find all appointment on a given date and if it's completed.
+     *
+     * @return Appointment[]
+     */
+    public function findAllOnDate(\DateTime $date, bool $getCompleted): array
+    {
+        return [];
     }
 }
