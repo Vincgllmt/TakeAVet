@@ -73,3 +73,4 @@ Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récap
 ### Client
 En tant que client vous pouvez enregistrer vos animaux, voir leurs possible récapitulatifs, voir le planning des vétérinaires et prendre rendez vous.
 ### Admin
+En tant qu'Admin vous avez accès au dashboard
