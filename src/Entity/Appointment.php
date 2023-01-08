@@ -48,6 +48,10 @@ class Appointment
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateEnd = null;
 
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Animal $animal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -169,6 +173,18 @@ class Appointment
     public function setDateEnd(?\DateTimeInterface $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->animal;
+    }
+
+    public function setAnimal(?Animal $animal): self
+    {
+        $this->animal = $animal;
 
         return $this;
     }

@@ -49,10 +49,14 @@ class Animal
     #[ORM\OneToMany(mappedBy: 'Animal', targetEntity: AnimalRecord::class)]
     private Collection $animalRecords;
 
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Appointment::class)]
+    private Collection $appointments;
+
     public function __construct()
     {
         $this->vaccines = new ArrayCollection();
         $this->animalRecords = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +226,36 @@ class Animal
             // set the owning side to null (unless already changed)
             if ($animalRecord->getAnimal() === $this) {
                 $animalRecord->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getAnimal() === $this) {
+                $appointment->setAnimal(null);
             }
         }
 
