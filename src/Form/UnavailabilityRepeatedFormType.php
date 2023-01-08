@@ -14,7 +14,7 @@ class UnavailabilityRepeatedFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $weekDays = ['Lundi' => 1, 'Mardi' => 2, 'Mercredi' => 3, 'Jeudi' => 4, 'Vendredi' => 5, 'Samedi' => 6, 'Dimanche' => 7];
+        $weekDays = ['Lundi' => 'Monday', 'Mardi' => 'Tuesday', 'Mercredi' => 'Wednesday', 'Jeudi' => 'Thursday', 'Vendredi' => 'Friday', 'Samedi' => 'Saturday', 'Dimanche' => 'Sunday'];
 
         $builder
             ->add('lib', TextType::class, [
@@ -30,6 +30,7 @@ class UnavailabilityRepeatedFormType extends AbstractType
             ->add('startDayTime', TimeType::class, [
                 'label' => 'Heure de début',
                 'required' => true,
+                'mapped' => false,
                 'data' => new \DateTime(),
             ])
             ->add('endDay', ChoiceType::class, [
@@ -40,6 +41,7 @@ class UnavailabilityRepeatedFormType extends AbstractType
             ])
             ->add('endDayTime', TimeType::class, [
                 'label' => 'Heure de fin',
+                'mapped' => false,
                 'required' => true,
                 'data' => new \DateTime('23:59'),
             ])
