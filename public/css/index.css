@@ -140,14 +140,6 @@ a.twitter-timeline {
     .center-on-mobile {
         text-align: start;
     }
-
-    .col-row-responsive {
-        flex-direction: row;
-    }
-
-    .row-col-responsive {
-        flex-direction: column !important;
-    }
 }
 
 
@@ -164,6 +156,14 @@ a.twitter-timeline {
     .twitter-container {
         gap: 15px;
         width: 30%;
+    }
+
+    .col-row-responsive {
+        flex-direction: row;
+    }
+
+    .row-col-responsive {
+        flex-direction: column !important;
     }
 }
 

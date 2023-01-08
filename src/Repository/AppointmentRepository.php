@@ -2,13 +2,15 @@
 
 namespace App\Repository;
 
-use App\Entity\Agenda;
+use App\Entity\Animal;
 use App\Entity\Appointment;
+use App\Entity\CategoryAnimal;
 use App\Entity\Client;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -77,5 +79,53 @@ class AppointmentRepository extends ServiceEntityRepository
             ->setParameter('start', $start_week)
             ->setParameter('end', $end_week)
             ->getArrayResult();
+    }
+
+    /**
+     * Find all appointment on a given date and if it's completed.
+     */
+    public function findAllOnDate(Veto $veto, \DateTime $date, bool $getCompleted): array
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->select('a as appointment')
+            ->addSelect('ctg.name as animal_type')
+            ->addSelect('ta.libTypeApp as appointment_type')
+            ->addSelect('an.id as animal_id')
+            ->addSelect('cli.id as client_id')
+            ->innerJoin(Animal::class, 'an')
+            ->innerJoin(CategoryAnimal::class, 'ctg')
+            ->innerJoin(Client::class, 'cli')
+            ->innerJoin(TypeAppointment::class, 'ta')
+            ->where('a.veto = :veto')
+            ->andWhere('ctg = an.CategoryAnimal')
+            ->andWhere('an = a.animal')
+            ->andWhere('cli = a.client')
+            ->andWhere('ta = a.type')
+            ->andWhere('DATE(a.dateApp) = :date');
+
+        if ($getCompleted) {
+            $queryBuilder->andWhere('a.isCompleted = TRUE');
+        }
+
+        return $queryBuilder->getQuery()
+            ->setParameter('veto', $veto)
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->getArrayResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function updateNote(int $appointmentId, string $note): int
+    {
+        return $this->createQueryBuilder('a')
+            ->update()
+            ->set('a.note', ':note')
+            ->where('a.id = :id')
+            ->getQuery()
+            ->setParameter('id', $appointmentId)
+            ->setParameter('note', $note)
+            ->getSingleScalarResult();
     }
 }

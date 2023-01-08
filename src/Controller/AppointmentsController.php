@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Address;
+use App\Entity\Animal;
 use App\Entity\Appointment;
 use App\Entity\Client;
 use App\Entity\TypeAppointment;
@@ -52,7 +53,7 @@ class AppointmentsController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $appointmentsForm = $this->createForm(AppointmentFormType::class);
+        $appointmentsForm = $this->createForm(AppointmentFormType::class, options: ['client' => $user]);
 
         $appointmentsForm->handleRequest($request);
         if ($appointmentsForm->isSubmitted() && $appointmentsForm->isValid()) {
@@ -75,6 +76,9 @@ class AppointmentsController extends AbstractController
             /* @var string $appointmentNote */
             $appointmentNote = $appointmentsForm->get('note')->getData();
 
+            /* @var Animal $appointmentAnimal */
+            $appointmentAnimal = $appointmentsForm->get('animal')->getData();
+
             // need to be after now.
             $isAfterThatDate = $appointmentDate > new \DateTime();
 
@@ -83,7 +87,10 @@ class AppointmentsController extends AbstractController
             $unavailabilityAtDate = $unavailabilityRepository->getUnavailabilityAt($appointmentDate, $appointmentType, $appointmentAgenda);
             $vacationAtDate = $vacationRepository->getVacationAt($appointmentDate, $appointmentAgenda);
 
+            dump($appointmentAtDate, $unavailabilityAtDate, $vacationAtDate);
+
             $isValidWorkDay = $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
+
             $hasAppointment = null !== $appointmentAtDate;
             $hasUnavailability = null !== $unavailabilityAtDate;
             $hasVacation = null !== $vacationAtDate;
@@ -125,6 +132,7 @@ class AppointmentsController extends AbstractController
                 $appointment->setIsCompleted(false);
                 $appointment->setIsUrgent($appointmentUrgent);
                 $appointment->setNote($appointmentNote);
+                $appointment->setAnimal($appointmentAnimal);
 
                 // pre-calc of the end datetime.
                 $appointment->setDateEnd((clone $appointmentDate)->modify("+{$appointmentType->getDuration()} minute"));

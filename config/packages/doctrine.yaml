@@ -18,6 +18,7 @@ doctrine:
         dql:
             datetime_functions:
                 dayofweek: App\DoctrineExtension\DayOfWeek
+                date: App\DoctrineExtension\Date
 
 when@test:
     doctrine:
