@@ -82,8 +82,19 @@ class AppointmentRepository extends ServiceEntityRepository
      *
      * @return Appointment[]
      */
-    public function findAllOnDate(\DateTime $date, bool $getCompleted): array
+    public function findAllOnDate(Veto $veto, \DateTime $date, bool $getCompleted): array
     {
-        return [];
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->where('a.veto = :veto')
+            ->andWhere('DATE(a.dateApp) = :date');
+
+        if ($getCompleted) {
+            $queryBuilder->andWhere('a.isCompleted = TRUE');
+        }
+
+        return $queryBuilder->getQuery()
+            ->setParameter('veto', $veto)
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->getArrayResult();
     }
 }
