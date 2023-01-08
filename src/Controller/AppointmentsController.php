@@ -52,7 +52,7 @@ class AppointmentsController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $appointmentsForm = $this->createForm(AppointmentFormType::class);
+        $appointmentsForm = $this->createForm(AppointmentFormType::class, options: ['client' => $user]);
 
         $appointmentsForm->handleRequest($request);
         if ($appointmentsForm->isSubmitted() && $appointmentsForm->isValid()) {
@@ -83,7 +83,10 @@ class AppointmentsController extends AbstractController
             $unavailabilityAtDate = $unavailabilityRepository->getUnavailabilityAt($appointmentDate, $appointmentType, $appointmentAgenda);
             $vacationAtDate = $vacationRepository->getVacationAt($appointmentDate, $appointmentAgenda);
 
+            dump($appointmentAtDate, $unavailabilityAtDate, $vacationAtDate);
+
             $isValidWorkDay = $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
+
             $hasAppointment = null !== $appointmentAtDate;
             $hasUnavailability = null !== $unavailabilityAtDate;
             $hasVacation = null !== $vacationAtDate;
