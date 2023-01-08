@@ -116,7 +116,8 @@ class UnavailabilityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->where('u.agenda = :agenda')
-            ->andWhere('(u.dateDeb >= :date_day_start AND u.dateDeb <= :date_day_end) OR (u.dateEnd >= :date_day_start AND u.dateEnd <= :date_day_end)')
+            ->andWhere('(u.isRepeated = TRUE AND (DAYOFWEEK(:date_day_start) BETWEEN DAYOFWEEK(u.dateDeb) AND DAYOFWEEK(u.dateEnd)) OR (DAYOFWEEK(:date_day_end) BETWEEN DAYOFWEEK(u.dateDeb) AND DAYOFWEEK(u.dateEnd)))')
+            ->orWhere('(u.dateDeb >= :date_day_start AND u.dateDeb <= :date_day_end) OR (u.dateEnd >= :date_day_start AND u.dateEnd <= :date_day_end)')
             ->getQuery()
             ->setParameter('agenda', $agenda)
             ->setParameter('date_day_start', $startDate)
