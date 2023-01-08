@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Address;
+use App\Entity\Animal;
 use App\Entity\Appointment;
 use App\Entity\Client;
 use App\Entity\TypeAppointment;
@@ -75,6 +76,9 @@ class AppointmentsController extends AbstractController
             /* @var string $appointmentNote */
             $appointmentNote = $appointmentsForm->get('note')->getData();
 
+            /* @var Animal $appointmentAnimal */
+            $appointmentAnimal = $appointmentsForm->get('animal')->getData();
+
             // need to be after now.
             $isAfterThatDate = $appointmentDate > new \DateTime();
 
@@ -128,6 +132,7 @@ class AppointmentsController extends AbstractController
                 $appointment->setIsCompleted(false);
                 $appointment->setIsUrgent($appointmentUrgent);
                 $appointment->setNote($appointmentNote);
+                $appointment->setAnimal($appointmentAnimal);
 
                 // pre-calc of the end datetime.
                 $appointment->setDateEnd((clone $appointmentDate)->modify("+{$appointmentType->getDuration()} minute"));
