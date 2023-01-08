@@ -67,3 +67,8 @@ admin
 ## Le site Takeavet
 
 - Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
+
+### Vétérinaire
+Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récapitulatifs des animaux, modifier votre planning etc...
+### Client
+### Admin
