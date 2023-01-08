@@ -9,6 +9,7 @@ use App\Entity\Vacation;
 use App\Entity\Veto;
 use App\Form\AgendaFormType;
 use App\Form\UnavailabilityFormType;
+use App\Form\UnavailabilityRepeatedFormType;
 use App\Form\VacationFormType;
 use App\Repository\AgendaDayRepository;
 use App\Repository\AgendaRepository;
@@ -136,6 +137,9 @@ class PlanningController extends AbstractController
         $unavailabilityAddForm = $this->createForm(UnavailabilityFormType::class);
         $unavailabilityAddForm->handleRequest($request);
 
+        $unavailabilityRepeatedForm = $this->createForm(UnavailabilityRepeatedFormType::class);
+        $unavailabilityRepeatedForm->handleRequest($request);
+
         if ($vacationAddForm->isSubmitted() && $vacationAddForm->isValid()) {
             /** @var Vacation $newVacation */
             $newVacation = $vacationAddForm->getData();
@@ -146,6 +150,32 @@ class PlanningController extends AbstractController
             /** @var Unavailability $newUnavailability */
             $newUnavailability = $unavailabilityAddForm->getData();
             $newUnavailability->setAgenda($agenda);
+            $newUnavailability->setIsRepeated(false);
+            $unavailabilityRepository->save($newUnavailability, true);
+            $success = true;
+        } elseif ($unavailabilityRepeatedForm->isSubmitted() && $unavailabilityRepeatedForm->isValid()) {
+            /** @var Unavailability $newUnavailability */
+            $newUnavailability = $unavailabilityRepeatedForm->getData();
+            $newUnavailability->setAgenda($agenda);
+
+            /** @var string $dayStartRealname */
+            $dayStartRealname = $unavailabilityRepeatedForm->get('startDay')->getData();
+            /** @var string $dayEndRealname */
+            $dayEndRealname = $unavailabilityRepeatedForm->get('endDay')->getData();
+
+            /** @var \DateTime $dayStartTime */
+            $dayStartTime = $unavailabilityRepeatedForm->get('startDayTime')->getData();
+            /** @var \DateTime $dayEndTime */
+            $dayEndTime = $unavailabilityRepeatedForm->get('endDayTime')->getData();
+
+
+            // create the datetime for passing only the day and hours on. it creates a datetime from 'now'.
+            $dayStart = new \DateTime("$dayStartRealname {$dayStartTime->format('H:i')}");
+            $dayEnd = new \DateTime("$dayEndRealname {$dayEndTime->format('H:i')}");
+            $newUnavailability->setDateDeb($dayStart);
+            $newUnavailability->setDateEnd($dayEnd);
+
+            $newUnavailability->setIsRepeated(true);
             $unavailabilityRepository->save($newUnavailability, true);
             $success = true;
         }
@@ -155,6 +185,7 @@ class PlanningController extends AbstractController
             'veto' => $user,
             'vacation_add_form' => $vacationAddForm,
             'unavailability_add_form' => $unavailabilityAddForm,
+            'unavailability_add_repeated_Form' => $unavailabilityRepeatedForm,
             'success' => $success,
         ]);
     }
