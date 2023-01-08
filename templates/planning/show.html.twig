@@ -36,7 +36,7 @@
                     <tr>
                         {% for day in agenda.days %}
                             <td>
-                                Rendez-vous possible de {{ day.startHour|date('H:i') }}h à {{ day.endHour|date('H:i') }}h
+                                Rendez-vous possible de <i>{{ day.startHour|date('H:i') }}h</i> à  <i>{{ day.endHour|date('H:i') }}h</i>
                             </td>
                         {% endfor %}
                     </tr>
@@ -57,13 +57,23 @@
                             </ul>
 
                             {% if not hasAppInTd %}
-                                <p>///////</p>
+                                <p>X</p>
                             {% endif %}
                         </td>
                     {% endfor %}
                     </tr>
                     </tbody>
                 </table>
+                <h3 class="text-primary">Absences</h3>
+                {% if unavailabilities is not empty %}
+                    <ul>
+                        {% for u in unavailabilities %}
+                            <li>{{ u.lib }} - {{ u.dateDeb|format_datetime }} {{ u.dateEnd|format_datetime }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-secondary" style="text-align: center;">Il n'y a aucune absence signalée pour la semaine en cours.</p>
+                {% endif %}
                 <div class="d-flex" style="justify-content: space-around; align-items: center;">
                     <a class="btn btn-outline-primary" href="?offset={{ weekOffset-1 }}"><i class="fa-sharp fa-solid fa-arrow-left"></i></a>
                     <p style="margin-bottom: 0;" class="text-secondary">Semaine: {{ (weekOffset > 0 ? '+' : '') ~ weekOffset }}</p>

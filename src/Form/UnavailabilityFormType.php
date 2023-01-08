@@ -30,10 +30,6 @@ class UnavailabilityFormType extends AbstractType
                 'label' => 'Date de fin',
                 'years' => range($curYear, $curYear + 10),
             ])
-            ->add('isRepeated', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Répétition de l\'absence, (dans ce cas c\'est le jour dans la semaine est pris en compte)',
-            ])
         ;
     }
 
