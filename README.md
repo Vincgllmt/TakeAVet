@@ -63,3 +63,7 @@ composer test
 admin@take.vet
 admin
 ````
+
+## Le site Takeavet
+
+- Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
