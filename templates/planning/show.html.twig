@@ -41,6 +41,15 @@
                         {% endfor %}
                     </tr>
                     <tr>
+                        {% for day in agenda.days %}
+                            <td>
+                                {% for u in unavailabilities %}
+                                    {{ u.lib }}
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
                     {% for day in agenda.days %}
                         <td>
                             {% set dateDay = ("Sunday + #{day.day} days"|date("U")) %}
@@ -57,7 +66,7 @@
                             </ul>
 
                             {% if not hasAppInTd %}
-                                <p>///////</p>
+                                <p>X</p>
                             {% endif %}
                         </td>
                     {% endfor %}

@@ -35,7 +35,7 @@ class PlanningController extends AbstractController
     #[Route('/planning/{id}/',
         name: 'app_planning_show',
         requirements: ['id' => "\d+"])]
-    public function show(Agenda $agenda, AppointmentRepository $appointmentRepository, VacationRepository $vacationRepository, Request $request): Response
+    public function show(Agenda $agenda, AppointmentRepository $appointmentRepository, UnavailabilityRepository $unavailabilityRepository, VacationRepository $vacationRepository, Request $request): Response
     {
         $weekOffset = $request->query->get('offset', 0);
 
@@ -54,6 +54,7 @@ class PlanningController extends AbstractController
             'lastDayOfWeek' => $lastDayOfWeek,
             'weekOffset' => $weekOffset,
             'vacations' => $vacations,
+            'unavailabilities' => $unavailabilityRepository->findAllOnWeek($agenda, $firstDayOfWeek),
         ]);
     }
 
