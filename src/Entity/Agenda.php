@@ -166,10 +166,7 @@ class Agenda
         $agendaDay = $agendaDayRepository->findAndCheckAt($dayNumber, $this, $dateTime, $appointmentType->getDuration());
 
         // the appointment can be taken on this day at this time for this vet (with no verification on the already existing appointments)
-        $isDateValidWithDays = null !== $agendaDay;
-
-        // TODO: canTakeAt
-        return $isDateValidWithDays;
+        return null !== $agendaDay;
     }
 
     /**
