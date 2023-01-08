@@ -34,7 +34,10 @@ composer install # to install all deps
 ```shell
 composer start
 ```
-
+- Lancer le projet sur une machine windows :
+```shell
+symfony serve
+```
 - Vérifier le code avec l'outil Cs Fixer :
 ````shell
 composer test:cs
