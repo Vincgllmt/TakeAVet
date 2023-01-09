@@ -59,7 +59,7 @@ Dans le fichier `.env.local`, indiquez votre URL de base de données.
 DATABASE_URL="mysql://root:admin@127.0.0.1:3306/TAKEAVET_DEV?serverVersion=8&charset=utf8mb4"
 ```
 
-Avec cette suite de commands.
+Avec cette suite de commandes.
 
 ```shell
 cp .env .env.local
@@ -107,11 +107,11 @@ composer test
 
 Voici la liste des identifiants qui sont générés par les fixtures dans le projet.
 
-| Email                  | Mot de passe | Type de compte      |
-|------------------------|--------------|---------------------|
-| admin.take.vet         | admin        | Client (ROLE_ADMIN) |
-| client-XXX@exemple.com | test         | Client              |
-| veto-XXX@exemple.com   | test         | Vétérinaire         |
+| Email               | Mot de passe | Type de compte      |
+|---------------------|--------------|---------------------|
+| admin.take.vet      | admin        | Client (ROLE_ADMIN) |
+| client-XXX@take.vet | test         | Client              |
+| veto-XXX@take.vet   | test         | Vétérinaire         |
 
 Fichiers de données
 
