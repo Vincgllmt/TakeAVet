@@ -4,6 +4,23 @@
 
 Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétérinaire et clients en Symfony.
 
+## Table des matières
+
+<!-- TOC -->
+* [Take'A'Vet (SAE 3.01)](#takea--vet--sae-301-)
+    * [Table des matières](#table-des-matières)
+    * [Les auteurs du projet](#les-auteurs-du-projet)
+    * [Les outils](#les-outils)
+    * [Pour commencer](#pour-commencer)
+    * [Autres Commandes](#autres-commandes)
+    * [Données](#données)
+        * [Identifiants](#identifiants)
+    * [Fonctionnalités](#fonctionnalités)
+        * [Vétérinaire](#vétérinaire)
+        * [Client](#client)
+        * [Admin](#admin)
+    * [Aperçu](#aperu)
+<!-- TOC -->
 ## Les auteurs du projet
 
 - Alexis Udycz
@@ -20,57 +37,106 @@ Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétér
 - Zenstruck/foundry
 - EasyAdmin
 - Orm-fixtures
+- EasyAdmin2
+- Imagine
+- FontAwesome
 
-## Commandes
+## Pour commencer
 
-- "Getting Started"
+- Installation du projet
 ```shell
 git clone https://iut-info.univ-reims.fr/gitlab/udyc0001/sae3-01.git ./takeavet
 cd ./takeavet/
-composer install # to install all deps
+# Pour installer toutes les dépendances du projets
+composer install 
 ```
 
-- Lancer le projet sur une machine linux :
+- Configuration du projet.
+
+Dans le fichier `.env.local`, indiquez votre URL de base de données.
+
+```ini
+DATABASE_URL="mysql://root:admin@127.0.0.1:3306/TAKEAVET_DEV?serverVersion=8&charset=utf8mb4"
+```
+
+Avec cette suite de commands.
+
 ```shell
-composer start
-```
-- Lancer le projet sur une machine windows :
-```shell
-symfony serve
-```
-- Vérifier le code avec l'outil Cs Fixer :
-````shell
-composer test:cs
-````
+cp .env .env.local
 
-- Corriger le code avec l'outil Cs Fixer :
-````shell
-composer fix:cs
-````
+# Modifier le fichier .env.local avec votre DATABASE_URL
 
-- Générer des données factices :
-````shell
+composer migrate
 composer db
-````
+```
 
-- Générer tous les tests :
-````shell
+- Lancer le projet dans l'environnement de développement..
+
+| Avec Composer    | Avec Symfony Console |
+|------------------|----------------------|
+| `composer start` | `symfony serve`      |
+## Autres Commandes
+
+- Vérifier le code avec l'outil Cs Fixer :
+```shell
+composer test:cs
+```
+
+- Corriger le code avec l'outil PHP-CS-Fixer.
+```shell
+composer fix:cs
+```
+
+- Créer une nouvelle migration pour la base de données.
+```shell
+composer migrate
+```
+
+- Générer des données factices.
+```shell
+composer db
+```
+
+- Générer tous les tests.
+```shell
 composer test
-````
+```
+## Données
 
-- Identifiants pour la fixture :
-````shell
-admin@take.vet
-admin
-````
+### Identifiants
 
-## Le site Takeavet
+Voici la liste des identifiants qui sont générés par les fixtures dans le projet.
 
-- Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
+| Email                  | Mot de passe | Type de compte      |
+|------------------------|--------------|---------------------|
+| admin.take.vet         | admin        | Client (ROLE_ADMIN) |
+| client-XXX@exemple.com | test         | Client              |
+| veto-XXX@exemple.com   | test         | Vétérinaire         |
+
+Fichiers de données
+
+| Fichier                                            | Description                                                                                           |
+|----------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| [animals.json](src/DataFixtures/data/animals.json) | Liste de nom d'animaux pour la factory [CategoryFixtures.php](src/DataFixtures/CategoryFixtures.php). |
+## Fonctionnalités
+
+- [X] Gestion automatisée de rendez-vous.
+- [X] Gestion et affichage des plannings.
+- [X] Foire aux questions pour utilisateur et vétérinaire
+- [X] Gestion de vos animaux et de leurs vaccins.
+- [ ] ...
 
 ### Vétérinaire
 Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récapitulatifs des animaux, modifier votre planning etc...
 ### Client
 En tant que client vous pouvez enregistrer vos animaux, voir leurs possible récapitulatifs, voir le planning des vétérinaires et prendre rendez vous.
 ### Admin
-En tant qu'Admin vous avez accès au dashboard
+En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous permet d'ajouter facilement des utilisateurs, des animaux et de supprimer des messages dans la foire aux questions, ainsi que de nombreuses autres possibilités.
+
+## Aperçu
+### Accueil
+![l'Accueil du site](img.png)
+### Planning
+![Planning](img_1.png)
+### Page de contact
+![Contact](img_2.png)
