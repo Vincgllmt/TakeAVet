@@ -4,6 +4,22 @@
 
 Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétérinaire et clients en Symfony.
 
+## Table des matières
+
+<!-- TOC -->
+* [Take'A'Vet (SAE 3.01)](#takea--vet--sae-301-)
+    * [Table des matières](#table-des-matières)
+    * [Les auteurs du projet](#les-auteurs-du-projet)
+    * [Les outils](#les-outils)
+    * [Pour commencer](#pour-commencer)
+    * [Autres Commandes](#autres-commandes)
+    * [Données](#données)
+        * [Identifiants](#identifiants)
+    * [Fonctionnalités](#fonctionnalités)
+        * [Vétérinaire](#vétérinaire)
+        * [Client](#client)
+        * [Admin](#admin)
+<!-- TOC -->
 ## Les auteurs du projet
 
 - Alexis Udycz
