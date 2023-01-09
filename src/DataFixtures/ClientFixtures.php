@@ -29,5 +29,7 @@ class ClientFixtures extends Fixture
                 'tel' => ClientFactory::faker()->boolean() ? ClientFactory::faker()->phoneNumber() : null,
             ];
         });
+
+        $manager->flush();
     }
 }
