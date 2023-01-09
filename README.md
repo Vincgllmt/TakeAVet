@@ -83,6 +83,14 @@ admin@take.vet
 admin
 ````
 
+## Fonctionnalités
+
+- [X] Gestion automatisée de rendez-vous.
+- [X] Gestion et affichage des plannings.
+- [X] Foire aux questions pour utilisateur et vétérinaire
+- [X] Gestion de vos animaux et de leurs vaccins.
+- [ ] ...
+
 ## Le site Takeavet
 
 - Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
