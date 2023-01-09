@@ -59,7 +59,7 @@ Dans le fichier `.env.local`, indiquez votre URL de base de données.
 DATABASE_URL="mysql://root:admin@127.0.0.1:3306/TAKEAVET_DEV?serverVersion=8&charset=utf8mb4"
 ```
 
-Avec cette suite de commands.
+Avec cette suite de commandes.
 
 ```shell
 cp .env .env.local
