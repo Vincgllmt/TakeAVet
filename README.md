@@ -36,6 +36,9 @@ Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétér
 - Zenstruck/foundry
 - EasyAdmin
 - Orm-fixtures
+- EasyAdmin2
+- Imagine
+- FontAwesome
 
 ## Commandes
 
