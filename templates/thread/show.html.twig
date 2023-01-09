@@ -9,7 +9,17 @@
         <h2 class="m-3">
             <span class="thread__tag">Thread #{{ thread.id }}:</span>
             {{ thread.lib }}
+            {% if thread.resolved %}
+                <span class="badge text-bg-info">Question résolue</span>
+            {% endif %}
         </h2>
+
+        {% if is_owner or is_granted('ROLE_ADMIN') or app.user.veto|default(false) %}
+            {{ form_start(buttonsForm) }}
+            {{ form_widget(buttonsForm) }}
+            {{ form_end(buttonsForm) }}
+        {% endif %}
+
         <p class="thread__description">
             {{ thread.message }}
         </p>

@@ -6,7 +6,7 @@ use App\Factory\CategoryAnimalFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class CategoryFixtures extends Fixture
+class CategoryAnimalFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
