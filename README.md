@@ -134,3 +134,9 @@ En tant que client vous pouvez enregistrer vos animaux, voir leurs possible réc
 En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous permet d'ajouter facilement des utilisateurs, des animaux et de supprimer des messages dans la foire aux questions, ainsi que de nombreuses autres possibilités.
 
 ## Aperçu
+### Accueil
+![l'Accueil du site](img.png)
+### Planning
+![Planning](img_1.png)
+### Page de contact
+![Contact](img_2.png)
