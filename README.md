@@ -74,39 +74,32 @@ composer db
 | Avec Composer    | Avec Symfony Console |
 |------------------|----------------------|
 | `composer start` | `symfony serve`      |
-- Lancer le projet sur une machine linux :
-```shell
-composer start
-```
-- Lancer le projet sur une machine windows :
-```shell
-symfony serve
-```
+## Autres Commandes
+
 - Vérifier le code avec l'outil Cs Fixer :
-````shell
+```shell
 composer test:cs
-````
+```
 
-- Corriger le code avec l'outil Cs Fixer :
-````shell
+- Corriger le code avec l'outil PHP-CS-Fixer.
+```shell
 composer fix:cs
-````
+```
 
-- Générer des données factices :
-````shell
+- Créer une nouvelle migration pour la base de données.
+```shell
+composer migrate
+```
+
+- Générer des données factices.
+```shell
 composer db
-````
+```
 
-- Générer tous les tests :
-````shell
+- Générer tous les tests.
+```shell
 composer test
-````
-
-- Identifiants pour la fixture :
-````shell
-admin@take.vet
-admin
-````
+```
 
 ## Fonctionnalités
 
