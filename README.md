@@ -19,6 +19,7 @@ Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétér
         * [Vétérinaire](#vétérinaire)
         * [Client](#client)
         * [Admin](#admin)
+    * [Aperçu](#aperu)
 <!-- TOC -->
 ## Les auteurs du projet
 
@@ -131,3 +132,5 @@ Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récap
 En tant que client vous pouvez enregistrer vos animaux, voir leurs possible récapitulatifs, voir le planning des vétérinaires et prendre rendez vous.
 ### Admin
 En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous permet d'ajouter facilement des utilisateurs, des animaux et de supprimer des messages dans la foire aux questions, ainsi que de nombreuses autres possibilités.
+
+## Aperçu
