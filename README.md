@@ -40,14 +40,16 @@ Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétér
 - Imagine
 - FontAwesome
 
-## Commandes
+## Pour commencer
 
-- "Getting Started"
+- Installation du projet
 ```shell
 git clone https://iut-info.univ-reims.fr/gitlab/udyc0001/sae3-01.git ./takeavet
 cd ./takeavet/
-composer install # to install all deps
+# Pour installer toutes les dépendances du projets
+composer install 
 ```
+
 
 - Lancer le projet sur une machine linux :
 ```shell
@@ -91,13 +93,9 @@ admin
 - [X] Gestion de vos animaux et de leurs vaccins.
 - [ ] ...
 
-## Le site Takeavet
-
-- Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
-
 ### Vétérinaire
 Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récapitulatifs des animaux, modifier votre planning etc...
 ### Client
 En tant que client vous pouvez enregistrer vos animaux, voir leurs possible récapitulatifs, voir le planning des vétérinaires et prendre rendez vous.
 ### Admin
-En tant qu'Admin vous avez accès au dashboard
+En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous permet d'ajouter facilement des utilisateurs, des animaux et de supprimer des messages dans la foire aux questions, ainsi que de nombreuses autres possibilités.
