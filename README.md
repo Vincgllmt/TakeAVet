@@ -107,11 +107,11 @@ composer test
 
 Voici la liste des identifiants qui sont générés par les fixtures dans le projet.
 
-| Email                  | Mot de passe | Type de compte      |
-|------------------------|--------------|---------------------|
-| admin.take.vet         | admin        | Client (ROLE_ADMIN) |
-| client-XXX@exemple.com | test         | Client              |
-| veto-XXX@exemple.com   | test         | Vétérinaire         |
+| Email               | Mot de passe | Type de compte      |
+|---------------------|--------------|---------------------|
+| admin.take.vet      | admin        | Client (ROLE_ADMIN) |
+| client-XXX@take.vet | test         | Client              |
+| veto-XXX@take.vet   | test         | Vétérinaire         |
 
 Fichiers de données
 
