@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vaccine;
+use App\Form\VaccineFormType;
 use App\Repository\VaccineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
