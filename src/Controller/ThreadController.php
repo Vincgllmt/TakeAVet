@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
+use App\Entity\Veto;
 use App\Form\ThreadFormType;
 use App\Form\ThreadReplyFormType;
 use App\Repository\ThreadMessageRepository;
 use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,8 +37,30 @@ class ThreadController extends AbstractController
     #[Route('/threads/{id}',
         name: 'app_threads_show',
         requirements: ['id' => "\d+"])]
-    public function show(Thread $thread, ThreadMessageRepository $messageRepository, Request $request): Response
+    public function show(Thread $thread, ThreadRepository $threadRepository, ThreadMessageRepository $messageRepository, Request $request): Response
     {
+        $user = $this->getUser();
+        $buttonsForm = $this->createFormBuilder(options: [
+            'attr' => [
+                'class' => 'd-flex align-items-center justify-content-end',
+            ], ])
+            ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'warning' : 'success')], 'label' => $thread->isResolved() ? 'Re-Ouvrir le Thread' : 'Fermer le Thread'])
+            ->getForm();
+
+        $buttonsForm->handleRequest($request);
+
+        if ($buttonsForm->isSubmitted() && $buttonsForm->isValid()) {
+            /* @var SubmitButton $closeOrReopenButton */
+            $closeOrReopenButton = $buttonsForm->get('closeOrReopen');
+
+            if ($closeOrReopenButton->isClicked() && ($this->isGranted('ROLE_ADMIN') || $user instanceof Veto || $thread->getAuthor() === $user)) {
+                $thread->setResolved(!$thread->isResolved());
+                $threadRepository->save($thread, true);
+
+                return $this->redirectToRoute('app_threads_show', ['id' => $thread->getId()]);
+            }
+        }
+
         $reply = new ThreadMessage();
 
         $reply->setUser($this->getUser());
@@ -57,6 +81,8 @@ class ThreadController extends AbstractController
             'thread' => $thread,
             'messages' => $messageRepository->findSortByVeto($thread),
             'replyForm' => $replyForm,
+            'is_owner' => $thread->getAuthor() === $this->getUser(),
+            'buttonsForm' => $buttonsForm,
         ]);
     }
 
