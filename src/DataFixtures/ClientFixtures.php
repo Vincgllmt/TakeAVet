@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Factory\AddressFactory;
 use App\Factory\ClientFactory;
 use App\Factory\ThreadFactory;
 use App\Factory\ThreadMessageFactory;
@@ -14,22 +15,9 @@ class ClientFixtures extends Fixture
     {
         ClientFactory::createMany(15, function () {
             return [
-                // create Thread
-                'threads' => ThreadFactory::createMany(ClientFactory::faker()->numberBetween(0, 5), function () {
-                    return [
-                        // create ThreadMessage
-                        'replies' => ThreadMessageFactory::createMany(ClientFactory::faker()->numberBetween(0, 5), function () {
-                            return [
-                                // set to a random author
-                                'user' => ClientFactory::random(),
-                            ];
-                        }),
-                    ];
-                }),
                 'tel' => ClientFactory::faker()->boolean() ? ClientFactory::faker()->phoneNumber() : null,
+                'adresses' => AddressFactory::createMany(ClientFactory::faker()->numberBetween(1, 3)),
             ];
         });
-
-        $manager->flush();
     }
 }
