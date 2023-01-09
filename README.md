@@ -50,7 +50,30 @@ cd ./takeavet/
 composer install 
 ```
 
+- Configuration du projet.
 
+Dans le fichier `.env.local`, indiquez votre URL de base de données.
+
+```ini
+DATABASE_URL="mysql://root:admin@127.0.0.1:3306/TAKEAVET_DEV?serverVersion=8&charset=utf8mb4"
+```
+
+Avec cette suite de commands.
+
+```shell
+cp .env .env.local
+
+# Modifier le fichier .env.local avec votre DATABASE_URL
+
+composer migrate
+composer db
+```
+
+- Lancer le projet dans l'environnement de développement..
+
+| Avec Composer    | Avec Symfony Console |
+|------------------|----------------------|
+| `composer start` | `symfony serve`      |
 - Lancer le projet sur une machine linux :
 ```shell
 composer start
