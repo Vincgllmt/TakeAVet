@@ -100,7 +100,23 @@ composer db
 ```shell
 composer test
 ```
+## Données
 
+### Identifiants
+
+Voici la liste des identifiants qui sont générés par les fixtures dans le projet.
+
+| Email                | Mot de passe | Type de compte      |
+|----------------------|--------------|---------------------|
+| admin.take.vet       | admin        | Client (ROLE_ADMIN) |
+| user-XXX@exemple.com | test         | Client              |
+| user-XXX@exemple.com | test         | Vétérinaire         |
+
+Fichiers de données
+
+| Fichier                                            | Description                                                                                           |
+|----------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| [animals.json](src/DataFixtures/data/animals.json) | Liste de nom d'animaux pour la factory [CategoryFixtures.php](src/DataFixtures/CategoryFixtures.php). |
 ## Fonctionnalités
 
 - [X] Gestion automatisée de rendez-vous.
