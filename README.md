@@ -34,7 +34,10 @@ composer install # to install all deps
 ```shell
 composer start
 ```
-
+- Lancer le projet sur une machine windows :
+```shell
+symfony serve
+```
 - Vérifier le code avec l'outil Cs Fixer :
 ````shell
 composer test:cs
@@ -60,3 +63,14 @@ composer test
 admin@take.vet
 admin
 ````
+
+## Le site Takeavet
+
+- Une fois la commande ``` Symfony serve ``` ou ```composer start``` executé vous pouvez aller sur le site en saisissant l'adresse suivante : ```localhost:8000/``` 
+
+### Vétérinaire
+Si vous êtes connecté en tant que Vétérinaire vous pourrez créer des récapitulatifs des animaux, modifier votre planning etc...
+### Client
+En tant que client vous pouvez enregistrer vos animaux, voir leurs possible récapitulatifs, voir le planning des vétérinaires et prendre rendez vous.
+### Admin
+En tant qu'Admin vous avez accès au dashboard
