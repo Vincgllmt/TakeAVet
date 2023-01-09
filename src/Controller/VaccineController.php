@@ -2,11 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Address;
-use App\Entity\Client;
-use App\Entity\User;
-use App\Form\AddressFormType;
-use App\Repository\AddressRepository;
+use App\Entity\Vaccine;
 use App\Repository\VaccineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +11,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VaccineController extends AbstractController
 {
-    #[Route('/address', name: 'app_address')]
+    #[Route('/vaccine', name: 'app_vaccine')]
     public function index(VaccineRepository $repository, Request $request): Response
     {
+        $createForm = $this->createForm(VaccineFormType::class);
+        $createForm->handleRequest($request);
 
+        if ($createForm->isSubmitted() && $createForm->isValid()) {
+            /** @var $vaccine Vaccine */
+            $vaccine = $createForm->getData();
+            $repository->save($vaccine, true);
+        }
+
+        return $this->renderForm('vaccines/index.html.twig', [
+            'create_form' => $createForm,
+        ]);
     }
 }
