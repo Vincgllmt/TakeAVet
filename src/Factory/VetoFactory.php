@@ -46,6 +46,18 @@ final class VetoFactory extends UserFactory
         return $self;
     }
 
+    /**
+     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
+     */
+    protected function getDefaults(): array
+    {
+        $idUnique = self::faker()->unique()->numerify();
+
+        return array_merge(parent::getDefaults(), [
+            'email' => "veto-$idUnique@take.vet",
+        ]);
+    }
+
     protected static function getClass(): string
     {
         return Veto::class;
