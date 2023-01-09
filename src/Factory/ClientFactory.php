@@ -40,8 +40,10 @@ final class ClientFactory extends UserFactory
      */
     protected function getDefaults(): array
     {
+        $idUnique = self::faker()->unique()->numerify();
         return array_merge(parent::getDefaults(), [
             'isAnHusbandry' => self::faker()->boolean(),
+            'email' => "client-$idUnique@take.vet",
         ]);
     }
 
