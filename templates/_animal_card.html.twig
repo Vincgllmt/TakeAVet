@@ -15,5 +15,11 @@
             <strong>Téléphone (Client):</strong> <span
                     class="{% if client.tel is null %}text-secondary{% endif %}">{{ client.tel|default('<Rien>') }}</span>
         </p>
+        <p><strong>Vaccins:</strong></p>
+        <ul>
+            {% for v in animal.vaccines %}
+                <li>{{ v.name }} (Fait le <i>{{ v.datenext|format_date }}</i>, prochain le <i>{{ v.datenext|format_date }})</i></li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
