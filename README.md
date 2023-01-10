@@ -109,7 +109,7 @@ Voici la liste des identifiants qui sont générés par les fixtures dans le pro
 
 | Email               | Mot de passe | Type de compte      |
 |---------------------|--------------|---------------------|
-| admin.take.vet      | admin        | Client (ROLE_ADMIN) |
+| admin@take.vet      | admin        | Client (ROLE_ADMIN) |
 | client-XXX@take.vet | test         | Client              |
 | veto-XXX@take.vet   | test         | Vétérinaire         |
 
@@ -135,8 +135,8 @@ En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous 
 
 ## Aperçu
 ### Accueil
-![l'Accueil du site](img.png)
+![l'Accueil du site](/Accueil.PNG)
 ### Planning
-![Planning](img_1.png)
+![Planning](/planning.png)
 ### Page de contact
-![Contact](img_2.png)
+![Contact](/contact.png)
