@@ -26,6 +26,10 @@ class Vaccine
     #[ORM\ManyToOne]
     private ?Animal $Animal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vaccines')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Animal $animal = null;
+
     public function getId(): ?int
     {
         return $this->id;
