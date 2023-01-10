@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Entity\CategoryAnimal;
+use App\Repository\CategoryAnimalRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -37,6 +38,12 @@ class AnimalCrudController extends AbstractCrudController
                 ->formatValue(function (?string $value, Animal $entity) {
                     return $entity->getCategoryAnimal()?->getName();
                 })
+                ->setFormTypeOption('choice_label', 'name')
+                ->setFormTypeOption('query_builder', function (CategoryAnimalRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                })->hideOnForm()
+
         ];
     }
 

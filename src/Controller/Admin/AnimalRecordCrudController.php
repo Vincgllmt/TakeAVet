@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Entity\AnimalRecord;
+use App\Form\AnimalType;
+use App\Repository\AnimalRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -32,7 +34,7 @@ class AnimalRecordCrudController extends AbstractCrudController
                 ->setFormType(Animal::class)
                 ->formatValue(function (?string $value, AnimalRecord $entity) {
                     return $entity->getAnimal()?->getName();
-                })
+                })->hideOnForm()
         ];
     }
 }
