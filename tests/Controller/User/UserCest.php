@@ -22,4 +22,23 @@ class UserCest
         $I->seeCurrentUrlEquals('/me');
         $I->seeResponseCodeIs(200);
     }
+
+    public function userCanEditHim(ControllerTester $I) {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/me');
+        $I->seeCurrentUrlEquals('/me');
+        $I->seeResponseCodeIs(200);
+        $I->see('Mes Informations');
+        $I->fillField('user_info_change_form[lastName]', 'Gis');
+        $I->fillField('user_info_change_form[firstName]', 'José');
+        $I->fillField('user_info_change_form[tel]', '0606060606');
+        $I->click('Mettre à jour les informations');
+        $I->seeResponseCodeIs(200);
+        $I->seeInField('user_info_change_form[lastName]', 'Gis');
+        $I->seeInField('user_info_change_form[firstName]', 'José');
+    }
+
 }
