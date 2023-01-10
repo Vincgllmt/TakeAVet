@@ -4,11 +4,11 @@ namespace App\Form;
 
 use App\Entity\Vaccine;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 
 class VaccineFormType extends AbstractType
 {
@@ -18,18 +18,20 @@ class VaccineFormType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
-                    'placeholder' => 'Exemple: Pfizer',
+                    'placeholder' => 'Exemple: Maladie de Carré, hépatite, leptospirose, rage,  parvovirose...',
                 ],
             ])
-            ->add('dateNext', \DateTimeInterface::class, [
-                    'label' => 'Date prochain vaccin',
+            ->add('dateNext', DateType::class, [
+                    'label' => 'Date du prochain vaccin',
+                    'years' => range(date('Y') - 20, date('Y') + 20),
                     'attr' => [
                         'placeholder' => 'Exemple: 01/01/2024',
                     ],
                 ]
             )
-            ->add('dateCurrent', \DateTimeInterface::class, [
-                    'label' => 'Date actuelle vaccin',
+            ->add('dateCurrent', DateType::class, [
+                    'label' => 'Date actuelle du vaccin',
+                    'years' => range(date('Y') - 20, date('Y') + 20),
                     'attr' => [
                         'placeholder' => 'Date à laquelle le vaccin a été fait',
                 ],
