@@ -28,7 +28,7 @@ class Thread
     #[ORM\JoinColumn(nullable: true)]
     private ?User $author = null;
 
-    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class)]
+    #[ORM\OneToMany(mappedBy: 'thread', targetEntity: ThreadMessage::class, cascade: ['remove'])]
     private Collection $replies;
 
     #[ORM\Column]
