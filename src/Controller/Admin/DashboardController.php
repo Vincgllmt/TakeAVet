@@ -2,9 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Agenda;
+use App\Entity\AgendaDay;
+use App\Entity\Animal;
+use App\Entity\AnimalRecord;
+use App\Entity\CategoryAnimal;
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
+use App\Entity\Unavailability;
 use App\Entity\User;
+use App\Entity\Vacation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -36,6 +43,15 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Threads');
         yield MenuItem::linkToCrud('Threads', 'fa fa-database', Thread::class);
         yield MenuItem::linkToCrud('Messages', 'fa fa-database', ThreadMessage::class);
+        yield MenuItem::section('Animal');
+        yield MenuItem::linkToCrud('Category', 'fa fa-database', CategoryAnimal::class);
+        yield MenuItem::linkToCrud('Animal', 'fa fa-database', Animal::class);
+        yield MenuItem::linkToCrud('Record', 'fa fa-database', AnimalRecord::class);
+        yield MenuItem::section('Agenda');
+        yield MenuItem::linkToCrud('Agenda', 'fa fa-database', Agenda::class);
+        yield MenuItem::linkToCrud('Unvailbilities', 'fa fa-database', Unavailability::class);
+        yield MenuItem::linkToCrud('Jour', 'fa fa-database', AgendaDay::class);
+        yield MenuItem::linkToCrud('Vacance', 'fa fa-database', Vacation::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::section('Admin');
