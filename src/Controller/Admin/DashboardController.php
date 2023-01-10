@@ -8,6 +8,7 @@ use App\Entity\AgendaDay;
 use App\Entity\Animal;
 use App\Entity\AnimalRecord;
 use App\Entity\CategoryAnimal;
+use App\Entity\Receipt;
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
 use App\Entity\Unavailability;
@@ -58,6 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::linkToCrud('Address', 'fa fa-database', Address::class);
+        yield MenuItem::linkToCrud('Receipt', 'fa fa-database', Receipt::class);
         yield MenuItem::section('Admin');
 
         yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
