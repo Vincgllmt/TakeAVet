@@ -23,6 +23,9 @@ class Vaccine
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateCurrent = null;
 
+    #[ORM\ManyToOne]
+    private ?Animal $Animal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Vaccine
     public function setDateCurrent(?\DateTimeInterface $dateCurrent): self
     {
         $this->dateCurrent = $dateCurrent;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->Animal;
+    }
+
+    public function setAnimal(?Animal $Animal): self
+    {
+        $this->Animal = $Animal;
 
         return $this;
     }
