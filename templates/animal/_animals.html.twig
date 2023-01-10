@@ -1,6 +1,6 @@
 <main>
     <div class="main-content">
-        <div class="main-content__home">
+        <div>
             <h1 class="title">Mes animaux</h1>
             <p style="text-align: center">
             <a class="btn btn-primary" href="{{ path('app_animal_create') }}" role="button"> Ajouter un nouvel animal</a>
@@ -14,7 +14,9 @@
                     </div>
                     <p class="animal_date">{{ animal.birthday| date("d-m-Y") }}</p>
                     {% if animal.photoPath is not null %}
-                        <img src="{{ asset('uploads/animals/' ~ animal.photoPath) }}" />
+                        <div>
+                        <img class="img-small" src="{{ asset('uploads/animals/' ~ animal.photoPath) }}" />
+                        </div>
                     {% endif %}
                     <textarea class="form-control"> </textarea>
                     <div class="animal_part">
