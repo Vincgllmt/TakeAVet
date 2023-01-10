@@ -4,6 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\CategoryAnimal;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CategoryAnimalCrudController extends AbstractCrudController
 {
@@ -11,8 +14,6 @@ class CategoryAnimalCrudController extends AbstractCrudController
     {
         return CategoryAnimal::class;
     }
-
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -21,5 +22,5 @@ class CategoryAnimalCrudController extends AbstractCrudController
             TextEditorField::new('description'),
         ];
     }
-    */
+
 }
