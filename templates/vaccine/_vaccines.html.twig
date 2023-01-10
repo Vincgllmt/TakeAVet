@@ -1,0 +1,27 @@
+<main>
+    <div class="main-content">
+        <div class="main-content__home">
+            <h1 class="title">Mes Vaccins</h1>
+            <p style="text-align: center">
+            <a class="btn btn-primary" href="{{ path('app_vaccine_create') }}" role="button"> Ajouter un vaccin</a>
+            </p>
+            <ul class="list_animal">
+                {% for vaccine in vaccines  %}
+                <div class="list_animal_item">
+                    <div class="animal_part">
+                        <p class="animal_name">{{vaccine.name}}</p>
+                        <p class="animal-type">{{vaccine.dateCurrent |format_date}}</p>
+                        <p class="animal-type">{{vaccine.dateNext |format_date}}</p>
+                    </div>
+                    <textarea class="form-control"> </textarea>
+                    <div class="animal_part">
+                        <p class="animal_button"><a class="btn btn-success" href="{{ path('app_animal_update', {id: animal.id}) }}" role="button"> Modifier cet animal</a> </p>
+                        <p class="animal_button"><a class="btn btn-danger" href="{{ path('app_animal_delete', {id: animal.id}) }}" role="button"> Supprimer cet animal</a></p>
+                        <p class="animal_button"><a class="btn btn-success" href="{{ path('app_record_animal', {id: animal.id}) }}" role="button"> Accéder aux derniers récap !</a></p>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
