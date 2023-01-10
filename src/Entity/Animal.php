@@ -34,10 +34,10 @@ class Animal
     #[ORM\Column]
     private ?bool $isDomestic = null;
 
-    #[ORM\ManyToMany(targetEntity: Vaccine::class)]
+    #[ORM\ManyToMany(targetEntity: Vaccine::class, cascade: ['persist', 'remove'])]
     private Collection $vaccines;
 
-    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'animals')]
     private ?CategoryAnimal $CategoryAnimal = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
@@ -46,10 +46,10 @@ class Animal
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoPath = null;
 
-    #[ORM\OneToMany(mappedBy: 'Animal', targetEntity: AnimalRecord::class)]
+    #[ORM\OneToMany(mappedBy: 'Animal', targetEntity: AnimalRecord::class, cascade: ['persist', 'remove'])]
     private Collection $animalRecords;
 
-    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Appointment::class)]
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Appointment::class, cascade: ['remove'])]
     private Collection $appointments;
 
     public function __construct()

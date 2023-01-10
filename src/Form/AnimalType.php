@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use App\Entity\CategoryAnimal;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -43,6 +45,12 @@ class AnimalType extends AbstractType
                     'Non Spécifié' => 'N',
                 ],
                 'label' => 'Genre biologique',
+            ])
+            ->add('CategoryAnimal', EntityType::class, [
+                'class' => CategoryAnimal::class,
+                'choice_label' => function (CategoryAnimal $categoryAnimal) {
+                    return $categoryAnimal->getName();
+                },
             ])
             ->add('photo', FileType::class, [
                 'data_class' => null,

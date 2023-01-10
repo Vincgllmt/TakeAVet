@@ -103,8 +103,10 @@ class AppointmentRepository extends ServiceEntityRepository
             ->andWhere('ta = a.type')
             ->andWhere('DATE(a.dateApp) = :date');
 
+        $queryBuilder->andWhere('a.isCompleted = FALSE');
+
         if ($getCompleted) {
-            $queryBuilder->andWhere('a.isCompleted = TRUE');
+            $queryBuilder->orWhere('a.isCompleted = TRUE');
         }
 
         return $queryBuilder->getQuery()
@@ -126,6 +128,21 @@ class AppointmentRepository extends ServiceEntityRepository
             ->getQuery()
             ->setParameter('id', $appointmentId)
             ->setParameter('note', $note)
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function setComplete(int $appId): int
+    {
+        return $this->createQueryBuilder('a')
+            ->update()
+            ->set('a.isCompleted', 'TRUE')
+            ->where('a.id = :id')
+            ->getQuery()
+            ->setParameter('id', $appId)
             ->getSingleScalarResult();
     }
 }

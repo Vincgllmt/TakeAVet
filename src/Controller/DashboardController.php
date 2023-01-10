@@ -11,6 +11,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +32,7 @@ class DashboardController extends AbstractController
         }
 
         $appointments = $appointmentRepository->findAllOnDate($user, new \DateTime(), false);
-        dump($appointments);
+
         $currentAppointment = null;
         if (count($appointments) > 0) {
             $currentAppointment = $appointments[0];
@@ -47,6 +48,30 @@ class DashboardController extends AbstractController
             $appointmentRepository->updateNote($currentAppointment['appointment']['id'], $newNote);
         }
 
+        $buttonsForm = $this->createFormBuilder()
+            ->add('next', SubmitType::class, ['attr' => ['class' => 'btn btn-success'], 'label' => 'Finir le rendez-vous'])
+            ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer le rendez-vous'])
+            ->getForm();
+
+        $buttonsForm->handleRequest($request);
+
+        if ($buttonsForm->isSubmitted() && $buttonsForm->isValid()) {
+            /* @var SubmitButton $nextButton */
+            $nextButton = $buttonsForm->get('next');
+
+            /* @var SubmitButton $closeButton */
+            $closeButton = $buttonsForm->get('delete');
+
+            if ($closeButton->isClicked()) {
+                $appEntity = $appointmentRepository->findOneBy(['id' => $currentAppointment['appointment']['id']]);
+                $appointmentRepository->remove($appEntity, true);
+                return $this->redirectToRoute('app_dashboard');
+            } elseif ($nextButton->isClicked()) {
+                $appointmentRepository->setComplete($currentAppointment['appointment']['id']);
+                return $this->redirectToRoute('app_dashboard');
+            }
+        }
+
         return $this->renderForm('dashboard/index.html.twig', [
             'veto' => $user,
             'appointments' => $appointments,
@@ -58,6 +83,7 @@ class DashboardController extends AbstractController
                 ? $animalRepository->findOneBy(['id' => $currentAppointment['animal_id']])
                 : null,
             'note_form' => $dashboardNoteForm,
+            'buttons_form' => $buttonsForm,
         ]);
     }
 }

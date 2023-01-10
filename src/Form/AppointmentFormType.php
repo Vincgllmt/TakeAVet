@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\Animal;
 use App\Entity\TypeAppointment;
 use App\Entity\Veto;
+use App\Repository\AddressRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\TypeAppointmentRepository;
 use App\Repository\VetoRepository;
@@ -81,6 +82,11 @@ class AppointmentFormType extends AbstractType
                 'class' => Address::class,
                 'choice_label' => function (Address $address) {
                     return $address->getDisplayName();
+                },
+                'query_builder' => function (AddressRepository $addressRepository) use ($options) {
+                    return $addressRepository->createQueryBuilder('a')
+                        ->where('a.client = :client')
+                        ->setParameter('client', $options['client']);
                 },
             ])
             ->add('note', TextareaType::class, [
