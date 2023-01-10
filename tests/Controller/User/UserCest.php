@@ -41,4 +41,26 @@ class UserCest
         $I->seeInField('user_info_change_form[firstName]', 'José');
     }
 
+    public function userCanDeleteHim(ControllerTester $I) {
+        $client = ClientFactory::createOne([
+            'email' => 'testdelete111@live.fr',
+            'password' => 'test123'
+        ]);
+        $I->amOnPage('/login');
+        $I->fillField('email', 'testdelete111@live.fr');
+        $I->fillField('password', 'test123');
+        $I->click('Sign in');
+        $I->amOnPage('/me');
+        $I->seeCurrentUrlEquals('/me');
+        $I->see('Supprimer votre compte');
+        $I->click('Supprimer votre compte');
+        $I->seeCurrentUrlEquals('/');
+        $I->amOnPage('/');
+        $I->click('Se connecter');
+        $I->fillField('email', 'testdelete111@live.fr');
+        $I->fillField('password', 'test123');
+        $I->click('Sign in');
+        $I->see('Identifiants invalides.');
+    }
+
 }
