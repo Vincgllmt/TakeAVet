@@ -37,27 +37,31 @@
                 {{ include('dashboard/_animal_card.html.twig', {'animal': current_animal, 'client': current_client}) }}
             </div>
         {% endif %}
+        <hr>
+        {% if appointments is not empty %}
+            <h3>Liste des rendez-vous</h3>
+            <ul class="list-group">
+                {% for i, a in appointments %}
+                    <li class="list-group-item">
 
-        <h3>Liste des rendez-vous</h3>
-        <ul class="list-group">
-            {% for i, a in appointments %}
-                <li class="list-group-item">
+                        {% if a.appointment.isUrgent %}
+                            <span class="badge bg-warning rounded-pill">Urgent</span>
+                        {% endif %}
 
-                    {% if a.appointment.isUrgent %}
-                        <span class="badge bg-warning rounded-pill">Urgent</span>
-                    {% endif %}
+                        {% if a.appointment.isCompleted %}
+                            <span class="badge bg-success rounded-pill">Completed</span>
+                        {% elseif i == 0 %}
+                            <span class="badge bg-info rounded-pill">Actuel</span>
+                        {% else %}
+                            <span class="badge bg-secondary rounded-pill">En attente</span>
+                        {% endif %}
 
-                    {% if a.appointment.isCompleted %}
-                        <span class="badge bg-success rounded-pill">Completed</span>
-                    {% elseif i == 0 %}
-                        <span class="badge bg-info rounded-pill">Actuel</span>
-                    {% else %}
-                        <span class="badge bg-secondary rounded-pill">En attente</span>
-                    {% endif %}
-
-                    {{ a.appointment.dateApp|format_time }} - {{ a.appointment.dateEnd|format_time }} / {{ a.animal_type }}
-                </li>
-            {% endfor %}
-        </ul>
+                        {{ a.appointment.dateApp|format_time }} - {{ a.appointment.dateEnd|format_time }} / {{ a.animal_type }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3 class="text-center text-secondary ">Pas de rendez-vous aujourd'hui</h3>
+        {% endif %}
     </div>
 {% endblock %}
