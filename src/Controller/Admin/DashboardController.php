@@ -36,6 +36,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Threads');
         yield MenuItem::linkToCrud('Threads', 'fa fa-database', Thread::class);
         yield MenuItem::linkToCrud('Messages', 'fa fa-database', ThreadMessage::class);
+        yield MenuItem::section('Animal');
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::section('Admin');
