@@ -8,6 +8,9 @@
         <div class="main-content__home">
             <h1 class="title">Derniers récapitulatifs de {{ animal.name }}</h1>
         </div>
+        {% if records is empty %}
+        <p style="text-align: center"> Il n'y a pas encore de récapitulatif de rendez vous.</p>
+        {% else %}
         <ul class="list_animal">
             {% for record in records %}
             <div>
@@ -25,6 +28,7 @@
             </div>
             {% endfor %}
         </ul>
+        {% endif %}
         <p class="title"><a class="btn btn-success" href="{{ path('app_animal')}}" role="button"> Revenir a vos animaux</a> </p>
         </div>
     </main>
