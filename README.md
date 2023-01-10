@@ -135,8 +135,8 @@ En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous 
 
 ## Aperçu
 ### Accueil
-![l'Accueil du site](img.png)
+![l'Accueil du site](/Accueil.PNG)
 ### Planning
-![Planning](img_1.png)
+![Planning](/planning.png)
 ### Page de contact
-![Contact](img_2.png)
+![Contact](/contact.png)
