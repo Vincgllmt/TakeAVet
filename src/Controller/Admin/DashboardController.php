@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Animal;
 use App\Entity\CategoryAnimal;
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Messages', 'fa fa-database', ThreadMessage::class);
         yield MenuItem::section('Animal');
         yield MenuItem::linkToCrud('Category', 'fa fa-database', CategoryAnimal::class);
+        yield MenuItem::linkToCrud('Animal', 'fa fa-database', Animal::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::section('Admin');
