@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Vaccine;
 use App\Form\VaccineFormType;
 use App\Repository\VaccineRepository;
@@ -15,6 +16,15 @@ class VaccineController extends AbstractController
     #[Route('/vaccine', name: 'app_vaccine')]
     public function index(VaccineRepository $repository, Request $request): Response
     {
+        $client = $this->getUser();
+
+        if (!$client instanceof User) {
+            return $this->redirectToRoute('app_login');
+        }
+        if (!$client->isVeto()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $createForm = $this->createForm(VaccineFormType::class);
         $createForm->handleRequest($request);
 
