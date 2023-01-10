@@ -18,4 +18,13 @@ class HomeCest
         $I->seeElement('.main-content');
     }
 
+    public function contactHome(ControllerTester $I) {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/contact');
+        $I->see('Contacter le service');
+    }
+
 }
