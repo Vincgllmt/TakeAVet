@@ -44,7 +44,7 @@ class ThreadController extends AbstractController
             'attr' => [
                 'class' => 'd-flex align-items-center justify-content-end',
             ], ])
-            ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'warning' : 'success')], 'label' => $thread->isResolved() ? 'Re-Ouvrir le Thread' : 'Fermer le Thread'])
+            ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'danger' : 'success')], 'label' => $thread->isResolved() ? 'Je veux réouvrir ma question !' : 'Ma question est résolue ?'])
             ->getForm();
 
         $buttonsForm->handleRequest($request);
