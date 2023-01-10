@@ -13,9 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VaccineController extends AbstractController
 {
+
     #[Route('/vaccine/{id}',
         name: 'app_vaccine',
-        requirements ['id' => "\d+"])]
+        requirements: ['id' => "\d+"])]
     public function index(VaccineRepository $repository, Request $request): Response
     {
         $client = $this->getUser();
@@ -119,4 +120,5 @@ class VaccineController extends AbstractController
 
         return $this->redirectToRoute('app_vaccine');
     }
+
 }
