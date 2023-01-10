@@ -130,4 +130,19 @@ class AppointmentRepository extends ServiceEntityRepository
             ->setParameter('note', $note)
             ->getSingleScalarResult();
     }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function setComplete(int $appId): int
+    {
+        return $this->createQueryBuilder('a')
+            ->update()
+            ->set('a.isCompleted', 'TRUE')
+            ->where('a.id = :id')
+            ->getQuery()
+            ->setParameter('id', $appId)
+            ->getSingleScalarResult();
+    }
 }
