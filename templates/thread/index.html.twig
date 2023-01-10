@@ -50,7 +50,7 @@
                     <p class="thread__messages_item_author">{{ thread.createdAt|date('d-m-Y') }} | {{ thread.name }}</p>
                     <div class="mt-2">
                         <a class="btn btn-primary" href="{{ path('app_threads_show', {'id':  thread.id}) }}">Voir le message</a>
-                        <a class="btn btn-primary">Répondre</a>
+                        <a class="btn btn-outline-primary" href="{{ path('app_threads_show', {'id': thread.id}) ~ '#thread_reply_form' }}">Répondre</a>
                     </div>
                 </div>
             {% endfor %}
