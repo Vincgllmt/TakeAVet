@@ -8,6 +8,7 @@ use App\Entity\AnimalRecord;
 use App\Entity\CategoryAnimal;
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
+use App\Entity\Unavailability;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -46,6 +47,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Record', 'fa fa-database', AnimalRecord::class);
         yield MenuItem::section('Agenda');
         yield MenuItem::linkToCrud('Agenda', 'fa fa-database', Agenda::class);
+        yield MenuItem::linkToCrud('Unvailbilities', 'fa fa-database', Unavailability::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::section('Admin');
