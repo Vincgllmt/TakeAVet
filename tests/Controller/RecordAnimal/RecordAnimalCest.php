@@ -19,4 +19,13 @@ class RecordAnimalCest
         $I->seeResponseCodeIs(403);
     }
 
+    public function recordIdDenied(ControllerTester $I) {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/record/5');
+        $I->seeResponseCodeIs(403);
+    }
+
 }
