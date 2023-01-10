@@ -13,7 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VaccineController extends AbstractController
 {
-    #[Route('/vaccine', name: 'app_vaccine')]
+    #[Route('/vaccine/{id}',
+        name: 'app_vaccine',
+        requirements ['id' => "\d+"])]
     public function index(VaccineRepository $repository, Request $request): Response
     {
         $client = $this->getUser();
@@ -21,7 +23,7 @@ class VaccineController extends AbstractController
         if (!$client instanceof User) {
             return $this->redirectToRoute('app_login');
         }
-        if (!$client->isVeto()) {
+        if (!$client->isClient()) {
             throw $this->createAccessDeniedException();
         }
 
@@ -34,8 +36,42 @@ class VaccineController extends AbstractController
             $repository->save($vaccine, true);
         }
 
+        $vaccines = $repository->findBy(['Animal' => $client]);
+
         return $this->renderForm('vaccines/index.html.twig', [
             'create_form' => $createForm,
+            'vaccines' => $vaccines
+        ]);
+    }
+
+    #[Route('/address/update/{id}',
+        name: 'app_address_update',
+        requirements: ['id' => "\d+"])]
+    public function update(VaccineRepository $repository, Request $request, Vaccine $vaccine): Response
+    {
+        $client = $this->getUser();
+
+        if (!$client instanceof User) {
+            return $this->redirectToRoute('app_login');
+        }
+        if (!$client->isClient()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $updateForm = $this->createForm(VaccineFormType::class, $vaccine);
+        $updateForm->handleRequest($request);
+
+        if ($updateForm->isSubmitted() && $updateForm->isValid()) {
+            /** @var $vaccine Vaccine */
+            $vaccine = $updateForm->getData();
+
+            $vaccine->setAnimal(null);
+            $repository->save($vaccine, true);
+        }
+
+        return $this->renderForm('vaccine/update.html.twig', [
+            'name' => $vaccine->getName(),
+            'update_form' => $updateForm,
         ]);
     }
 }
