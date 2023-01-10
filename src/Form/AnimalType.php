@@ -73,7 +73,7 @@ class AnimalType extends AbstractType
                 'label' => 'Race',
             ])
             ->add('isDomestic', CheckboxType::class, [
-                'label' => "S'agit-il d'un animal domestic non issu d'une production animale ?",
+                'label' => "S'agit-il d'un animal domestique non issu d'une production animale ?",
                 'required' => false,
             ])
         ;
