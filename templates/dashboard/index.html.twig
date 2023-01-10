@@ -7,7 +7,7 @@
         <h1 class="text-center">Mon Dashboard</h1>
 
         {% if veto.agenda is null %}
-            <h3 class="text-center">Vous n'avais pas de planning, commencer par en créer un !</h3>
+            <h3 class="text-center">Vous n'avez pas de planning, commencez par en créer un !</h3>
             <a href="{{ path('app_planning_create') }}" class="btn btn-primary">Créer mon planning</a>
         {% else %}
             <a href="{{ path('app_planning_edit', {id: veto.agenda.id}) }}" class="btn btn-primary">Éditer mon planning</a>
