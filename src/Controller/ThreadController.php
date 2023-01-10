@@ -45,7 +45,10 @@ class ThreadController extends AbstractController
                 'class' => 'd-flex align-items-center justify-content-end',
             ], ])
             ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'danger' : 'success')], 'label' => $thread->isResolved() ? 'Je veux réouvrir ma question !' : 'Ma question est résolue ?'])
+            ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer'])
             ->getForm();
+
+        $isOwnerVetoOrAdmin = $this->isGranted('ROLE_ADMIN') || $user instanceof Veto || $thread->getAuthor() === $user;
 
         $buttonsForm->handleRequest($request);
 
@@ -54,10 +57,13 @@ class ThreadController extends AbstractController
             $closeOrReopenButton = $buttonsForm->get('closeOrReopen');
 
             if ($closeOrReopenButton->isClicked() && ($this->isGranted('ROLE_ADMIN') || $user instanceof Veto || $thread->getAuthor() === $user)) {
-                $thread->setResolved(!$thread->isResolved());
-                $threadRepository->save($thread, true);
+                if ($isOwnerVetoOrAdmin) {
+                    $thread->setResolved(!$thread->isResolved());
+                    $threadRepository->save($thread, true);
 
-                return $this->redirectToRoute('app_threads_show', ['id' => $thread->getId()]);
+                    return $this->redirectToRoute('app_threads_show', ['id' => $thread->getId()]);
+                }
+                throw $this->createAccessDeniedException();
             }
         }
 
@@ -82,6 +88,7 @@ class ThreadController extends AbstractController
             'messages' => $messageRepository->findSortByVeto($thread),
             'replyForm' => $replyForm,
             'is_owner' => $thread->getAuthor() === $this->getUser(),
+            'is_thread_admin' => $isOwnerVetoOrAdmin,
             'buttonsForm' => $buttonsForm,
         ]);
     }

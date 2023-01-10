@@ -7,7 +7,7 @@
 {% block main %}
     <div class="main-content">
 
-        {% if is_owner or is_granted('ROLE_ADMIN') or app.user.veto|default(false) %}
+        {% if is_thread_admin %}
             {{ form_start(buttonsForm) }}
             {{ form_widget(buttonsForm) }}
             {{ form_end(buttonsForm) }}
