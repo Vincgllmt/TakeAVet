@@ -13,6 +13,7 @@ use App\Entity\ThreadMessage;
 use App\Entity\Unavailability;
 use App\Entity\User;
 use App\Entity\Vacation;
+use App\Entity\Vaccine;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -48,6 +49,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Category', 'fa fa-database', CategoryAnimal::class);
         yield MenuItem::linkToCrud('Animal', 'fa fa-database', Animal::class);
         yield MenuItem::linkToCrud('Record', 'fa fa-database', AnimalRecord::class);
+        yield MenuItem::linkToCrud('Vaccin', 'fa fa-database', Vaccine::class);
         yield MenuItem::section('Agenda');
         yield MenuItem::linkToCrud('Agenda', 'fa fa-database', Agenda::class);
         yield MenuItem::linkToCrud('Unvailbilities', 'fa fa-database', Unavailability::class);
