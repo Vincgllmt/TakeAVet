@@ -7,6 +7,7 @@ use App\Entity\Agenda;
 use App\Entity\AgendaDay;
 use App\Entity\Animal;
 use App\Entity\AnimalRecord;
+use App\Entity\Appointment;
 use App\Entity\CategoryAnimal;
 use App\Entity\Receipt;
 use App\Entity\Thread;
@@ -58,6 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Jour', 'fa fa-database', AgendaDay::class);
         yield MenuItem::linkToCrud('Vacance', 'fa fa-database', Vacation::class);
         yield MenuItem::linkToCrud('Type RDV', 'fa fa-database', TypeAppointment::class);
+        yield MenuItem::linkToCrud('RDV', 'fa fa-database', Appointment::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::linkToCrud('Address', 'fa fa-database', Address::class);
