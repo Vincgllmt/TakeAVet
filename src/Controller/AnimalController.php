@@ -6,6 +6,9 @@ use App\Entity\Animal;
 use App\Entity\Client;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\ManipulatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +22,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class AnimalController extends AbstractController
 {
+    private Imagine $imagine;
+
+    public function __construct()
+    {
+        $this->imagine = new Imagine();
+    }
     #[Route('/animal', name: 'app_animal')]
     public function index(AnimalRepository $animalRepository): Response
     {
@@ -81,7 +90,15 @@ class AnimalController extends AbstractController
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+                $realFilename = $photoFile->getRealPath();
+                // resize at fixed size of 512x512.
+                $image = $this->imagine->open($realFilename)
+                    ->thumbnail(new Box(200, 200), ManipulatorInterface::THUMBNAIL_OUTBOUND);
 
+                // save the image to webp format
+                $image->save($realFilename, [
+                    'format' => 'webp',
+                ]);
                 try {
                     $photoFile->move(
                         $this->getParameter('animal_directory'),
