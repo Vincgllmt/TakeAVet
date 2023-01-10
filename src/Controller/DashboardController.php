@@ -31,7 +31,7 @@ class DashboardController extends AbstractController
         }
 
         $appointments = $appointmentRepository->findAllOnDate($user, new \DateTime(), false);
-        dump($appointments);
+
         $currentAppointment = null;
         if (count($appointments) > 0) {
             $currentAppointment = $appointments[0];
