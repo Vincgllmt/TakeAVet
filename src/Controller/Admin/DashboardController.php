@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Address;
 use App\Entity\Agenda;
 use App\Entity\AgendaDay;
 use App\Entity\Animal;
@@ -54,6 +55,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Vacance', 'fa fa-database', Vacation::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
+        yield MenuItem::linkToCrud('Address', 'fa fa-database', Address::class);
         yield MenuItem::section('Admin');
 
         yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
