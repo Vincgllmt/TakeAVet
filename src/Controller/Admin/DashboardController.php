@@ -11,6 +11,7 @@ use App\Entity\CategoryAnimal;
 use App\Entity\Receipt;
 use App\Entity\Thread;
 use App\Entity\ThreadMessage;
+use App\Entity\TypeAppointment;
 use App\Entity\Unavailability;
 use App\Entity\User;
 use App\Entity\Vacation;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Unvailbilities', 'fa fa-database', Unavailability::class);
         yield MenuItem::linkToCrud('Jour', 'fa fa-database', AgendaDay::class);
         yield MenuItem::linkToCrud('Vacance', 'fa fa-database', Vacation::class);
+        yield MenuItem::linkToCrud('Type RDV', 'fa fa-database', TypeAppointment::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::linkToCrud('Address', 'fa fa-database', Address::class);
