@@ -34,9 +34,6 @@ class Animal
     #[ORM\Column]
     private ?bool $isDomestic = null;
 
-    #[ORM\ManyToMany(targetEntity: Vaccine::class, cascade: ['persist', 'remove'])]
-    private Collection $vaccines;
-
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'animals')]
     private ?CategoryAnimal $CategoryAnimal = null;
 
@@ -52,11 +49,14 @@ class Animal
     #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Appointment::class, cascade: ['remove'])]
     private Collection $appointments;
 
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Vaccine::class)]
+    private Collection $vaccines;
+
     public function __construct()
     {
-        $this->vaccines = new ArrayCollection();
         $this->animalRecords = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->vaccines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,30 +136,6 @@ class Animal
         return $this;
     }
 
-    /**
-     * @return Collection<int, Vaccine>
-     */
-    public function getVaccines(): Collection
-    {
-        return $this->vaccines;
-    }
-
-    public function addVaccine(Vaccine $vaccine): self
-    {
-        if (!$this->vaccines->contains($vaccine)) {
-            $this->vaccines->add($vaccine);
-        }
-
-        return $this;
-    }
-
-    public function removeVaccine(Vaccine $vaccine): self
-    {
-        $this->vaccines->removeElement($vaccine);
-
-        return $this;
-    }
-
     public function getCategoryAnimal(): ?CategoryAnimal
     {
         return $this->CategoryAnimal;
@@ -199,7 +175,7 @@ class Animal
     public function getDisplayName(): string
     {
         $category = $this->CategoryAnimal?->getName();
-        return "$this->name".' '."$category";
+        return "$this->name ($category)";
     }
 
     /**
@@ -256,6 +232,36 @@ class Animal
             // set the owning side to null (unless already changed)
             if ($appointment->getAnimal() === $this) {
                 $appointment->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vaccine>
+     */
+    public function getVaccines(): Collection
+    {
+        return $this->vaccines;
+    }
+
+    public function addVaccine(Vaccine $vaccine): self
+    {
+        if (!$this->vaccines->contains($vaccine)) {
+            $this->vaccines->add($vaccine);
+            $vaccine->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVaccine(Vaccine $vaccine): self
+    {
+        if ($this->vaccines->removeElement($vaccine)) {
+            // set the owning side to null (unless already changed)
+            if ($vaccine->getAnimal() === $this) {
+                $vaccine->setAnimal(null);
             }
         }
 

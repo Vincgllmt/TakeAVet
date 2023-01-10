@@ -12,6 +12,7 @@ use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,6 +51,7 @@ class DashboardController extends AbstractController
 
         $buttonsForm = $this->createFormBuilder()
             ->add('next', SubmitType::class, ['attr' => ['class' => 'btn btn-success'], 'label' => 'Finir le rendez-vous'])
+            ->add('add-vacine', SubmitType::class, ['attr' => ['class' => 'btn btn-primary'], 'label' => 'Ajouter un vaccin'])
             ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer le rendez-vous'])
             ->getForm();
 
@@ -62,13 +64,20 @@ class DashboardController extends AbstractController
             /* @var SubmitButton $closeButton */
             $closeButton = $buttonsForm->get('delete');
 
+            /* @var SubmitButton $addVaccineButton */
+            $addVaccineButton = $buttonsForm->get('add-vacine');
+
             if ($closeButton->isClicked()) {
                 $appEntity = $appointmentRepository->findOneBy(['id' => $currentAppointment['appointment']['id']]);
                 $appointmentRepository->remove($appEntity, true);
+
                 return $this->redirectToRoute('app_dashboard');
             } elseif ($nextButton->isClicked()) {
                 $appointmentRepository->setComplete($currentAppointment['appointment']['id']);
+
                 return $this->redirectToRoute('app_dashboard');
+            } elseif ($addVaccineButton->isClicked()) {
+                return $this->redirectToRoute('app_vaccine_add', ['id' => $currentAppointment['animal_id']]);
             }
         }
 

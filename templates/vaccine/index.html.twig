@@ -3,5 +3,17 @@
 {% block title %}Take'A'Vet - Vaccins{% endblock %}
 
 {% block main %}
-    {% include('vaccine/_vaccines.html.twig') %}
+    <div class="main-content">
+        <h1 class="text-center">Ajouter un vaccin pour {{ animal.displayName }}</h1>
+
+        <div class="d-flex gap-5 col-row-responsive">
+            <div class="flex-grow-1">
+                {{ form_start(create_form) }}
+                {{ form_widget(create_form) }}
+                <input type="submit" class="btn btn-primary" value="Ajouter">
+                {{ form_end(create_form) }}
+            </div>
+            {{ include('_animal_card.html.twig', {animal: animal, client: client}) }}
+        </div>
+    </div>
 {% endblock %}
