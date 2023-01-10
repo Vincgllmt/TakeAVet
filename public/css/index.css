@@ -548,3 +548,7 @@ Transitions & utils
     width: 100%;
     background: white;
 }
+
+.bg-black-opacity-80 {
+    background: rgba(0,0,0,0.8);
+}

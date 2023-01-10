@@ -8,9 +8,18 @@
     <div class="main-content">
         <div class="main-title">
             <h1>F.A.Q</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam corporis debitis dicta dolor error eum
-                eveniet expedita iste, necessitatibus, nemo nostrum numquam odio possimus provident quisquam
-                reprehenderit sit sunt voluptatem.</p>
+            <p>Bienvenue sur la foire aux questions de take'a'vet. Vous pouvez poser vos questions ici, et des
+                vétérinaires du site ainsi que les utilisateurs pourront vous fournir des réponses.</p>
+            <p>
+                Voici quelques règles pour les questions :
+            <ol>
+                <li>Soyez respectueux envers les autres membres.</li>
+                <li>Gardez les discussions en lien avec les animaux.</li>
+                <li>Ne publiez pas de contenu illégal ou inapproprié.</li>
+                <li>Respectez les droits d'auteur et ne publiez pas de contenu sans autorisation.</li>
+                <li>Ne publiez pas de spam ou de publicités non sollicitées.</li>
+            </ol>
+            </p>
         </div>
 
         <form class="row m-2 w-100 justify-content-center align-items-center">
@@ -41,7 +50,7 @@
             {% for thread in threads %}
                 <div class="thread__item">
                     <h4>{{ thread.lib }}</h4>
-                    <p>{{ thread.message|u.truncate(150, '...')}}
+                    <p>{{ thread.message|u.truncate(150, '...') }}
                         <span class="badge bg-primary rounded-pill">{{ thread.count }} réponses</span>
                         {% if thread.resolved %}
                             <span class="badge bg-success rounded-pill">Question résolue</span>
@@ -49,8 +58,10 @@
                     </p>
                     <p class="thread__messages_item_author">{{ thread.createdAt|date('d-m-Y') }} | {{ thread.name }}</p>
                     <div class="mt-2">
-                        <a class="btn btn-primary" href="{{ path('app_threads_show', {'id':  thread.id}) }}">Voir le message</a>
-                        <a class="btn btn-primary">Répondre</a>
+                        <a class="btn btn-primary" href="{{ path('app_threads_show', {'id':  thread.id}) }}">Voir le
+                            message</a>
+                        <a class="btn btn-outline-primary"
+                           href="{{ path('app_threads_show', {'id': thread.id}) ~ '#thread_reply_form' }}">Répondre</a>
                     </div>
                 </div>
             {% endfor %}
