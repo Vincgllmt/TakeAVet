@@ -57,6 +57,20 @@ class ThreadCest
         $I->seeCurrentUrlEquals('/threads');
     }
 
+    public function testThreadAnswer(ControllerTester $I): void
+    {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/threads');
+        $I->seeResponseCodeIs(200);
+        $I->click('Répondre');
+        $I->fillField('thread_reply_form[message]', 'Réponse pour test');
+        $I->click('Répondre');
+        $I->seeElement('p.thread__messages_item_message:contains("Réponse pour test")');
+    }
+
 
 
 }
