@@ -103,8 +103,10 @@ class AppointmentRepository extends ServiceEntityRepository
             ->andWhere('ta = a.type')
             ->andWhere('DATE(a.dateApp) = :date');
 
+        $queryBuilder->andWhere('a.isCompleted = FALSE');
+
         if ($getCompleted) {
-            $queryBuilder->andWhere('a.isCompleted = TRUE');
+            $queryBuilder->orWhere('a.isCompleted = TRUE');
         }
 
         return $queryBuilder->getQuery()
