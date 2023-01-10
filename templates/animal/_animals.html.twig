@@ -1,10 +1,12 @@
-<main>
-    <div class="main-content">
+<div class="main-content">
         <div>
             <h1 class="title">Mes animaux</h1>
+            {% if animals is empty %}
+                <p style="text-align: center">Vous n'avez pas encore d'animal, cliquez sur le bouton du dessus !</p>
             <p style="text-align: center">
             <a class="btn btn-primary" href="{{ path('app_animal_create') }}" role="button"> Ajouter un nouvel animal</a>
             </p>
+            {% else %}
             <ul class="list_animal">
                 {% for animal in animals  %}
                 <div class="list_animal_item">
@@ -26,6 +28,6 @@
                 </div>
                 {% endfor %}
             </ul>
+            {% endif %}
         </div>
     </div>
-</main>
