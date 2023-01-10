@@ -42,4 +42,12 @@ class PlanningCest
         $I->see($veto->getEmail(), 'tr');
     }
 
+    public function deletePlanningForClientWhoIsntVeto(ControllerTester $I) {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/planning/8/delete');
+        $I->seeResponseCodeIs(403);
+    }
+
 }
