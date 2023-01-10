@@ -50,4 +50,18 @@ class PlanningCest
         $I->seeResponseCodeIs(403);
     }
 
+    public function deletePlanningFromVeto(ControllerTester $I) {
+        $vetoProxy = VetoFactory::createOne();
+        $veto = $vetoProxy->object();
+        $I->amLoggedInAs($veto);
+        $I->amOnPage('dashboard');
+        $I->click('Créer mon planning');
+        $I->click("C'est bon !");
+        $vetores = $vetoProxy->object();
+        $I->amOnPage('/planning/' . $vetores->getAgenda()->getId() . '/delete');
+        $I->amOnPage('/dashboard');
+        $I->dontSee("Éditer mon planning");
+        $I->see("Vous n'avez pas de planning, commencez par en créer un !");
+    }
+
 }
