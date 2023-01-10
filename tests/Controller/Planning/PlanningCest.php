@@ -19,7 +19,6 @@ class PlanningCest
         $I->seeElement('.main-content');
         $vetoProxy = VetoFactory::createOne();
         $veto = $vetoProxy->object();
-
         $I->amLoggedInAs($veto);
         $I->amOnPage('/planning/' . $vetoProxy->getId());
     }
