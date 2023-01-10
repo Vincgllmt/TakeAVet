@@ -91,7 +91,7 @@ class AnimalController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
                 $realFilename = $photoFile->getRealPath();
-                // resize at fixed size of 512x512.
+                // resize at fixed size of 200x200.
                 $image = $this->imagine->open($realFilename)
                     ->thumbnail(new Box(200, 200), ManipulatorInterface::THUMBNAIL_OUTBOUND);
 
