@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Création d'un nouveau vaccin
+{% endblock %}
+
+{% block main %}
+    <div class="main-content">
+        <h1>Création d'un nouveau vaccin</h1>
+
+        {{ include('vaccine/_form.html.twig', {label_submit: "créer", with_context: false, form: form}) }}
+    </div>
+
+{% endblock %}
+
