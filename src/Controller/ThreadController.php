@@ -12,6 +12,7 @@ use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,9 +43,9 @@ class ThreadController extends AbstractController
         $user = $this->getUser();
         $buttonsForm = $this->createFormBuilder(options: [
             'attr' => [
-                'class' => 'd-flex align-items-center justify-content-end',
+                'class' => 'd-flex align-items-center justify-content-end gap-3',
             ], ])
-            ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'danger' : 'success')], 'label' => $thread->isResolved() ? 'Je veux réouvrir ma question !' : 'Ma question est résolue ?'])
+            ->add('closeOrReopen', SubmitType::class, ['attr' => ['class' => 'btn btn-'.($thread->isResolved() ? 'outline-success' : 'success')], 'label' => $thread->isResolved() ? 'Je veux réouvrir ma question !' : 'Ma question est résolue ?'])
             ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer'])
             ->getForm();
 
@@ -56,12 +57,22 @@ class ThreadController extends AbstractController
             /* @var SubmitButton $closeOrReopenButton */
             $closeOrReopenButton = $buttonsForm->get('closeOrReopen');
 
-            if ($closeOrReopenButton->isClicked() && ($this->isGranted('ROLE_ADMIN') || $user instanceof Veto || $thread->getAuthor() === $user)) {
+            /* @var SubmitButton $deleteButton */
+            $deleteButton = $buttonsForm->get('delete');
+
+            if ($closeOrReopenButton->isClicked()) {
                 if ($isOwnerVetoOrAdmin) {
                     $thread->setResolved(!$thread->isResolved());
                     $threadRepository->save($thread, true);
 
                     return $this->redirectToRoute('app_threads_show', ['id' => $thread->getId()]);
+                }
+                throw $this->createAccessDeniedException();
+            } elseif ($deleteButton->isClicked()) {
+                if ($isOwnerVetoOrAdmin) {
+                    $threadRepository->remove($thread, true);
+
+                    return $this->redirectToRoute('app_threads');
                 }
                 throw $this->createAccessDeniedException();
             }
