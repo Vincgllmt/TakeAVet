@@ -40,6 +40,23 @@ class ThreadCest
         $I->seeResponseCodeIs(200);
     }
 
+    public function testThreadDeleted(ControllerTester $I): void
+    {
+        $clientProxy = ClientFactory::createOne();
+        $client = $clientProxy->object();
+
+        $I->amLoggedInAs($client);
+        $I->amOnPage('/threads');
+        $I->seeResponseCodeIs(200);
+        $I->click('Ajouter une question ici');
+        $I->seeCurrentUrlEquals('/thread/create');
+        $I->see('Soumettre une question');
+        $I->fillField('thread_form[lib]', 'Question pour test');
+        $I->click('Soumettre ma question');
+        $I->click('Supprimer');
+        $I->seeCurrentUrlEquals('/threads');
+    }
+
 
 
 }
