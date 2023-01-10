@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Agenda;
+use App\Entity\AgendaDay;
 use App\Entity\Animal;
 use App\Entity\AnimalRecord;
 use App\Entity\CategoryAnimal;
@@ -48,6 +49,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Agenda');
         yield MenuItem::linkToCrud('Agenda', 'fa fa-database', Agenda::class);
         yield MenuItem::linkToCrud('Unvailbilities', 'fa fa-database', Unavailability::class);
+        yield MenuItem::linkToCrud('Jour', 'fa fa-database', AgendaDay::class);
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('All Users', 'fa fa-database', User::class);
         yield MenuItem::section('Admin');
