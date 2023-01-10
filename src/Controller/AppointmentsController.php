@@ -87,8 +87,6 @@ class AppointmentsController extends AbstractController
             $unavailabilityAtDate = $unavailabilityRepository->getUnavailabilityAt($appointmentDate, $appointmentType, $appointmentAgenda);
             $vacationAtDate = $vacationRepository->getVacationAt($appointmentDate, $appointmentAgenda);
 
-            dump($appointmentAtDate, $unavailabilityAtDate, $vacationAtDate);
-
             $isValidWorkDay = $appointmentAgenda->canTakeAt($appointmentDate, $agendaDayRepository, $appointmentType);
 
             $hasAppointment = null !== $appointmentAtDate;
