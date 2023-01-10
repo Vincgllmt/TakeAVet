@@ -37,4 +37,17 @@ class RecordAnimalCest
         $I->seeResponseCodeIs(403);
     }
 
+    public function recordAuthorized(ControllerTester $I) {
+        $vetoProxy = VetoFactory::createOne();
+        $veto = $vetoProxy->object();
+
+        $I->amLoggedInAs($veto);
+        $I->amOnPage('/record/5');
+        $I->seeResponseCodeIs(200);
+        $I->amOnPage('/record/update/5');
+        $I->seeResponseCodeIs(200);
+        $I->amOnPage('/record/create');
+        $I->seeResponseCodeIs(200);
+    }
+
 }
