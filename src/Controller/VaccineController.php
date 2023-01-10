@@ -44,8 +44,8 @@ class VaccineController extends AbstractController
         ]);
     }
 
-    #[Route('/address/update/{id}',
-        name: 'app_address_update',
+    #[Route('/vaccine/update/{id}',
+        name: 'app_vaccine_update',
         requirements: ['id' => "\d+"])]
     public function update(VaccineRepository $repository, Request $request, Vaccine $vaccine): Response
     {
@@ -73,5 +73,50 @@ class VaccineController extends AbstractController
             'name' => $vaccine->getName(),
             'update_form' => $updateForm,
         ]);
+    }
+
+    #[Route('/vaccine/create')]
+    public function create(Request $request, VaccineRepository $vaccineRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createNotFoundException();
+        }
+
+        $vaccine = new Vaccine();
+
+        $form = $this->createForm(VaccineFormType::class, $vaccine);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var Vaccine $handledVaccine * */
+            $handledVaccine = $form->getData();
+
+            $handledVaccine->setAnimal(null);
+            $vaccineRepository->save($handledVaccine, true);
+
+            return $this->redirectToRoute('app_vaccine');
+        }
+
+        return $this->renderForm('vaccine/create.twig', [
+            'form' => $form,
+            ]);
+    }
+
+    #[Route('/vaccine/delete/{id}',
+        name: 'app_vaccine_delete',
+        requirements: ['id' => "\d+"])]
+    public function delete(Request $request, VaccineRepository $repository, Vaccine $vaccine): Response
+    {
+        $client = $this->getUser();
+
+        if ($client instanceof User) {
+            if ($vaccine->getAnimal() === null) {
+                $repository->remove($vaccine, true);
+            }
+        }
+
+        return $this->redirectToRoute('app_vaccine');
     }
 }
