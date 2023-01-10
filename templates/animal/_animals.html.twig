@@ -12,10 +12,10 @@
                         <div class="text-center">
                             <img class="img-small" src="{{ asset('uploads/animals/' ~ animal.photoPath) }}" />
                         </div>
-                    <div class="animal_part">
+                    <div class="text-center">
                         <p class="animal_name">{{animal.name}} {{animal.race}} </p>
                     </div>
-                    <p class="animal_date">{{ animal.birthday| date("d-m-Y") }}</p>
+                    <p class="text-center">{{ animal.birthday| date("d-m-Y") }}</p>
                     <textarea class="form-control"> </textarea>
                     {% endif %}
                     <div class="animal_part">
