@@ -199,7 +199,7 @@ class Animal
     public function getDisplayName(): string
     {
         $category = $this->CategoryAnimal?->getName();
-        return "$this->name".' '."$category";
+        return "$this->name ($category)";
     }
 
     /**
