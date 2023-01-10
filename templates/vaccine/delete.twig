@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ "Suppression du vaccin #{vaccine.name}" }}
+{% endblock %}
+
+{% block main %}
+    <div class="main-content">
+        <h1>{{ "Suppression du vaccin #{vaccine.name}" }}</h1>
+        <p> êtes vous sur de vouloir supprimer ce vaccin ?</p>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
