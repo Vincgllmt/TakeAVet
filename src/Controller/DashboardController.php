@@ -31,25 +31,6 @@ class DashboardController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $buttonsForm = $this->createFormBuilder()
-            ->add('next', SubmitType::class, ['attr' => ['class' => 'btn btn-success'], 'label' => 'Finir le rendez-vous'])
-            ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer le rendez-vous'])
-            ->getForm();
-
-        $buttonsForm->handleRequest($request);
-
-        if ($buttonsForm->isSubmitted() && $buttonsForm->isValid()) {
-            /* @var SubmitButton $nextButton */
-            $nextButton = $buttonsForm->get('next');
-
-            /* @var SubmitButton $closeButton */
-            $closeButton = $buttonsForm->get('delete');
-
-            if ($closeButton->isClicked()) {
-            } elseif ($nextButton->isClicked()) {
-            }
-        }
-
         $appointments = $appointmentRepository->findAllOnDate($user, new \DateTime(), false);
 
         $currentAppointment = null;
@@ -65,6 +46,30 @@ class DashboardController extends AbstractController
         if ($dashboardNoteForm->isSubmitted() && $dashboardNoteForm->isValid()) {
             $newNote = $dashboardNoteForm->get('note')->getData();
             $appointmentRepository->updateNote($currentAppointment['appointment']['id'], $newNote);
+        }
+
+        $buttonsForm = $this->createFormBuilder()
+            ->add('next', SubmitType::class, ['attr' => ['class' => 'btn btn-success'], 'label' => 'Finir le rendez-vous'])
+            ->add('delete', SubmitType::class, ['attr' => ['class' => 'btn btn-danger'], 'label' => 'Supprimer le rendez-vous'])
+            ->getForm();
+
+        $buttonsForm->handleRequest($request);
+
+        if ($buttonsForm->isSubmitted() && $buttonsForm->isValid()) {
+            /* @var SubmitButton $nextButton */
+            $nextButton = $buttonsForm->get('next');
+
+            /* @var SubmitButton $closeButton */
+            $closeButton = $buttonsForm->get('delete');
+
+            if ($closeButton->isClicked()) {
+                $appEntity = $appointmentRepository->findOneBy(['id' => $currentAppointment['appointment']['id']]);
+                $appointmentRepository->remove($appEntity, true);
+                return $this->redirectToRoute('app_dashboard');
+            } elseif ($nextButton->isClicked()) {
+                $appointmentRepository->setComplete($currentAppointment['appointment']['id']);
+                return $this->redirectToRoute('app_dashboard');
+            }
         }
 
         return $this->renderForm('dashboard/index.html.twig', [
