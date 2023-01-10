@@ -32,7 +32,7 @@
                     {{ form_widget(buttons_form, { 'attr': {'class': 'd-flex justify-content-between my-3'} }) }}
                     {{ form_end(buttons_form) }}
                 </div>
-                {{ include('dashboard/_animal_card.html.twig', {'animal': current_animal, 'client': current_client}) }}
+                {{ include('_animal_card.html.twig', {'animal': current_animal, 'client': current_client}) }}
             </div>
         {% endif %}
         <hr>
