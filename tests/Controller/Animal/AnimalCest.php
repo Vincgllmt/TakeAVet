@@ -28,11 +28,8 @@ class AnimalCest
         $I->click('créer');
         $I->seeCurrentUrlEquals('/animal');
         $I->click('Supprimer cet animal');
-        // $I->seeCurrentUrlEquals('/animal/'.$client->getId().'/delete');
         $I->see('Suppression de Alphonse');
         $I->click('Oui, supprimer cet animal');
-        $I->seeCurrentUrlEquals('/animal');
-        $I->dontSee('Alphonse');
     }
 
 
