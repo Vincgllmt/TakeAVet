@@ -8,19 +8,25 @@ Application de gestion d'emploi du temps, de rendez-vous, d'animaux pour vétér
 
 <!-- TOC -->
 * [Take'A'Vet (SAE 3.01)](#takea--vet--sae-301-)
-    * [Table des matières](#table-des-matières)
-    * [Les auteurs du projet](#les-auteurs-du-projet)
-    * [Les outils](#les-outils)
-    * [Pour commencer](#pour-commencer)
-    * [Autres Commandes](#autres-commandes)
-    * [Données](#données)
-        * [Identifiants](#identifiants)
-    * [Fonctionnalités](#fonctionnalités)
-        * [Vétérinaire](#vétérinaire)
-        * [Client](#client)
-        * [Admin](#admin)
-    * [Aperçu](#aperu)
+  * [Table des matières](#table-des-matires)
+  * [Les auteurs du projet](#les-auteurs-du-projet)
+  * [Les outils](#les-outils)
+  * [Pour commencer](#pour-commencer)
+  * [Autres Commandes](#autres-commandes)
+  * [Données](#donnes)
+    * [Identifiants](#identifiants)
+  * [Fonctionnalités](#fonctionnalits)
+    * [Vétérinaire](#vtrinaire)
+    * [Client](#client)
+    * [Admin](#admin)
+  * [Aperçu](#aperu)
+    * [Accueil](#accueil)
+    * [Planning](#planning)
+    * [Page de contact](#page-de-contact)
+  * [Production](#production)
+    * [Base de données](#base-de-donnes)
 <!-- TOC -->
+
 ## Les auteurs du projet
 
 - Alexis Udycz
@@ -140,3 +146,31 @@ En tant qu'administrateur, vous avez accès au dashboard easyadmin, ce qui vous 
 ![Planning](/planning.png)
 ### Page de contact
 ![Contact](/contact.png)
+
+## Production
+
+Le serveur est accessible à l'adresse [http://10.31.11.105/](http://10.31.11.105/) et est configuré pour utiliser PHP 8.1 et Apache 2.
+
+| Username | Password |
+|----------|----------|
+| sae      | iutinfo  |
+
+```shell
+ssh sae@10.31.11.105
+```
+
+Répertoire important pour la configuration du serveur :
+- `/var/www/takeavet.fr/` Répertoire du projet symfony en production.
+- `/var/www/takeavet.fr/.env.local.php` Configuration en production, créer par le `composer dump-env prod`
+- `/etc/apache2/sites-available/takeavet.fr.conf` Configuration du serveur Apache2 pour le site.
+
+### Base de données
+
+| Email                        | Password   | Type             |
+|------------------------------|------------|------------------|
+| admin@take.vet               | *          | :\Lk13s`/Q>4unp  | Administrateur |
+| marguerite.hamel@exemple.com | testtest   | Vétérinaire      |
+| emile.marleau@exemple.com    | {<E5tG{r>5 | Client           |
+
+* : R9ei|:\Lk13s`/Q>4unp 
+
